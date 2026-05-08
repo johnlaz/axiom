@@ -6,31 +6,8 @@
 <meta name="theme-color" content="#09090f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AXIOM">
-<meta name="application-name" content="AXIOM">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="AI-powered stock analysis and portfolio intelligence">
 <title>AXIOM — AI Stock Intelligence</title>
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-
-<!-- Apple Touch Icons -->
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
-<link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
-<link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
-<link rel="apple-touch-icon" sizes="96x96" href="icons/icon-96.png">
-<link rel="apple-touch-icon" sizes="72x72" href="icons/icon-72.png">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icons/icon-96.png">
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-
-<!-- Apple Splash Screens (iPhone) -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;AXIOM&quot;,&quot;short_name&quot;:&quot;AXIOM&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#09090f&quot;,&quot;theme_color&quot;:&quot;#09090f&quot;}">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -78,6 +55,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .setup-btn:active{transform:scale(.98)}
 .setup-footer{font-size:10px;color:var(--text3);margin-top:14px;text-align:center;line-height:1.7}
 .setup-footer a{color:var(--cyan);text-decoration:none;font-weight:600}
+#import-label:hover{border-color:var(--cyan)!important;color:var(--cyan)!important}
 .risk-chips{display:flex;gap:8px;flex-wrap:wrap}
 .risk-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2);background:var(--bg3)}
 .risk-chip.active{border-color:var(--cyan);color:var(--cyan);background:#22d3ee15}
@@ -120,8 +98,9 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .icon-btn:hover{border-color:var(--border2);color:var(--text)}
 
 /* ── NAV ── */
-.nav-tabs{display:flex;padding:0 8px;border-bottom:1px solid var(--border);background:var(--bg);overflow-x:auto;scrollbar-width:none;width:100%}
-.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tabs{border-bottom:1px solid var(--border);background:var(--bg);width:100%}
+.nav-tabs-inner{display:flex;padding:0 8px;max-width:900px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.nav-tabs-inner::-webkit-scrollbar{display:none}
 .nav-tab{padding:13px 12px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px}
 .nav-tab:hover{color:var(--text2)}
 .nav-tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
@@ -681,7 +660,19 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         <div class="risk-chip" onclick="selectRisk(this,'Speculative')">Speculative</div>
       </div>
     </div>
-    <button class="setup-btn" onclick="launchApp()">Launch AXIOM →</button>
+    <button class="setup-btn" id="launch-btn" onclick="launchApp()">Launch AXIOM →</button>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-size:11px;color:var(--text3);white-space:nowrap">or restore from backup</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
+    <label for="setup-import-file" id="import-label" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:11px;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;box-sizing:border-box">
+      ⬆ Import Settings from Backup (.json)
+    </label>
+    <input type="file" id="setup-import-file" accept=".json" style="display:none" onchange="importSettingsFromSetup(event)">
+    <div id="import-success-banner" style="display:none;margin-top:10px;padding:10px 14px;background:#10b98118;border:1px solid #10b98144;border-radius:var(--radius-sm);font-size:12px;color:#10b981;line-height:1.6"></div>
+
     <div class="setup-footer">
       Prices via <a href="https://finance.yahoo.com" target="_blank">Yahoo Finance</a> (free) ·
       Analyst data via <a href="https://financialmodelingprep.com" target="_blank">FMP</a> (optional) ·
@@ -729,6 +720,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
   </div>
 
   <div class="nav-tabs">
+    <div class="nav-tabs-inner">
     <div class="nav-tab" id="tab-dashboard" onclick="switchView('dashboard')">🏠 Dashboard</div>
     <div class="nav-tab active" id="tab-analyze" onclick="switchView('analyze')">🔍 Analyze</div>
     <div class="nav-tab" id="tab-compare" onclick="switchView('compare')">⚖️ Compare</div>
@@ -738,6 +730,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
     <div class="nav-tab" id="tab-strategies" onclick="switchView('strategies')">🧪 Strategies</div>
     <div class="nav-tab" id="tab-earnings" onclick="switchView('earnings')">📅 Earnings</div>
     <div class="nav-tab" id="tab-ask" onclick="switchView('ask')">💬 Ask AXIOM</div>
+    </div>
   </div>
 
   <div class="main">
@@ -948,7 +941,9 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="port-action-btn" onclick="exportAllPortfolios()">⬇ Export All</button>
-          <button class="port-action-btn" onclick="document.getElementById('import-all-file').click()">⬆ Import</button>
+          <button class="port-action-btn" onclick="document.getElementById('import-all-file').click()">⬆ Import JSON</button>
+          <button class="port-action-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="document.getElementById('brokerage-csv-file').click()">&#x1F4E5; Import Brokerage CSV</button>
+          <input type="file" id="brokerage-csv-file" accept=".csv,.txt" style="display:none" onchange="importBrokerageCSV(event)">
           <input type="file" id="import-all-file" accept=".json" style="display:none" onchange="importAllPortfolios(event)">
         </div>
       </div>
@@ -1322,6 +1317,53 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
   </div>
 </div>
 
+<!-- ══ BROKERAGE CSV IMPORT MODAL ══ -->
+<div class="modal-overlay" id="csv-import-modal">
+  <div class="modal" style="max-width:600px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <div class="modal-title" style="margin-bottom:0">&#x1F4E5; Import Brokerage CSV</div>
+      <button onclick="closeCSVImport()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1">&times;</button>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px;line-height:1.6">
+      Detected <strong id="csv-row-count" style="color:var(--cyan)">0</strong> positions from
+      <span id="csv-filename" style="color:var(--text2)">--</span>.
+      Mapped: <span id="csv-cols-found" style="color:var(--text2)">--</span>.
+      <span id="csv-missing-note" style="color:var(--amber)"></span>
+    </div>
+    <div class="modal-group">
+      <span class="modal-label">Add to Portfolio</span>
+      <select class="modal-select" id="csv-portfolio-select"></select>
+    </div>
+    <div class="modal-group">
+      <span class="modal-label">Default Strategy</span>
+      <select class="modal-select" id="csv-strategy-select">
+        <option value="Buy &amp; Hold">Buy &amp; Hold</option>
+        <option value="RSI Reversal">RSI Reversal</option>
+        <option value="Momentum">Momentum</option>
+        <option value="Value Gap">Value Gap</option>
+      </select>
+    </div>
+    <div style="max-height:260px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:14px">
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead><tr style="background:var(--bg3);position:sticky;top:0">
+          <th style="padding:7px 10px;text-align:left;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Ticker</th>
+          <th style="padding:7px 10px;text-align:left;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Name</th>
+          <th style="padding:7px 10px;text-align:right;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Qty</th>
+          <th style="padding:7px 10px;text-align:right;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Cost/sh</th>
+          <th style="padding:7px 10px;text-align:right;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Price</th>
+          <th style="padding:7px 10px;text-align:left;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Status</th>
+        </tr></thead>
+        <tbody id="csv-preview-tbody"></tbody>
+      </table>
+    </div>
+    <div id="csv-warning" style="display:none;padding:8px 12px;background:#f59e0b18;border:1px solid #f59e0b44;border-radius:var(--radius-sm);font-size:11px;color:var(--amber);margin-bottom:12px"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeCSVImport()">Cancel</button>
+      <button class="modal-confirm" onclick="confirmCSVImport()">Import Positions</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ ADD RECOMMENDED STOCKS MODAL ══ -->
 <div class="modal-overlay" id="add-recs-modal">
   <div class="modal" style="max-width:520px">
@@ -1470,12 +1512,76 @@ function selectNewPortRisk(el,val){document.querySelectorAll('#new-port-risk-chi
 function launchApp(){
   const gk=document.getElementById('groq-key-input').value.trim();
   if(!gk){showToast('⚠️','Groq API key required');return;}
-  ST.groqKey=gk;ST.fmpKey=document.getElementById('fmp-key-input').value.trim();
+  ST.groqKey=gk;
+  ST.fmpKey=document.getElementById('fmp-key-input').value.trim();
   const cap=parseFloat(document.getElementById('capital-input').value)||100000;
-  ST.capital=cap;ST.startCapital=cap;
+  ST.capital=cap; ST.startCapital=cap;
   ST.currency=document.getElementById('currency-input').value;
-  ST.risk=selectedRisk;ST.theme='neon';
-  save();bootApp();
+  ST.risk=selectedRisk;
+  if(!ST.theme) ST.theme='neon'; // preserve imported theme
+  save(); bootApp();
+}
+
+function importSettingsFromSetup(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const label=document.getElementById('import-label');
+  const banner=document.getElementById('import-success-banner');
+  const launchBtn=document.getElementById('launch-btn');
+  if(label) label.textContent='Reading '+file.name+'...';
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    var d;
+    try{ d=JSON.parse(ev.target.result); }
+    catch(err){
+      if(label){ label.textContent='Invalid file - not valid JSON'; label.style.color='#f43f5e'; }
+      return;
+    }
+    // Apply all recognisable fields
+    if(d.groqKey)      ST.groqKey=d.groqKey;
+    if(d.fmpKey)       ST.fmpKey=d.fmpKey;
+    if(d.risk)         { ST.risk=d.risk; selectedRisk=d.risk; }
+    if(d.capital)      ST.capital=parseFloat(d.capital)||100000;
+    if(d.startCapital) ST.startCapital=parseFloat(d.startCapital)||ST.capital;
+    if(d.currency)     ST.currency=d.currency;
+    if(d.theme)        ST.theme=d.theme;
+    if(d.portfolios&&d.portfolios.length) ST.portfolios=d.portfolios;
+    if(d.watchlist&&d.watchlist.length)   ST.watchlist=d.watchlist;
+    if(d.strategies)   ST.strategies=d.strategies;
+    save();
+    // Populate form fields
+    var gkEl=document.getElementById('groq-key-input');
+    var fkEl=document.getElementById('fmp-key-input');
+    var capEl=document.getElementById('capital-input');
+    var curEl=document.getElementById('currency-input');
+    if(gkEl){ gkEl.value=d.groqKey||''; gkEl.type='text'; }
+    if(fkEl){ fkEl.value=d.fmpKey||''; fkEl.type='text'; }
+    if(capEl&&d.capital) capEl.value=d.capital;
+    if(curEl&&d.currency) curEl.value=d.currency;
+    if(d.risk){
+      document.querySelectorAll('#setup-risk-chips .risk-chip').forEach(function(c){
+        c.classList.toggle('active', c.textContent.trim()===d.risk);
+      });
+    }
+    // Show success
+    if(banner){
+      banner.style.display='block';
+      banner.innerHTML='<strong>Loaded: '+file.name+'</strong><br>'
+        +'Groq key: '+(d.groqKey?d.groqKey.slice(0,14)+'...':'not found')+'<br>'
+        +(d.portfolios?d.portfolios.length+' portfolio(s) found<br>':'')
+        +(d.watchlist?d.watchlist.length+' watchlist items found<br>':'')
+        +'<em>Launching in 2 seconds...</em>';
+      banner.style.color='#10b981';
+    }
+    if(label){ label.textContent='File loaded successfully'; label.style.color='#10b981'; }
+    if(launchBtn){ launchBtn.textContent='Launch AXIOM'; }
+    if(d.groqKey) setTimeout(function(){ bootApp(); }, 2000);
+    setTimeout(function(){ try{e.target.value='';}catch(x){} }, 3000);
+  };
+  reader.onerror=function(){
+    if(label){ label.textContent='Could not read file'; label.style.color='#f43f5e'; }
+  };
+  reader.readAsText(file);
 }
 function bootApp(){
   document.getElementById('setup-screen').style.display='none';
@@ -1560,23 +1666,79 @@ function saveSettings(){
   applyRiskBadge(ST.risk);save();closeSettings();showToast('✅','Settings saved');
 }
 function exportSettings(){
-  const d={groqKey:ST.groqKey,fmpKey:ST.fmpKey,risk:ST.risk,capital:ST.capital,startCapital:ST.startCapital,currency:ST.currency,theme:ST.theme,exportedAt:new Date().toISOString(),version:'axiom-v5'};
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.download='axiom-settings-'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('⬇','Settings exported');
+  // Full backup — saves everything including portfolios, watchlist, settings
+  const d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
+  a.download='axiom-full-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  showToast('⬇','Full backup exported (settings + portfolios + watchlist)');
 }
 function importSettings(e){
   const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=ev=>{
-    try{
-      const d=JSON.parse(ev.target.result);
-      ['groqKey','fmpKey','risk','capital','startCapital','currency','theme'].forEach(k=>{if(d[k])ST[k]=d[k];});
-      save();applyTheme(ST.theme);applyRiskBadge(ST.risk);selectedRisk=ST.risk;
-      document.getElementById('settings-groq').value=ST.groqKey;
-      document.getElementById('settings-fmp').value=ST.fmpKey;
-      document.getElementById('settings-capital').value=ST.capital;
-      document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
-      showToast('✅','Settings imported');
-    }catch(err){showToast('⚠️','Invalid file');}
-  };r.readAsText(f);e.target.value='';
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    applyImportedData(ev.target.result,'settings');
+  };
+  reader.readAsText(f);e.target.value='';
+}
+function applyImportedData(jsonText, source){
+  var d;
+  try{ d=JSON.parse(jsonText); }
+  catch(err){
+    showToast('⚠️','Invalid file — not valid JSON');
+    return false;
+  }
+  // Accept any AXIOM export format — apply whatever fields are present
+  var applied=[];
+  if(d.groqKey)      { ST.groqKey=d.groqKey;       applied.push('Groq key'); }
+  if(d.fmpKey)       { ST.fmpKey=d.fmpKey;          applied.push('FMP key'); }
+  if(d.risk)         { ST.risk=d.risk;               applied.push('risk'); }
+  if(d.capital)      { ST.capital=parseFloat(d.capital)||ST.capital; applied.push('capital'); }
+  if(d.startCapital) { ST.startCapital=parseFloat(d.startCapital)||ST.startCapital; }
+  if(d.currency)     { ST.currency=d.currency; }
+  if(d.theme)        { ST.theme=d.theme; }
+  if(d.portfolios&&d.portfolios.length){
+    // Merge: add portfolios not already present (by id)
+    var added=0;
+    d.portfolios.forEach(function(np){
+      if(!ST.portfolios.find(function(p){return p.id===np.id;})){
+        ST.portfolios.push(np); added++;
+      }
+    });
+    if(added) applied.push(added+' portfolio(s)');
+  }
+  if(d.watchlist&&d.watchlist.length){
+    d.watchlist.forEach(function(nw){
+      if(!ST.watchlist.find(function(w){return w.ticker===nw.ticker;})){
+        ST.watchlist.push(nw);
+      }
+    });
+    applied.push('watchlist');
+  }
+  if(d.strategies) { Object.assign(ST.strategies, d.strategies); }
+  if(!applied.length){
+    showToast('⚠️','No recognisable AXIOM data found in file');
+    return false;
+  }
+  save();
+  // Refresh live UI if app is running
+  try{
+    applyTheme(ST.theme||'neon');
+    applyRiskBadge(ST.risk||'Moderate');
+    selectedRisk=ST.risk||'Moderate';
+    var gkEl=document.getElementById('settings-groq');
+    var fkEl=document.getElementById('settings-fmp');
+    var capEl=document.getElementById('settings-capital');
+    var capDisp=document.getElementById('settings-capital-display');
+    if(gkEl) gkEl.value=ST.groqKey||'';
+    if(fkEl) fkEl.value=ST.fmpKey||'';
+    if(capEl) capEl.value=ST.capital||100000;
+    if(capDisp) capDisp.textContent='$'+(ST.capital||100000).toLocaleString();
+    renderPortfolioCards(); renderWatchlist(); updatePosCount();
+  }catch(e){}
+  showToast('✅','Imported: '+applied.join(', '));
+  return true;
 }
 function resetAllData(){
   if(!confirm('Reset everything? Clears all portfolios, watchlist, and settings.'))return;
@@ -1609,20 +1771,37 @@ function fetchWithTimeout(url,ms=15000){
 async function yahooFetch(path){
   const t1='https://query1.finance.yahoo.com'+path;
   const t2='https://query2.finance.yahoo.com'+path;
+
+  // Multiple proxy options — tried in order, skipping on failure
   const tries=[
-    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t1)}`,15000),
-    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t2)}`,15000),
-    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t1)}`,15000),
-    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t2)}`,15000),
+    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t1)}`,12000),
+    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t1)}`,12000),
+    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t2)}`,12000),
+    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t2)}`,12000),
+    ()=>fetchWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(t1)}`,12000),
+    ()=>fetchWithTimeout(`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(t1)}`,12000),
   ];
+
   let lastErr='All proxies failed';
-  for(const fn of tries){
+  for(let i=0;i<tries.length;i++){
     try{
-      const r=await fn();if(!r.ok)throw new Error('HTTP '+r.status);
+      const r=await tries[i]();
+      // On 403/429 from Yahoo (rate limit), wait before trying next proxy
+      if(r.status===403||r.status===429){
+        lastErr=`HTTP ${r.status} (rate limited)`;
+        if(i<tries.length-1) await new Promise(res=>setTimeout(res,600));
+        continue;
+      }
+      if(!r.ok) throw new Error('HTTP '+r.status);
       const txt=await r.text();
-      if(!txt||txt.trim().startsWith('<'))throw new Error('Got HTML');
+      if(!txt||txt.trim().length<10) throw new Error('Empty response');
+      if(txt.trim().startsWith('<')) throw new Error('Got HTML — proxy returned error page');
       return JSON.parse(txt);
-    }catch(e){lastErr=e.message;}
+    }catch(e){
+      lastErr=e.message;
+      // Small pause between proxy attempts to avoid hammering
+      if(i<tries.length-1) await new Promise(res=>setTimeout(res,300));
+    }
   }
   throw new Error(lastErr);
 }
@@ -1714,6 +1893,10 @@ async function analyzeStock(){
   const ticker=document.getElementById('ticker-input').value.trim().toUpperCase().replace(/[^A-Z.]/g,'');
   if(!ticker){showToast('⚠️','Enter a ticker');return;}
   if(!ST.groqKey){showToast('⚠️','Add Groq API key in Settings ⚙️');return;}
+
+  // Clear cache for this ticker so explicit analyze always gets fresh data
+  delete priceCache[ticker];
+
   const loading=document.getElementById('loading');
   const result=document.getElementById('analysis-result');
   const tip=document.getElementById('analyze-tip');
@@ -1731,7 +1914,13 @@ async function analyzeStock(){
     renderAnalysis(ticker,q,a,g);
   }catch(err){
     loading.classList.remove('show');
-    result.innerHTML=`<div class="card" style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">Analysis Failed</div><div style="font-size:13px;color:var(--text3);margin-bottom:14px">${err.message}</div><div style="font-size:11px;color:var(--text3);line-height:1.8">• Check ticker spelling (e.g. NVDA, AAPL, TSLA)<br>• CORS proxy may be temporarily down — wait 30s and retry<br>• Verify your Groq API key is valid in Settings ⚙️</div></div>`;
+    result.innerHTML=`<div class="card" style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">Analysis Failed</div><div style="font-size:13px;color:var(--text3);margin-bottom:14px">${err.message}</div><div style="font-size:11px;color:var(--text3);line-height:2;text-align:left;max-width:380px;margin:0 auto">
+      ${err.message.includes('403')||err.message.includes('rate')?
+        '🔄 <strong>Rate limited</strong> — Yahoo Finance blocked the request. Wait 15-30 seconds and try again.<br>💡 Try searching a different ticker first, then come back to this one.':
+        '• Check ticker spelling (e.g. NVDA, AAPL, TSLA)<br>• CORS proxy may be temporarily down — wait 30s and retry<br>• Verify your Groq API key is valid in Settings ⚙️'}
+    </div>
+    <button onclick="analyzeStock()" style="margin-top:16px;padding:10px 24px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--cyan2),var(--violet));border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer">↺ Retry</button>
+    </div>`;
     result.classList.add('show');if(tip)tip.style.display='block';
   }
 }
@@ -2299,17 +2488,19 @@ function importPortfolio(e){
   };r.readAsText(f);e.target.value='';
 }
 function exportAllPortfolios(){
-  const data={portfolios:ST.portfolios,strategies:ST.strategies,exportedAt:new Date().toISOString(),version:'axiom-v5'};
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='axiom-all-portfolios-'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('⬇','All portfolios exported');
+  // Full backup from portfolio tab
+  var d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
+  a.download='axiom-full-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  showToast('⬇','Full backup exported');
 }
 function importAllPortfolios(e){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=ev=>{
-    try{
-      const d=JSON.parse(ev.target.result);
-      if(d.portfolios){ST.portfolios=[...ST.portfolios,...d.portfolios.filter(np=>!ST.portfolios.find(p=>p.id===np.id))];save();renderPortfolioCards();showToast('✅','Portfolios imported');}
-    }catch(err){showToast('⚠️','Import failed');}
-  };r.readAsText(f);e.target.value='';
+  var f=e.target.files[0];if(!f)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){ applyImportedData(ev.target.result,'portfolio-tab'); };
+  reader.readAsText(f);e.target.value='';
 }
 
 // ── GROQ PORTFOLIO ANALYSIS ──
@@ -2336,7 +2527,7 @@ async function groqPortfolioAnalysis(){
     const text=d.choices?.[0]?.message?.content||'';
     body.innerHTML=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
     // Parse tickers from response
-    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6))];
+    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6)]);
     if(tickers.length){
       chips.innerHTML=`<div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1.5px;width:100%;margin-bottom:8px">GROQ SUGGESTED TICKERS</div>`
         +tickers.map(t=>`<button onclick="openActionCard('${t}',null,'${t}')" class="realloc-chip">${t} ▾</button>`).join('')
@@ -2622,7 +2813,7 @@ async function getStrategyAdvice(strategy){
     const text=d.choices?.[0]?.message?.content||'No response.';
 
     // Extract tickers first so we can highlight them inline in the body text
-    const EXCLUDE=new Set(['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','SP','NYSE','NASDAQ','EPS','PE','YOY','QOQ']);
+    const EXCLUDE=new Set(['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','SP','NYSE','NASDAQ','EPS','PE','YOY','QOQ','AXIOM','GROQ','FMP','API','URL','JSON','CSS','HTML','USD','CAD','GBP','EUR','YTD','TTM','DCF','ROE','ROI','EBIT','FCF']);
     const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>
       t.length>=2&&t.length<=5&&!EXCLUDE.has(t)
     ).slice(0,8))];
@@ -3688,7 +3879,7 @@ async function sendAskMessage(){
     // Extract any tickers mentioned and offer quick analyze chips
     const tickers=[...new Set((reply.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>
       t.length>=2&&t.length<=5&&/^[A-Z][A-Z0-9]{1,4}$/.test(t)&&
-      !['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO'].includes(t)
+      !['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE','SP','NYSE','NASDAQ'].includes(t)
     ).slice(0,5))];
     if(tickers.length){
       const chipsEl=document.createElement('div');
@@ -3930,7 +4121,7 @@ function exportAnalysisPDF(ticker){
   </div>
 
   <!-- Dynamically extract and rebuild key sections from the live analysis -->
-  <script>
+  <scr'+'ipt>
   (function(){
     // Pull data from parent window's analysis result
     try{
@@ -4052,7 +4243,7 @@ function exportAnalysisPDF(ticker){
 
   </div><!-- /container -->
 
-  <script>
+  <scr'+'ipt>
     window.addEventListener('load',function(){
       // Auto-print after data extraction completes
       setTimeout(function(){window.print();},1500);
@@ -4254,7 +4445,7 @@ function parseBriefingText(text){
     .replace(/\bbullish\b/gi,m=>`<span class="tech-badge bullish">▲ ${m}</span>`);
 
   // Make tickers clickable chips (uppercase 2-5 char words not in exclusion list)
-  const EXCLUDE=new Set(['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','IT','ON','OF','BY','AS','AN']);
+  const EXCLUDE=new Set(['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','IT','ON','OF','BY','AS','AN','SP','NYSE','NASDAQ','EPS','PE','YOY','QOQ','AXIOM','GROQ','FMP','API','USD','CAD','GBP','EUR','YTD','TTM','DCF','ROE','ROI','EBIT','FCF','GDP','FED','SEC','IRS']);
   out = out.replace(/\b([A-Z]{2,5})\b(?![^<]*>)/g,(m,t)=>{
     if(EXCLUDE.has(t)||t.length<2) return m;
     return`<button onclick="openActionCard('${t}',null,'${t}')" style="padding:1px 8px;border-radius:12px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent);color:var(--cyan);font-size:11px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;display:inline-block;margin:1px">${t}</button>`;
@@ -4402,69 +4593,187 @@ function renderPortfolioChart(portId){
   el.innerHTML = buildPortfolioChart(p);
 }
 
+
+// ── BROKERAGE CSV IMPORT ──
+let csvParsedRows = [];
+
+function importBrokerageCSV(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try{ parseAndPreviewCSV(ev.target.result, file.name); }
+    catch(err){ showToast('⚠️','Could not parse CSV: '+err.message); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function parseAndPreviewCSV(raw, filename){
+  const lines = raw.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(function(l){return l.trim();});
+  if(lines.length < 2){ showToast('⚠️','CSV appears empty'); return; }
+
+  function splitCSV(line){
+    var out=[],cur='',inQ=false;
+    for(var i=0;i<line.length;i++){
+      var c=line[i];
+      if(c==='"'){inQ=!inQ;}
+      else if(c===','&&!inQ){out.push(cur.trim().replace(/^"|"$/g,''));cur='';}
+      else{cur+=c;}
+    }
+    out.push(cur.trim().replace(/^"|"$/g,''));
+    return out;
+  }
+
+  var headers = splitCSV(lines[0]).map(function(h){return h.toLowerCase().trim();});
+
+  var ALIASES = {
+    ticker:    ['ticker','symbol','stock symbol','security','sym','stock'],
+    name:      ['name','description','security name','company','security description'],
+    quantity:  ['quantity','qty','shares','units','shares/units'],
+    price:     ['price','current price','last price','market price','price/share','last'],
+    mktVal:    ['market value','value','current value','mkt value','market val'],
+    costBasis: ['cost basis','cost','average cost','avg cost','total cost','avg price','average price','book value','book cost'],
+    unrealized:['unrealized gain','unrealized gain/loss','gain/loss','unrealized p&l','gain'],
+  };
+
+  function findCol(aliases){
+    for(var i=0;i<aliases.length;i++){
+      var a=aliases[i];
+      for(var j=0;j<headers.length;j++){
+        if(headers[j].indexOf(a)>=0||a.indexOf(headers[j])>=0) return j;
+      }
+    }
+    return -1;
+  }
+
+  var col={}, found=[], missing=[];
+  var keys = Object.keys(ALIASES);
+  for(var ki=0;ki<keys.length;ki++){
+    var k=keys[ki];
+    col[k]=findCol(ALIASES[k]);
+    (col[k]>=0?found:missing).push(k);
+  }
+
+  if(col.ticker<0){ showToast('⚠️','No ticker/symbol column found'); return; }
+
+  var SKIP=['CASH','MMKT','SWEEP','TOTAL','PENDING','MONEY','MARKET'];
+  csvParsedRows=[];
+  var warnings=[];
+
+  function cleanNum(s){ return parseFloat((s||'').toString().replace(/[$,%\s]/g,''))||0; }
+
+  for(var li=1;li<lines.length;li++){
+    var cols=splitCSV(lines[li]);
+    if(cols.every(function(x){return !x;})) continue;
+    var ticker=(col.ticker>=0?cols[col.ticker]||'':'').toUpperCase().replace(/[^A-Z.]/g,'');
+    if(!ticker||ticker.length>6) continue;
+    var skip=false;
+    for(var si=0;si<SKIP.length;si++){if(ticker.indexOf(SKIP[si])>=0){skip=true;break;}}
+    if(skip) continue;
+
+    var name      = col.name>=0      ? (cols[col.name]||'').slice(0,40)    : '';
+    var qty       = col.quantity>=0  ? cleanNum(cols[col.quantity])         : 0;
+    var price     = col.price>=0     ? cleanNum(cols[col.price])            : 0;
+    var mktVal    = col.mktVal>=0    ? cleanNum(cols[col.mktVal])           : 0;
+    var costTotal = col.costBasis>=0 ? cleanNum(cols[col.costBasis])        : 0;
+
+    var shares  = qty;
+    var entryPx = 0;
+    var currPx  = price;
+
+    if(costTotal>0 && qty>0)       entryPx = costTotal/qty;
+    else if(costTotal>0)           entryPx = costTotal;
+    if(!currPx && mktVal>0&&qty>0) currPx  = mktVal/qty;
+    if(!entryPx) entryPx = currPx;
+    if(!currPx)  currPx  = entryPx;
+    if(!shares||shares<=0){ warnings.push(ticker+': no quantity'); continue; }
+    if(!entryPx) warnings.push(ticker+': no price data, set to $0');
+
+    csvParsedRows.push({
+      ticker:ticker, name:name, shares:shares,
+      entryPx:entryPx, currPx:currPx,
+      status: entryPx===0?'needs-price':'ok'
+    });
+  }
+
+  if(!csvParsedRows.length){ showToast('⚠️','No valid positions found in CSV'); return; }
+
+  if(!ST.portfolios.length){ showToast('ℹ️','Create a portfolio first'); openNewPortModal(); return; }
+  var portSel=document.getElementById('csv-portfolio-select');
+  portSel.innerHTML=ST.portfolios.map(function(p){
+    return '<option value="'+p.id+'">'+p.name+' ($'+Math.round(p.capital||0).toLocaleString()+' avail)</option>';
+  }).join('');
+  if(ST.activePortId) portSel.value=ST.activePortId;
+
+  document.getElementById('csv-row-count').textContent=csvParsedRows.length;
+  document.getElementById('csv-filename').textContent=filename;
+  document.getElementById('csv-cols-found').textContent=found.join(', ');
+  var mn=document.getElementById('csv-missing-note');
+  if(missing.length){ mn.textContent='Missing: '+missing.join(', ')+' (estimated where possible).'; }
+  else { mn.textContent=' All columns mapped.'; mn.style.color='var(--green)'; }
+
+  var tbody=document.getElementById('csv-preview-tbody');
+  tbody.innerHTML=csvParsedRows.map(function(row){
+    var sc=row.status==='needs-price';
+    return '<tr style="border-bottom:1px solid var(--border)">'
+      +'<td style="padding:7px 10px;font-family:\'JetBrains Mono\',monospace;font-weight:700">'+row.ticker+'</td>'
+      +'<td style="padding:7px 10px;color:var(--text3);font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(row.name||'-')+'</td>'
+      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+row.shares.toFixed(row.shares%1===0?0:3)+'</td>'
+      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.entryPx>0?'$'+row.entryPx.toFixed(2):'<span style="color:var(--amber)">-</span>')+'</td>'
+      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.currPx>0?'$'+row.currPx.toFixed(2):'-')+'</td>'
+      +'<td style="padding:7px 10px;font-size:10px;font-weight:600;color:'+(sc?'var(--amber)':'var(--green)')+';">'+(sc?'Fix price':'Ready')+'</td>'
+      +'</tr>';
+  }).join('');
+
+  var warnEl=document.getElementById('csv-warning');
+  if(warnings.length){ warnEl.style.display='block'; warnEl.textContent=warnings.slice(0,5).join(' | '); }
+  else{ warnEl.style.display='none'; }
+
+  document.getElementById('csv-import-modal').classList.add('show');
+}
+
+function closeCSVImport(){
+  document.getElementById('csv-import-modal').classList.remove('show');
+  csvParsedRows=[];
+}
+
+function confirmCSVImport(){
+  var portId=document.getElementById('csv-portfolio-select').value;
+  var strategy=document.getElementById('csv-strategy-select').value;
+  if(!portId){ showToast('⚠️','Select a portfolio'); return; }
+  ST.activePortId=portId;
+  var p=getActivePort();
+  if(!p){ showToast('⚠️','Portfolio not found'); return; }
+  var added=0;
+  for(var i=0;i<csvParsedRows.length;i++){
+    var row=csvParsedRows[i];
+    if(row.entryPx>0) p.capital=Math.max(0, p.capital-row.shares*row.entryPx);
+    p.positions.push({
+      id:Date.now()+'_'+Math.random().toString(36).slice(2,6),
+      ticker:row.ticker, shares:row.shares,
+      entryPrice:row.entryPx, currentPrice:row.currPx||row.entryPx,
+      strategy:strategy,
+      note:row.name+(row.entryPx===0?' - PRICE NEEDS UPDATE':''),
+      addedAt:new Date().toISOString()
+    });
+    ST.strategies[strategy]=ST.strategies[strategy]||{trades:0,wins:0,totalReturn:0,closed:[]};
+    ST.strategies[strategy].trades++;
+    added++;
+  }
+  save(); updatePosCount(); renderPortfolioCards();
+  closeCSVImport();
+  showToast('✅','Imported '+added+' position'+(added!==1?'s':'')+' into "'+p.name+'"');
+  setTimeout(function(){ switchView('portfolio'); setTimeout(function(){ openPortDetail(portId); },150); },200);
+}
+
+
 // ── TOAST ──
 function showToast(icon,msg){
   const t=document.getElementById('toast');
   document.getElementById('toast-icon').textContent=icon+' ';document.getElementById('toast-msg').textContent=msg;
   t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
 }
-</script>
-
-<!-- ── PWA: Service Worker Registration ── -->
-<script>
-(function() {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('./sw.js', { scope: './' })
-        .then(function(reg) {
-          console.log('[AXIOM] Service Worker registered, scope:', reg.scope);
-          reg.addEventListener('updatefound', function() {
-            const newWorker = reg.installing;
-            newWorker.addEventListener('statechange', function() {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                if (typeof showToast === 'function') {
-                  showToast('🔄', 'Update available — refresh to get the latest AXIOM');
-                }
-              }
-            });
-          });
-        })
-        .catch(function(err) {
-          console.warn('[AXIOM] Service Worker registration failed:', err);
-        });
-    });
-  }
-
-  // PWA Install Prompt
-  let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    setTimeout(function() {
-      if (deferredPrompt && typeof showToast === 'function') {
-        showToast('📲', 'Install AXIOM as an app for the best experience');
-      }
-    }, 3000);
-  });
-
-  window.installPWA = function() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(result) {
-      if (result.outcome === 'accepted' && typeof showToast === 'function') {
-        showToast('✅', 'AXIOM installed successfully!');
-      }
-      deferredPrompt = null;
-    });
-  };
-
-  window.addEventListener('appinstalled', function() {
-    deferredPrompt = null;
-    if (typeof showToast === 'function') {
-      showToast('🚀', 'AXIOM is now installed on your device!');
-    }
-  });
-})();
 </script>
 </body>
 </html>
