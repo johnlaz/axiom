@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>AXIOM — AI Stock Intelligence</title>
-<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;AXIOM&quot;,&quot;short_name&quot;:&quot;AXIOM&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#09090f&quot;,&quot;theme_color&quot;:&quot;#09090f&quot;}">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -4775,5 +4776,12 @@ function showToast(icon,msg){
   t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
 }
 </script>
+<script>
+// Service Worker registration for PWA install
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+<!-- © LAZLAB Creations -->
 </body>
 </html>
