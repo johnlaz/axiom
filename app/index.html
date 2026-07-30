@@ -1885,7 +1885,7 @@ function groqPost(messages,maxTokens=600,temp=.2){
         resolve(d);
       }catch(e){reject(new Error('Bad response from Groq'));}
     };
-    xhr.send(JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:maxTokens,temperature:temp,messages}));
+    xhr.send(JSON.stringify({model:'qwen/qwen3.6-27b',max_tokens:maxTokens,temperature:temp,messages}));
   });
 }
 
@@ -2528,7 +2528,7 @@ async function groqPortfolioAnalysis(){
     const text=d.choices?.[0]?.message?.content||'';
     body.innerHTML=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
     // Parse tickers from response
-    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6)]);
+    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6))];
     if(tickers.length){
       chips.innerHTML=`<div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1.5px;width:100%;margin-bottom:8px">GROQ SUGGESTED TICKERS</div>`
         +tickers.map(t=>`<button onclick="openActionCard('${t}',null,'${t}')" class="realloc-chip">${t} ▾</button>`).join('')
