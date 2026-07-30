@@ -1882,10 +1882,19 @@ function groqPost(messages,maxTokens=600,temp=.2){
         if(xhr.status===401)return reject(new Error('Invalid Groq key — update in Settings ⚙️'));
         if(xhr.status===429)return reject(new Error('Rate limited — wait 10s'));
         if(xhr.status>=400)return reject(new Error('Groq error: '+(d.error?.message||xhr.status)));
+        // Strip any leaked Qwen3 chain-of-thought reasoning before it reaches callers
+        const msg=d.choices?.[0]?.message;
+        if(msg&&typeof msg.content==='string'){
+          let text=msg.content;
+          text=text.replace(/<think>[\s\S]*?<\/think>/gi,'').trim();
+          text=text.replace(/^thinking process:[\s\S]*?(?=\n{2,}[a-z0-9])/i,'').trim();
+          text=text.replace(/^(\d+\.\s+\*\*[\s\S]*?)(?=\n{2,}(?!\d+\.\s))/i,'').trim();
+          msg.content=text;
+        }
         resolve(d);
       }catch(e){reject(new Error('Bad response from Groq'));}
     };
-    xhr.send(JSON.stringify({model:'qwen/qwen3.6-27b',max_tokens:maxTokens,temperature:temp,messages}));
+    xhr.send(JSON.stringify({model:'qwen/qwen3.6-27b',reasoning_effort:'none',reasoning_format:'hidden',max_tokens:maxTokens,temperature:temp,messages}));
   });
 }
 
@@ -2806,9 +2815,10 @@ async function getStrategyAdvice(strategy){
   if(!ST.groqKey){el.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>';return;}
   el.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Asking Groq for specific picks...</div>';
   const held=ST.portfolios.flatMap(p=>p.positions.map(pos=>pos.ticker)).filter((v,i,a)=>a.indexOf(v)===i).join(', ')||'none';
+  const todayStr=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   const prompt=strategy==='General'
-    ?`You are AXIOM, elite advisor for a ${ST.risk} risk investor (March 2025). Recommend the top 2 strategies from: Buy & Hold, RSI Reversal, Momentum, Value Gap for current market. For each, name 3 specific stock tickers that fit it RIGHT NOW and why. Plain text only. Already holding: ${held}.`
-    :`You are AXIOM. The user has a ${ST.risk} risk profile. For "${strategy}" strategy (March 2025):\n1. Name 5 SPECIFIC S&P 500 tickers that are strong ${strategy} candidates RIGHT NOW with brief why for each.\n2. Exact entry criteria: RSI level, MA position, price-target gap to look for.\n3. Risk rules: max position size (% of portfolio), stop-loss, profit target for ${ST.risk} investors.\nAlready holding: ${held}. Plain text, no markdown symbols.`;
+    ?`You are AXIOM, elite advisor for a ${ST.risk} risk investor. Today is ${todayStr}. Recommend the top 2 strategies from: Buy & Hold, RSI Reversal, Momentum, Value Gap for current market. For each, name 3 specific stock tickers that fit it RIGHT NOW and why. Plain text only. Already holding: ${held}.`
+    :`You are AXIOM. Today is ${todayStr}. The user has a ${ST.risk} risk profile. For "${strategy}" strategy:\n1. Name 5 SPECIFIC S&P 500 tickers that are strong ${strategy} candidates RIGHT NOW with brief why for each.\n2. Exact entry criteria: RSI level, MA position, price-target gap to look for.\n3. Risk rules: max position size (% of portfolio), stop-loss, profit target for ${ST.risk} investors.\nAlready holding: ${held}. Plain text, no markdown symbols.`;
   try{
     const d=await groqPost([{role:'user',content:prompt}],600,.4);
     const text=d.choices?.[0]?.message?.content||'No response.';
@@ -3000,7 +3010,8 @@ async function loadHeadlines(){
   if(!el) return;
   if(!ST.groqKey){ el.innerHTML = '<div style="font-size:12px;color:var(--amber)">⚠️ Add Groq key in Settings for AI headlines</div>'; return; }
   el.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Generating headlines...</div>';
-  const prompt = `You are a financial news AI. Generate 5 concise, realistic market headlines for today (March 2025). Each should be specific and impactful. For each headline provide: title (max 12 words), source (e.g. Reuters, Bloomberg, WSJ), sentiment (Bullish/Bearish/Neutral), and a 1-sentence summary. Output ONLY JSON array: [{"title":"...","source":"...","sentiment":"Bullish","summary":"..."}]`;
+  const todayStr = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const prompt = `You are a financial news AI. Today is ${todayStr}. Generate 5 concise, realistic market headlines for today. Each should be specific and impactful. For each headline provide: title (max 12 words), source (e.g. Reuters, Bloomberg, WSJ), sentiment (Bullish/Bearish/Neutral), and a 1-sentence summary. Output ONLY JSON array: [{"title":"...","source":"...","sentiment":"Bullish","summary":"..."}]`;
   try{
     const d = await groqPost([{role:'user',content:prompt}], 600, .7);
     let raw = (d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
@@ -3324,7 +3335,7 @@ async function loadBriefing(){
 
 Portfolio context: ${portSummary}. Total unrealized P&L: ${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(0)}. Watchlist: ${watchTickers}.
 
-Paragraph 1 — MARKET CONDITIONS: Current macro environment, key market themes (rates, AI, sector rotation, etc). Be specific about March 2025 conditions.
+Paragraph 1 — MARKET CONDITIONS: Current macro environment and key market themes (rates, AI, sector rotation, etc) as of today's date above. Do not reference any date other than today.
 Paragraph 2 — PORTFOLIO HEALTH: Based on their positions and P&L, assess overall portfolio health and any positions that need attention. If no positions, give general advice for a ${ST.risk} investor.
 Paragraph 3 — TODAY'S OPPORTUNITIES: 2-3 specific actionable ideas or themes to watch today. Name real tickers.
 
