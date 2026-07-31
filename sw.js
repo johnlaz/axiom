@@ -1,6 +1,6 @@
 // AXIOM Landing Page Service Worker
 // Scope: /apex/ (landing page only — app has its own SW at /apex/app/)
-const CACHE_NAME = 'axiom-landing-v1';
+const CACHE_NAME = 'axiom-landing-v2';
 const STATIC_ASSETS = [
   '/apex/',
   '/apex/index.html',
