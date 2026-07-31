@@ -554,6 +554,35 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .briefing-time{font-size:10px;color:var(--text3)}
 .briefing-body{font-size:13px;line-height:1.8;color:var(--text2);white-space:pre-wrap}
 
+/* ── LIVE SCAN INTERIM CARDS ── */
+@keyframes scanCardIn{
+  0%{opacity:0;transform:translateY(6px) scale(.97)}
+  60%{opacity:1;transform:translateY(-1px) scale(1.005)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes scanPulse{
+  0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--cyan) 35%,transparent)}
+  50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 0%,transparent)}
+}
+@keyframes scanShimmer{
+  0%{background-position:-200% 0}
+  100%{background-position:200% 0}
+}
+.scan-live-card{
+  animation:scanCardIn .35s ease-out both;
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:9px 12px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.scan-live-card.newest{animation:scanCardIn .35s ease-out both, scanPulse 1s ease-out}
+.scan-live-sym{font-weight:800;font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;gap:6px}
+.scan-live-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse-dot 1.2s infinite}
+.scan-skeleton{
+  height:36px;border-radius:10px;margin-bottom:7px;
+  background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);
+  background-size:200% 100%;animation:scanShimmer 1.4s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+
 /* ── PDF EXPORT ── */
 .pdf-export-btn{padding:8px 16px;border-radius:var(--radius-sm);border:1px solid var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent);color:var(--violet2);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
 .pdf-export-btn:hover{background:color-mix(in srgb,var(--violet2) 18%,transparent)}
@@ -617,6 +646,8 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .market-filter-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
 .market-filter{padding:5px 13px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--text2)}
 .market-filter.active{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
+.strategy-market-filter{padding:5px 13px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--text2)}
+.strategy-market-filter.active{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
 </style>
 </head>
 <body data-theme="neon">
@@ -628,11 +659,11 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
     <div class="setup-tagline">AI Stock Intelligence · Paper Trading · Portfolio Analytics</div>
     <div class="setup-group">
       <div class="setup-lbl-row">
-        <span class="setup-label">Groq API Key <span style="color:var(--red);font-size:9px">REQUIRED</span></span>
+        <span class="setup-label">Groq API Key <span style="color:var(--text3);font-size:9px">OPTIONAL — POWERS AI FEATURES</span></span>
         <a class="setup-link" href="https://console.groq.com/keys" target="_blank">Get free key ↗</a>
       </div>
       <input class="setup-input" id="groq-key-input" type="password" placeholder="gsk_...">
-      <div class="setup-hint">Free · Fast · Powers all AI — <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);text-decoration:none">console.groq.com/keys</a></div>
+      <div class="setup-hint">You can explore with live market data now and add this anytime — <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);text-decoration:none">console.groq.com/keys</a></div>
     </div>
     <div class="setup-group">
       <div class="setup-lbl-row">
@@ -831,7 +862,17 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
               <button class="watcher-toggle-btn" onclick="setWatcherPeriod('long',this)">Long-Term</button>
             </div>
           </div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:12px" id="watchers-desc">Stocks Groq expects highest near-term upside on</div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:8px" id="watchers-desc">Stocks Groq expects highest near-term upside on</div>
+          <select onchange="setWatcherMarket(this.value)" style="width:100%;padding:6px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px">
+            <option value="volume" selected>🔥 Top Volume (live, fastest)</option>
+            <option value="sp500">🇺🇸 S&P 500 Leaders</option>
+            <option value="nasdaq">📡 NASDAQ 100</option>
+            <option value="growth">🚀 High Growth</option>
+            <option value="dividend">💰 Dividend Income</option>
+            <option value="etfs">📦 ETFs & Sectors</option>
+            <option value="crypto">₿ Cryptocurrency</option>
+            <option value="intl">🌍 International ADRs</option>
+          </select>
           <div id="watchers-list">
             <div style="font-size:12px;color:var(--text3)">Click "Refresh" to load Groq's top picks →</div>
           </div>
@@ -887,7 +928,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">🧠 AI Analysis</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · llama-3.3-70b-versatile</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · qwen3.6-27b</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">⚠️ Important Notes</div>
@@ -1130,7 +1171,8 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 
         <div class="market-filter-row">
           <span style="font-size:10px;color:var(--text3);font-weight:600">MARKET:</span>
-          <div class="market-filter active" id="mf-sp500" onclick="setMarketFilter('sp500',this)">🇺🇸 S&P 500</div>
+          <div class="market-filter active" id="mf-volume" onclick="setMarketFilter('volume',this)">🔥 Top Volume</div>
+          <div class="market-filter" id="mf-sp500" onclick="setMarketFilter('sp500',this)">🇺🇸 S&P 500</div>
           <div class="market-filter" id="mf-nasdaq" onclick="setMarketFilter('nasdaq',this)">📡 NASDAQ 100</div>
           <div class="market-filter" id="mf-growth" onclick="setMarketFilter('growth',this)">🚀 High Growth</div>
           <div class="market-filter" id="mf-dividend" onclick="setMarketFilter('dividend',this)">💰 Dividend</div>
@@ -1171,9 +1213,19 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
       <div class="advice-card">
         <div class="advice-header">
           <div class="groq-icon">🧠</div>
-          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)">llama-3.3-70b-versatile · Risk: <span id="advice-risk">Moderate</span></div></div>
+          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)">qwen3.6-27b · Risk: <span id="advice-risk">Moderate</span></div></div>
         </div>
         <div class="advice-body" id="strategy-advice">Select a strategy below for specific stock picks, entry criteria, and risk rules tailored to your profile.</div>
+        <div class="market-filter-row" style="margin-top:12px">
+          <div class="strategy-market-filter active" onclick="setStrategyMarket('volume',this)">🔥 Top Volume</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('sp500',this)">🇺🇸 S&P 500</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('nasdaq',this)">📡 NASDAQ 100</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('growth',this)">🚀 High Growth</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('dividend',this)">💰 Dividend</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('etfs',this)">📦 ETFs</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('crypto',this)">₿ Crypto</div>
+          <div class="strategy-market-filter" onclick="setStrategyMarket('intl',this)">🌍 International</div>
+        </div>
         <div class="advice-chips">
           <button class="advice-chip" onclick="getStrategyAdvice('Buy & Hold')">📈 Buy & Hold</button>
           <button class="advice-chip" onclick="getStrategyAdvice('RSI Reversal')">🔄 RSI Reversal</button>
@@ -1278,6 +1330,13 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         <div class="risk-chip active" onclick="selectRisk2(this,'Moderate')">Moderate</div>
         <div class="risk-chip" onclick="selectRisk2(this,'Aggressive')">Aggressive</div>
         <div class="risk-chip" onclick="selectRisk2(this,'Speculative')">Speculative</div>
+      </div>
+    </div>
+    <div class="modal-group"><span class="modal-label" style="display:block;margin-bottom:7px">Groq Scan Depth <span style="font-weight:400;color:var(--text3);text-transform:none;letter-spacing:0">— speed vs. breadth for live-data picks</span></span>
+      <div class="risk-chips">
+        <div class="risk-chip scan-depth-btn" data-depth="quick" onclick="setScanDepth('quick')">⚡ Quick (16)</div>
+        <div class="risk-chip scan-depth-btn active" data-depth="standard" onclick="setScanDepth('standard')">Standard (28)</div>
+        <div class="risk-chip scan-depth-btn" data-depth="deep" onclick="setScanDepth('deep')">🔬 Deep (full list)</div>
       </div>
     </div>
     <div class="modal-group">
@@ -1447,6 +1506,8 @@ let portFilter   = 'all';
 let scanResults  = [];
 let scanSort     = 'upside';
 let watcherPeriod= 'short';
+let watcherMarket= 'volume';
+let strategyMarket= 'volume';
 let dashLoaded   = false;
 let pendingRecs  = [];
 
@@ -1458,7 +1519,7 @@ function setCache(t,d){ priceCache[t]={data:d,ts:Date.now()}; }
 
 // ── BATCH FETCHER — runs up to `size` requests concurrently ──
 // Dramatically faster than sequential: 8 tickers in 2 batches vs 8 sequential
-async function fetchBatch(items, fn, size=4, onEach=null){
+async function fetchBatch(items, fn, size=4, onEach=null, delay=400){
   const out=new Array(items.length).fill(null);
   for(let i=0;i<items.length;i+=size){
     const chunk=items.slice(i,i+size);
@@ -1467,7 +1528,7 @@ async function fetchBatch(items, fn, size=4, onEach=null){
       if(r.status==='fulfilled') out[i+j]=r.value;
       if(onEach) onEach(items[i+j],r.status==='fulfilled'?r.value:null,i+j);
     });
-    if(i+size<items.length) await new Promise(r=>setTimeout(r,400));
+    if(i+size<items.length) await new Promise(r=>setTimeout(r,delay));
   }
   return out;
 }
@@ -1512,8 +1573,7 @@ function selectNewPortRisk(el,val){document.querySelectorAll('#new-port-risk-chi
 
 function launchApp(){
   const gk=document.getElementById('groq-key-input').value.trim();
-  if(!gk){showToast('⚠️','Groq API key required');return;}
-  ST.groqKey=gk;
+  ST.groqKey=gk; // optional — user can explore with live Yahoo data and add a key later for AI features
   ST.fmpKey=document.getElementById('fmp-key-input').value.trim();
   const cap=parseFloat(document.getElementById('capital-input').value)||100000;
   ST.capital=cap; ST.startCapital=cap;
@@ -1521,6 +1581,7 @@ function launchApp(){
   ST.risk=selectedRisk;
   if(!ST.theme) ST.theme='neon'; // preserve imported theme
   save(); bootApp();
+  if(!gk) showToast('👀','Exploring without a Groq key — add one anytime in Settings for AI picks & insights');
 }
 
 function importSettingsFromSetup(e){
@@ -1829,6 +1890,19 @@ async function fetchQuote(ticker){
   setCache(ticker, result);
   return result;
 }
+// Single-call screener — returns today's most-active US tickers by volume
+// in ONE request, instead of one request per ticker. Used to build a fast,
+// genuinely-live "Top Volume" candidate pool instead of a static hardcoded list.
+async function fetchTopVolumeScreener(count=40){
+  try{
+    const j = await yahooFetch(`/v1/finance/screener/predefined/saved?count=${count}&scrIds=most_actives&formatted=false&lang=en-US&region=US`);
+    const quotes = j?.finance?.result?.[0]?.quotes || [];
+    return quotes
+      .filter(q=>q.symbol && q.regularMarketPrice)
+      .sort((a,b)=>(b.regularMarketVolume||0)-(a.regularMarketVolume||0))
+      .map(q=>q.symbol);
+  }catch(e){ return []; }
+}
 function calcRSI(p,n=14){
   if(p.length<n+1)return 50;
   let ag=0,al=0;
@@ -1865,6 +1939,120 @@ async function fetchAnalyst(ticker,q){
   }catch(e){}
   return{targetMean:q.price*1.15,targetHigh:q.price*1.38,targetLow:q.price*.85,targetMedian:q.price*1.12,buyPct:62,holdPct:26,sellPct:12,totalAnalysts:20,source:'Est.'};
 }
+
+// ══════════════════════════════════════════
+//  SHARED 2-STAGE LIVE MARKET SCAN
+//  Stage 1: fast quote-only pass across EVERY ticker in the selected market list
+//           (no random sampling — the full curated universe gets scored)
+//  Stage 2: pull deeper analyst data only for the strongest technical fits,
+//           so Groq gets real numbers on a real shortlist without the runtime
+//           of fetching analyst data for the entire list every time
+// ══════════════════════════════════════════
+function scoreForCriteria(q, mode){
+  let sc=5;
+  const rsi=q.rsi, vs200=q.priceVs200, chg=q.changePct;
+  if(mode==='RSI Reversal'){
+    if(rsi<30) sc+=4; else if(rsi<40) sc+=2; else if(rsi>65) sc-=2;
+  } else if(mode==='Momentum' || mode==='short'){
+    if(chg>2) sc+=3; else if(chg>0.5) sc+=1.5;
+    if(vs200>5) sc+=2; else if(vs200>0) sc+=1;
+    if(rsi>75) sc-=2;
+  } else if(mode==='Value Gap'){
+    const vsHigh=q.high52?((q.high52-q.price)/q.high52)*100:0;
+    if(vsHigh>15) sc+=3; else if(vsHigh>8) sc+=1.5;
+    if(rsi<45) sc+=1;
+  } else if(mode==='Buy & Hold' || mode==='long'){
+    if(vs200>0) sc+=2;
+    if(rsi>35 && rsi<70) sc+=1.5;
+    if(Math.abs(chg)<3) sc+=1;
+  } else { // General
+    if(vs200>0) sc+=1.5;
+    if(rsi>30 && rsi<70) sc+=1;
+    if(chg>0) sc+=1;
+  }
+  return sc;
+}
+// Scan Depth: how much of the market list to consider before Groq picks —
+// more than a fixed 10, less than the entire list, and tunable for speed vs breadth
+const SCAN_DEPTH = {
+  quick:    { listCap: 16, topN: 8,  label: 'Quick' },
+  standard: { listCap: 28, topN: 12, label: 'Standard' },
+  deep:     { listCap: null, topN: 18, label: 'Deep' } // null = full list
+};
+let scanDepth = 'standard';
+function setScanDepth(d){
+  scanDepth = d;
+  document.querySelectorAll('.scan-depth-btn').forEach(b=>b.classList.toggle('active', b.dataset.depth===d));
+}
+
+// Shared animated "results populating live" renderer — used while a scan is in
+// progress so the user sees real cards land instead of a static spinner.
+function renderScanInterim(marketName, done, total, stage, partial){
+  const pending = Math.max(0, total - done);
+  const skeletons = Array.from({length: Math.min(pending, 4)}).map(()=>'<div class="scan-skeleton"></div>').join('');
+  if(stage==='scan'){
+    return `<div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+      <div class="scan-live-dot"></div> Scanning ${marketName} — ${done}/${total} technical checks
+    </div>${skeletons}`;
+  }
+  const cards = (partial||[]).slice(-6).reverse().map((d,i)=>`
+    <div class="scan-live-card${i===0?' newest':''}">
+      <div class="scan-live-sym"><div class="scan-live-dot"></div>${d.ticker}<span style="font-weight:400;color:var(--text3);font-size:10px">${(d.longName||'').slice(0,22)}</span></div>
+      <div style="display:flex;align-items:center;gap:10px;font-size:11px">
+        <span style="color:var(--text3);font-family:'JetBrains Mono',monospace">$${d.price} · RSI ${d.rsi}</span>
+        <span style="font-weight:800;color:${parseFloat(d.upside)>0?'var(--green)':'var(--red)'}">${d.upside>0?'+':''}${d.upside}%</span>
+      </div>
+    </div>`).join('');
+  return `<div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+    <div class="scan-live-dot"></div> Analyzing ${marketName} — ${done}/${total} · Groq ranks the final picks next
+  </div>${cards}${skeletons}`;
+}
+
+async function scanMarketLive(tickers, mode, onProgress){
+  const depth = SCAN_DEPTH[scanDepth] || SCAN_DEPTH.standard;
+  // Cap the field first (top slice of the curated, cap-weighted list — not random)
+  const pool = depth.listCap ? tickers.slice(0, depth.listCap) : tickers;
+
+  // Stage 1 — quote-only technical pass across the capped pool, 6-wide concurrent batches, short pause
+  const scored=[];
+  let done=0;
+  await fetchBatch(pool, async t=>{
+    const q=await fetchQuote(t);
+    return {ticker:t, q, score:scoreForCriteria(q, mode)};
+  }, 6, (t,res)=>{
+    done++;
+    if(res) scored.push(res);
+    if(onProgress) onProgress(done, pool.length, `Scanning ${t}...`, 'scan', null);
+  }, 200);
+  scored.sort((a,b)=>b.score-a.score);
+  const top=scored.slice(0, depth.topN);
+  if(!top.length) return [];
+
+  // Stage 2 — analyst data only for the finalists, 5-wide batches (heavier proxy calls)
+  // liveData is passed back through onProgress as it fills in, so the UI can render
+  // picks as they arrive instead of waiting for the whole batch to finish
+  let done2=0;
+  const liveData=[];
+  await fetchBatch(top, async cand=>{
+    const a=await fetchAnalyst(cand.ticker, cand.q);
+    return {cand, a};
+  }, 5, (cand,res)=>{
+    done2++;
+    if(res){
+      const {q}=res.cand, {a}=res;
+      liveData.push({
+        ticker:res.cand.ticker, longName:q.longName,
+        price:q.price.toFixed(2), changePct:q.changePct.toFixed(2),
+        rsi:q.rsi.toFixed(1), priceVs200:q.priceVs200.toFixed(1),
+        upside:((a.targetMean-q.price)/q.price*100).toFixed(1),
+        buyPct:a.buyPct, targetMean:a.targetMean.toFixed(2)
+      });
+    }
+    if(onProgress) onProgress(done2, top.length, `Pulling analyst data — ${cand.ticker}...`, 'analyst', liveData.slice());
+  }, 300);
+  return liveData;
+}
+
 
 // ── GROQ ──
 function groqPost(messages,maxTokens=600,temp=.2){
@@ -2145,7 +2333,7 @@ function renderAnalysis(ticker,q,a,g){
   </div>
 
   <div class="groq-section">
-    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · llama-3.3-70b-versatile · ${ST.risk} Profile</div></div></div>
+    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · qwen3.6-27b · ${ST.risk} Profile</div></div></div>
     <div class="groq-body">${enhanceInsight(g.insight)}</div>
     <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
       <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1px;margin-bottom:4px">ADD TO PORTFOLIO WITH STRATEGY</div>
@@ -2708,30 +2896,7 @@ function renderWatchlist(){
 }
 
 // ── SCANNER ──
-const SCAN_LIST=['AAPL','MSFT','NVDA','GOOGL','AMZN','META','TSLA','AVGO','LLY','JPM','V','MA','UNH','XOM','WMT','JNJ','PG','HD','CVX','MRK','ABBV','COST','ORCL','CRM','NFLX','AMD','QCOM','TXN','INTC','BA','CAT','GE','GS','MS','BAC','SCHW','DIS','SBUX','MCD','NKE','PYPL','ADBE','SNOW','PLTR','RIVN'];
 function setScanSort(s,el){scanSort=s;document.querySelectorAll('.scan-filter').forEach(c=>c.classList.remove('active'));el.classList.add('active');if(scanResults.length)renderScanTable();}
-async function runScanner(){
-  const btn=document.getElementById('run-scan-btn');const prog=document.getElementById('scan-progress');
-  const fill=document.getElementById('scan-prog-fill');const label=document.getElementById('scan-prog-label');
-  btn.disabled=true;btn.textContent='Scanning...';prog.classList.add('show');scanResults=[];
-  document.getElementById('scanner-content').innerHTML=`<div style="padding:20px;color:var(--text3);font-size:13px;text-align:center">Scanning stocks... results appear as they load (~30s).</div>`;
-  const tickers=SCAN_LIST.slice(0,40);
-  for(let i=0;i<tickers.length;i++){
-    const ticker=tickers[i];label.textContent=`Scanning ${i+1}/${tickers.length} — ${ticker}`;fill.style.width=((i+1)/tickers.length*100)+'%';
-    try{
-      const q=await fetchQuote(ticker);
-      let sc=5;if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-      const estTarget=q.high52*1.05;const upside=((estTarget-q.price)/q.price)*100;
-      if(upside>20)sc+=2;else if(upside>10)sc+=1;else if(upside<0)sc-=1;if(q.priceVs200>0)sc+=1;
-      sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-      scanResults.push({ticker,price:q.price,rsi:q.rsi,ma200:q.ma200,priceVs200:q.priceVs200,upside,score:sc,longName:q.longName,changePct:q.changePct});
-      renderScanTable();
-    }catch(e){}
-    await new Promise(r=>setTimeout(r,250));
-  }
-  btn.disabled=false;btn.textContent='▶ Re-Scan';prog.classList.remove('show');
-  showToast('✅',`Scanner complete — ${scanResults.length} stocks`);
-}
 function renderScanTable(){
   let sorted=[...scanResults];
   if(scanSort==='upside')sorted.sort((a,b)=>b.upside-a.upside);
@@ -2812,42 +2977,67 @@ function renderStrategyPerf(){
 
 async function getStrategyAdvice(strategy){
   const el=document.getElementById('strategy-advice');
-  if(!ST.groqKey){el.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>';return;}
-  el.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Asking Groq for specific picks...</div>';
+  if(!ST.groqKey){el.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>';showToast('🔑','Add a Groq API key in Settings to unlock AI picks');return;}
   const held=ST.portfolios.flatMap(p=>p.positions.map(pos=>pos.ticker)).filter((v,i,a)=>a.indexOf(v)===i).join(', ')||'none';
   const todayStr=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const marketName = MARKET_NAMES[strategyMarket] || 'S&P 500 Leaders';
+
+  let tickers;
+  if(strategyMarket==='volume'){
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Pulling today's top-volume tickers...</div>`;
+    tickers = await fetchTopVolumeScreener(40);
+    if(!tickers.length) tickers = MARKET_LISTS.sp500; // screener unreachable — fall back
+  } else {
+    tickers = MARKET_LISTS[strategyMarket] || MARKET_LISTS.sp500;
+  }
+
+  const depthCfg = SCAN_DEPTH[scanDepth] || SCAN_DEPTH.standard;
+  const poolSize = depthCfg.listCap ? Math.min(depthCfg.listCap, tickers.length) : tickers.length;
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Scanning ${marketName} (${poolSize} stocks, ${depthCfg.label} depth)...</div>`;
+
+  // Full 2-stage scan across the entire selected market — no random subset
+  const liveData = await scanMarketLive(tickers, strategy, (done,total,label,stage,partial)=>{
+    el.innerHTML = renderScanInterim(marketName, done, total, stage, partial);
+  });
+
+  if(!liveData.length){ el.innerHTML=`<span style="color:var(--amber)">⚠️ Could not fetch market data for ${marketName}</span>`; return; }
+
+  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% today), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, analyst target $${d.targetMean} (${d.upside>0?'+':''}${d.upside}% upside), ${d.buyPct}% analysts Buy`).join('\n');
+
   const prompt=strategy==='General'
-    ?`You are AXIOM, elite advisor for a ${ST.risk} risk investor. Today is ${todayStr}. Recommend the top 2 strategies from: Buy & Hold, RSI Reversal, Momentum, Value Gap for current market. For each, name 3 specific stock tickers that fit it RIGHT NOW and why. Plain text only. Already holding: ${held}.`
-    :`You are AXIOM. Today is ${todayStr}. The user has a ${ST.risk} risk profile. For "${strategy}" strategy:\n1. Name 5 SPECIFIC S&P 500 tickers that are strong ${strategy} candidates RIGHT NOW with brief why for each.\n2. Exact entry criteria: RSI level, MA position, price-target gap to look for.\n3. Risk rules: max position size (% of portfolio), stop-loss, profit target for ${ST.risk} investors.\nAlready holding: ${held}. Plain text, no markdown symbols.`;
+    ?`You are AXIOM, elite advisor for a ${ST.risk} risk investor. Today is ${todayStr}. Here is LIVE market data from the ${marketName} universe:\n${dataStr}\n\nRecommend the top 2 strategies from: Buy & Hold, RSI Reversal, Momentum, Value Gap for current conditions. For each, name 3 specific tickers FROM THE DATA ABOVE that fit it best right now, citing the real numbers, and briefly why. Plain text only. Already holding: ${held}.`
+    :`You are AXIOM. Today is ${todayStr}. The user has a ${ST.risk} risk profile. Here is LIVE market data from the ${marketName} universe:\n${dataStr}\n\nFor the "${strategy}" strategy:\n1. From the live data above ONLY, name the 5 tickers that best fit ${strategy} right now, citing the specific real numbers that support each pick.\n2. Exact entry criteria: RSI level, MA position, price-target gap to look for.\n3. Risk rules: max position size (% of portfolio), stop-loss, profit target for ${ST.risk} investors.\nAlready holding: ${held}. Plain text, no markdown symbols.`;
+
+  el.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Asking Groq for specific picks...</div>';
   try{
-    const d=await groqPost([{role:'user',content:prompt}],600,.4);
+    const d=await groqPost([{role:'user',content:prompt}],900,.4);
     const text=d.choices?.[0]?.message?.content||'No response.';
 
     // Extract tickers first so we can highlight them inline in the body text
     const EXCLUDE=new Set(['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','US','BE','IS','IF','NO','SO','SP','NYSE','NASDAQ','EPS','PE','YOY','QOQ','AXIOM','GROQ','FMP','API','URL','JSON','CSS','HTML','USD','CAD','GBP','EUR','YTD','TTM','DCF','ROE','ROI','EBIT','FCF']);
-    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>
+    const tickers2=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>
       t.length>=2&&t.length<=5&&!EXCLUDE.has(t)
     ).slice(0,8))];
 
     // Render body with tickers highlighted as inline clickable chips
     let body=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
-    tickers.forEach(t=>{
+    tickers2.forEach(t=>{
       const re=new RegExp(`\\b${t}\\b`,'g');
       body=body.replace(re,`<button onclick="openActionCard('${t}',null,'${t}')" style="padding:1px 8px;border-radius:12px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent);color:var(--cyan);font-size:11px;font-weight:800;cursor:pointer;font-family:'JetBrains Mono',monospace;display:inline-block;margin:1px;vertical-align:middle">${t}</button>`);
     });
     el.innerHTML=body;
 
-    if(tickers.length){
+    if(tickers2.length){
       el.innerHTML+=`
         <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
           <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1.5px;margin-bottom:10px">MENTIONED TICKERS — click to take action</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            ${tickers.map(t=>`
+            ${tickers2.map(t=>`
               <button onclick="openActionCard('${t}',null,'${t}')"
                 style="padding:7px 16px;border-radius:20px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent);color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:5px">
                 ${t} <span style="font-size:10px;opacity:.7">▾</span>
               </button>`).join('')}
-            <button onclick="openAddRecsModal(${JSON.stringify(tickers)})"
+            <button onclick="openAddRecsModal(${JSON.stringify(tickers2)})"
               style="padding:7px 16px;border-radius:20px;border:1px solid var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent);color:var(--violet2);font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">
               ＋ Add All to Portfolio
             </button>
@@ -2855,6 +3045,12 @@ async function getStrategyAdvice(strategy){
         </div>`;
     }
   }catch(e){el.innerHTML=`<span style="color:var(--amber)">⚠️ ${e.message}</span>`;}
+}
+
+function setStrategyMarket(market, el){
+  strategyMarket = market;
+  document.querySelectorAll('.strategy-market-filter').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
 }
 
 // ══════════════════════════════════════════
@@ -3039,68 +3235,78 @@ async function loadWatchers(){
   const el = document.getElementById('watchers-list');
   const desc = document.getElementById('watchers-desc');
   if(!el) return;
-  if(!ST.groqKey){ el.innerHTML='<div style="font-size:12px;color:var(--amber)">⚠️ Add Groq key in Settings</div>'; return; }
+  if(!ST.groqKey){ el.innerHTML='<div style="font-size:12px;color:var(--amber)">⚠️ Add Groq key in Settings</div>'; showToast('🔑','Add a Groq API key in Settings to unlock AI picks'); return; }
 
   const isShort = watcherPeriod === 'short';
   const horizon = isShort ? '1-4 weeks' : '3-12 months';
   const criteria = isShort
     ? 'near-term catalysts: earnings beats, oversold RSI rebounds, technical breakouts, short-term momentum'
     : 'long-term fundamentals: revenue growth, market share expansion, secular tailwinds, undervalued vs peers';
+  const marketName = MARKET_NAMES[watcherMarket] || 'S&P 500 Leaders';
 
-  if(desc) desc.textContent = `Live-data picks: highest expected upside ${isShort?'(1-4 weeks)':'(3-12 months)'}`;
-  el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Fetching live market data for analysis...</div>';
+  if(desc) desc.textContent = `Live-data picks from ${marketName}: highest expected upside ${isShort?'(1-4 weeks)':'(3-12 months)'}`;
 
-  // Step 1: Fetch live data for a candidate pool so Groq has real numbers
-  const candidates = isShort
-    ? ['NVDA','AAPL','MSFT','AMZN','META','TSLA','AMD','GOOGL','CRM','NFLX']
-    : ['NVDA','MSFT','AAPL','AMZN','LLY','V','MA','COST','UNH','AVGO'];
-
-  const liveData = [];
-  for(const t of candidates){
-    try{
-      const q = await fetchQuote(t);
-      const a = await fetchAnalyst(t,q);
-      liveData.push({
-        ticker:t, price:q.price.toFixed(2),
-        changePct:q.changePct.toFixed(2),
-        rsi:q.rsi.toFixed(1),
-        priceVs200:q.priceVs200.toFixed(1),
-        upside:((a.targetMean-q.price)/q.price*100).toFixed(1),
-        buyPct:a.buyPct,
-        targetMean:a.targetMean.toFixed(2),
-        longName:q.longName
-      });
-    }catch(e){}
-    await new Promise(r=>setTimeout(r,150));
+  let tickers;
+  if(watcherMarket==='volume'){
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Pulling today's top-volume tickers...</div>`;
+    tickers = await fetchTopVolumeScreener(40);
+    if(!tickers.length) tickers = MARKET_LISTS.sp500; // screener unreachable — fall back
+  } else {
+    tickers = MARKET_LISTS[watcherMarket] || MARKET_LISTS.sp500;
   }
 
-  if(!liveData.length){ el.innerHTML='<div style="font-size:12px;color:var(--amber)">⚠️ Could not fetch market data</div>'; return; }
+  const depthCfg = SCAN_DEPTH[scanDepth] || SCAN_DEPTH.standard;
+  const poolSize = depthCfg.listCap ? Math.min(depthCfg.listCap, tickers.length) : tickers.length;
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Scanning ${marketName} (${poolSize} stocks, ${depthCfg.label} depth)...</div>`;
+
+  // Full 2-stage scan across the entire selected market — no random subset.
+  // During Stage 2, partial results render live as each candidate's data lands,
+  // instead of one long blocking wait.
+  const liveData = await scanMarketLive(tickers, isShort?'short':'long', (done,total,label,stage,partial)=>{
+    el.innerHTML = renderScanInterim(marketName, done, total, stage, partial);
+  });
+
+  if(!liveData.length){ el.innerHTML=`<div style="font-size:12px;color:var(--amber)">⚠️ Could not fetch market data for ${marketName}</div>`; return; }
 
   el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Asking Groq to rank picks using live data...</div>';
 
-  const dataStr = liveData.map(d=>`${d.ticker}: Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% today), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, analyst target $${d.targetMean} (${d.upside>0?'+':''}${d.upside}% upside), ${d.buyPct}% analysts Buy`).join('\n');
+  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% today), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, analyst target $${d.targetMean} (${d.upside>0?'+':''}${d.upside}% upside), ${d.buyPct}% analysts Buy`).join('\n');
 
-  const prompt = `You are AXIOM, an elite stock analyst. Today is ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}. A ${ST.risk} risk investor wants your top 5 picks for the ${horizon} timeframe, focused on ${criteria}.
+  const prompt = `You are AXIOM, an elite stock analyst. Today is ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}. A ${ST.risk} risk investor wants your top 5 picks from the ${marketName} universe for the ${horizon} timeframe, focused on ${criteria}.
 
-Here is LIVE market data for candidate stocks:
+Here is LIVE market data for the strongest technical candidates from that universe:
 ${dataStr}
 
-Based on this real data, rank the top 5 stocks for the ${horizon} timeframe. For each explain: why it fits the ${isShort?'short-term':'long-term'} criteria specifically, key risk to watch, and realistic price target for the period.
+Based ONLY on this real data, rank the top 5 stocks for the ${horizon} timeframe. For each explain: why it fits the ${isShort?'short-term':'long-term'} criteria specifically citing the real numbers above, key risk to watch, and realistic price target for the period.
 
 Output ONLY JSON array:
 [{"ticker":"NVDA","name":"NVIDIA Corp","upside":${isShort?'12':'28'},"target":"$${isShort?'145':'165'}","reason":"Specific reason based on the live data above","risk":"Key risk","timeframe":"${horizon}"}]`;
 
   try{
-    const d = await groqPost([{role:'user',content:prompt}], 700, .5);
+    const d = await groqPost([{role:'user',content:prompt}], 1600, .5);
     let raw = (d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-    const m = raw.match(/\[[\s\S]*\]/);
-    const picks = m ? JSON.parse(m[0]) : [];
+    let m = raw.match(/\[[\s\S]*\]/);
+    let picks = [];
+    if(m){
+      try{ picks = JSON.parse(m[0]); }catch(parseErr){ picks = []; }
+    }
+    // Safety net: if the array got truncated (model ran out of tokens mid-object),
+    // salvage whatever complete {...} objects are present instead of failing outright
+    if(!picks.length){
+      const objs = raw.match(/\{[^{}]*\}/g) || [];
+      for(const o of objs){ try{ picks.push(JSON.parse(o)); }catch(e2){} }
+    }
     if(!picks.length) throw new Error('No picks returned');
 
     el.innerHTML = picks.slice(0,5).map((p,i)=>renderWatcherCard(p,i,liveData)).join('');
   }catch(e){
     el.innerHTML=`<div style="font-size:12px;color:var(--amber)">⚠️ ${e.message}</div>`;
   }
+}
+
+function setWatcherMarket(v){
+  watcherMarket = v;
+  loadWatchers();
 }
 
 function setWatcherPeriod(period, el){
@@ -3320,7 +3526,7 @@ async function loadBriefing(){
   const body = document.getElementById('briefing-body');
   const timeEl = document.getElementById('briefing-time');
   if(!body) return;
-  if(!ST.groqKey){ body.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>'; return; }
+  if(!ST.groqKey){ body.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>'; showToast('🔑','Add a Groq API key in Settings to unlock the AI briefing'); return; }
   body.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div> Generating your market briefing...</div>';
 
   // Gather portfolio context
@@ -3440,25 +3646,6 @@ function timeAgo(date){
   const hrs = Math.floor(mins/60);
   if(hrs<24) return hrs+'h ago';
   return Math.floor(hrs/24)+'d ago';
-}
-
-// Keep old Groq headlines as fallback
-async function loadHeadlines(){
-  const el = document.getElementById('headlines-list');
-  if(!el||!ST.groqKey) return;
-  el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Generating...</div>';
-  const prompt=`Generate 6 realistic, specific financial market headlines for ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}. Each should reflect real market themes. For each provide title (max 12 words), source (Reuters/Bloomberg/WSJ/CNBC), and sentiment (Bullish/Bearish/Neutral). JSON array only: [{"title":"...","source":"...","sentiment":"Bullish"}]`;
-  try{
-    const d=await groqPost([{role:'user',content:prompt}],400,.7);
-    let raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-    const m=raw.match(/\[[\s\S]*\]/);
-    const items=m?JSON.parse(m[0]):[];
-    el.innerHTML=items.map(h=>{
-      const sc=h.sentiment==='Bullish'?'var(--green)':h.sentiment==='Bearish'?'var(--red)':'var(--amber)';
-      const bg=h.sentiment==='Bullish'?'#10b98120':h.sentiment==='Bearish'?'#f43f5e20':'#f59e0b20';
-      return`<div class="news-item"><div class="news-headline">${h.title}</div><div class="news-meta"><span>${h.source}</span><span class="news-sentiment" style="background:${bg};color:${sc}">${h.sentiment}</span></div></div>`;
-    }).join('');
-  }catch(e){ el.innerHTML=`<span style="color:var(--amber)">⚠️ ${e.message}</span>`; }
 }
 
 // ══════════════════════════════════════════
@@ -3640,6 +3827,8 @@ function renderCompareTable(tickers){
       <div id="compare-verdict-body"><div style="font-size:12px;color:var(--text3)">Generating verdict...</div></div>
     </div>`;
     runCompareVerdict(tickers);
+  } else {
+    result.innerHTML += `<div class="compare-verdict" style="text-align:center;padding:16px;color:var(--text3);font-size:12px">🧠 Add a Groq key in Settings ⚙️ for an AI head-to-head verdict</div>`;
   }
 }
 
@@ -3652,7 +3841,7 @@ let earningsFilter = 'all';
 async function loadEarnings(){
   const el = document.getElementById('earnings-content');
   if(!el) return;
-  if(!ST.groqKey){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ Groq key required for earnings estimates</div>'; return; }
+  if(!ST.groqKey && !ST.fmpKey){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ Add a Groq or FMP key in Settings for earnings estimates</div>'; showToast('🔑','Add a Groq or FMP API key in Settings to unlock earnings estimates'); return; }
 
   const portTickers = [...new Set(ST.portfolios.flatMap(p=>p.positions.map(pos=>pos.ticker)))];
   const watchTickers = ST.watchlist.map(w=>w.ticker);
@@ -3706,55 +3895,56 @@ async function loadEarningsFMP(tickers, portTickers, watchTickers, el){
 }
 
 async function loadEarningsGroq(tickers, portTickers, watchTickers, el){
-  // Split into batches of 8 to avoid token limits
-  const batch = tickers.slice(0,8);
+  earningsData = [];
   const today = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const prompt=`Today is ${today}. For each of these stocks, estimate their next quarterly earnings date based on their typical fiscal calendar: ${batch.join(', ')}.
+  const chunks=[];
+  for(let i=0;i<tickers.length;i+=8) chunks.push(tickers.slice(i,i+8));
 
-Q1 FY2025 earnings for most companies will be reported April-May 2025. Q4 FY2024 was reported Jan-Feb 2025.
-
-Output ONLY a valid JSON array with no extra text:
-[{"ticker":"AAPL","date":"2025-05-01","epsEstimate":"1.62","revenueEstimate":"94.2B","fiscalQuarter":"Q2 FY2025","confidence":"High"}]
-
-Include one entry per ticker. Use realistic dates based on each company's known earnings schedule.`;
+  const parseEarningsJson=(raw)=>{
+    let picks=[];
+    const m=raw.match(/\[[\s\S]*\]/);
+    if(m){ try{ picks=JSON.parse(m[0]); }catch(e){ picks=[]; } }
+    if(!picks.length){
+      // Salvage individual {...} objects if the array got cut off mid-response
+      const objs=raw.match(/\{[^{}]*\}/g)||[];
+      for(const o of objs){ try{ picks.push(JSON.parse(o)); }catch(e2){} }
+    }
+    return picks;
+  };
 
   try{
-    const d=await groqPost([{role:'user',content:prompt}],600,.2);
-    let raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-    const m=raw.match(/\[[\s\S]*\]/);
-    if(!m) throw new Error('No JSON in response');
-    const items=JSON.parse(m[0]);
-    if(!items.length) throw new Error('Empty response');
+    for(let i=0;i<chunks.length;i++){
+      const batch=chunks[i];
+      el.innerHTML=`<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text3);font-size:13px">Estimating earnings dates — batch ${i+1}/${chunks.length}...</div></div>`;
 
-    earningsData=items.map(e=>{
-      const daysOut=Math.ceil((new Date(e.date)-new Date())/86400000);
-      return{
-        ticker:e.ticker, date:e.date, daysOut,
-        eps:e.epsEstimate, revenue:e.revenueEstimate,
-        fiscalQuarter:e.fiscalQuarter,
-        confidence:e.confidence||'Estimated',
-        inPortfolio:portTickers.includes(e.ticker),
-        inWatchlist:watchTickers.includes(e.ticker),
-        longName:e.ticker, source:'Groq Est.'
-      };
-    }).filter(e=>e.daysOut>=0).sort((a,b)=>a.daysOut-b.daysOut);
+      const prompt=`Today is ${today}. For each of these stocks, estimate their next quarterly earnings report date based on their typical fiscal calendar and reporting cadence: ${batch.join(', ')}.
 
-    // Fetch second batch if needed
-    if(tickers.length>8){
-      const batch2=tickers.slice(8,16);
-      const prompt2=prompt.replace(batch.join(', '),batch2.join(', '));
-      const d2=await groqPost([{role:'user',content:prompt2}],600,.2);
-      let raw2=(d2.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-      const m2=raw2.match(/\[[\s\S]*\]/);
-      if(m2){
-        const items2=JSON.parse(m2[0]);
-        const extra=items2.map(e=>{
-          const daysOut=Math.ceil((new Date(e.date)-new Date())/86400000);
-          return{ticker:e.ticker,date:e.date,daysOut,eps:e.epsEstimate,revenue:e.revenueEstimate,fiscalQuarter:e.fiscalQuarter,confidence:e.confidence||'Estimated',inPortfolio:portTickers.includes(e.ticker),inWatchlist:watchTickers.includes(e.ticker),longName:e.ticker,source:'Groq Est.'};
-        }).filter(e=>e.daysOut>=0);
-        earningsData=[...earningsData,...extra].sort((a,b)=>a.daysOut-b.daysOut);
-      }
+Output ONLY a valid JSON array with no extra text, no markdown, no explanation:
+[{"ticker":"AAPL","date":"YYYY-MM-DD","epsEstimate":"1.62","revenueEstimate":"94.2B","fiscalQuarter":"Q_ FY____","confidence":"High"}]
+
+The date must be the next upcoming report date after today (${today}). Include exactly one entry per ticker listed.`;
+
+      const d=await groqPost([{role:'user',content:prompt}],1400,.2);
+      const raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
+      const items=parseEarningsJson(raw);
+
+      const mapped=items.map(e=>{
+        const daysOut=Math.ceil((new Date(e.date)-new Date())/86400000);
+        return{
+          ticker:e.ticker, date:e.date, daysOut,
+          eps:e.epsEstimate, revenue:e.revenueEstimate,
+          fiscalQuarter:e.fiscalQuarter,
+          confidence:e.confidence||'Estimated',
+          inPortfolio:portTickers.includes(e.ticker),
+          inWatchlist:watchTickers.includes(e.ticker),
+          longName:e.ticker, source:'Groq Est.'
+        };
+      }).filter(e=>e.date && !isNaN(e.daysOut) && e.daysOut>=0);
+
+      earningsData=[...earningsData,...mapped].sort((a,b)=>a.daysOut-b.daysOut);
     }
+
+    if(!earningsData.length) throw new Error('No earnings data returned');
     renderEarnings(el);
   }catch(e){
     el.innerHTML=`<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ ${e.message}</div>`;
@@ -4299,7 +4489,7 @@ function closeActionCard(){ document.getElementById('action-card-modal').classLi
 // ══════════════════════════════════════════
 //  MARKET FILTER SCANNER LISTS
 // ══════════════════════════════════════════
-let currentMarket = 'sp500';
+let currentMarket = 'volume';
 
 const MARKET_LISTS = {
   sp500: ['AAPL','MSFT','NVDA','GOOGL','AMZN','META','TSLA','AVGO','LLY','JPM','V','MA','UNH','XOM','WMT','JNJ','PG','HD','CVX','MRK','ABBV','COST','ORCL','CRM','NFLX','AMD','QCOM','TXN','INTC','BA','CAT','GE','GS','MS','BAC','SCHW','DIS','SBUX','MCD','NKE','PYPL','ADBE','NOW','ISRG','REGN','VRTX','SLB','BLK','AXP','TT'],
@@ -4312,7 +4502,7 @@ const MARKET_LISTS = {
 };
 
 const MARKET_NAMES = {
-  sp500:'S&P 500 Leaders', nasdaq:'NASDAQ 100', growth:'High Growth', dividend:'Dividend Income', etfs:'ETFs & Sectors', crypto:'Cryptocurrency', intl:'International ADRs'
+  sp500:'S&P 500 Leaders', nasdaq:'NASDAQ 100', growth:'High Growth', dividend:'Dividend Income', etfs:'ETFs & Sectors', crypto:'Cryptocurrency', intl:'International ADRs', volume:'Top Volume'
 };
 
 function setMarketFilter(market, el){
@@ -4379,26 +4569,32 @@ function runScanner(){
   const label=document.getElementById('scan-prog-label');
   btn.disabled=true; btn.textContent='Scanning...'; prog.classList.add('show'); scanResults=[];
   document.getElementById('scanner-content').innerHTML=`<div style="padding:20px;color:var(--text3);font-size:13px;text-align:center">Scanning ${MARKET_NAMES[currentMarket]||'market'}... results appear as they load.</div>`;
-  const tickers=(MARKET_LISTS[currentMarket]||MARKET_LISTS.sp500).slice(0,40);
   (async()=>{
-    for(let i=0;i<tickers.length;i++){
-      const ticker=tickers[i];
-      label.textContent=`Scanning ${i+1}/${tickers.length} — ${ticker}`;
-      fill.style.width=((i+1)/tickers.length*100)+'%';
-      try{
-        const q=await fetchQuote(ticker);
-        let sc=5;
-        if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-        const estTarget=q.high52*1.05;
-        const upside=((estTarget-q.price)/q.price)*100;
-        if(upside>20)sc+=2;else if(upside>10)sc+=1;else if(upside<0)sc-=1;
-        if(q.priceVs200>0)sc+=1;
-        sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-        scanResults.push({ticker,price:q.price,rsi:q.rsi,ma200:q.ma200,priceVs200:q.priceVs200,upside,score:sc,longName:q.longName,changePct:q.changePct});
-        renderScanTable();
-      }catch(e){}
-      await new Promise(r=>setTimeout(r,250));
+    let tickers;
+    if(currentMarket==='volume'){
+      label.textContent='Pulling today\'s top-volume tickers...';
+      tickers = await fetchTopVolumeScreener(40);
+      if(!tickers.length) tickers = MARKET_LISTS.sp500;
+    } else {
+      tickers = (MARKET_LISTS[currentMarket]||MARKET_LISTS.sp500).slice(0,40);
     }
+    let done=0;
+    await fetchBatch(tickers, async ticker=>{
+      const q=await fetchQuote(ticker);
+      let sc=5;
+      if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
+      const estTarget=q.high52*1.05;
+      const upside=((estTarget-q.price)/q.price)*100;
+      if(upside>20)sc+=2;else if(upside>10)sc+=1;else if(upside<0)sc-=1;
+      if(q.priceVs200>0)sc+=1;
+      sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
+      return {ticker,price:q.price,rsi:q.rsi,ma200:q.ma200,priceVs200:q.priceVs200,upside,score:sc,longName:q.longName,changePct:q.changePct};
+    }, 6, (ticker,res)=>{
+      done++;
+      label.textContent=`Scanning ${done}/${tickers.length} — ${ticker}`;
+      fill.style.width=(done/tickers.length*100)+'%';
+      if(res){ scanResults.push(res); renderScanTable(); }
+    }, 200);
     btn.disabled=false; btn.textContent='▶ Re-Scan'; prog.classList.remove('show');
     showToast('✅',`${scanResults.length} ${MARKET_NAMES[currentMarket]||''} stocks scanned`);
   })();
