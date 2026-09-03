@@ -1,6 +1,6 @@
 // AXIOM App Service Worker
 // Scope: /apex/app/
-const CACHE_NAME = 'axiom-app-v2';
+const CACHE_NAME = 'axiom-app-v2.1';
 const STATIC_ASSETS = [
   '/apex/app/',
   '/apex/app/index.html',
