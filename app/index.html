@@ -928,7 +928,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">🧠 AI Analysis</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · qwen3.6-27b</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · qwen3.8-27b</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">⚠️ Important Notes</div>
@@ -1213,7 +1213,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
       <div class="advice-card">
         <div class="advice-header">
           <div class="groq-icon">🧠</div>
-          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)">qwen3.6-27b · Risk: <span id="advice-risk">Moderate</span></div></div>
+          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)">qwen3.8-27b · Risk: <span id="advice-risk">Moderate</span></div></div>
         </div>
         <div class="advice-body" id="strategy-advice">Select a strategy below for specific stock picks, entry criteria, and risk rules tailored to your profile.</div>
         <div class="market-filter-row" style="margin-top:12px">
@@ -1509,6 +1509,7 @@ let watcherPeriod= 'short';
 let watcherMarket= 'volume';
 let strategyMarket= 'volume';
 let dashLoaded   = false;
+let toastT       = null;
 let pendingRecs  = [];
 
 // ── PRICE CACHE — skip re-fetching same ticker within 5 min ──
@@ -2082,7 +2083,7 @@ function groqPost(messages,maxTokens=600,temp=.2){
         resolve(d);
       }catch(e){reject(new Error('Bad response from Groq'));}
     };
-    xhr.send(JSON.stringify({model:'qwen/qwen3.6-27b',reasoning_effort:'none',reasoning_format:'hidden',max_tokens:maxTokens,temperature:temp,messages}));
+    xhr.send(JSON.stringify({model:'qwen/qwen3.8-27b',reasoning_effort:'none',reasoning_format:'hidden',max_tokens:maxTokens,temperature:temp,messages}));
   });
 }
 
@@ -2333,7 +2334,7 @@ function renderAnalysis(ticker,q,a,g){
   </div>
 
   <div class="groq-section">
-    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · qwen3.6-27b · ${ST.risk} Profile</div></div></div>
+    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · qwen3.8-27b · ${ST.risk} Profile</div></div></div>
     <div class="groq-body">${enhanceInsight(g.insight)}</div>
     <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
       <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1px;margin-bottom:4px">ADD TO PORTFOLIO WITH STRATEGY</div>
