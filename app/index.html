@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#09090f">
+<meta name="theme-color" content="#edf2f7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>AXIOM — AI Stock Intelligence</title>
@@ -19,12 +19,17 @@
   --violet:#7c3aed;--violet2:#a78bfa;
   --green:#10b981;--red:#f43f5e;--amber:#f59e0b;
   --radius:14px;--radius-sm:8px;--risk-color:#22d3ee;
+  --panel-a:#1a1a2e;--panel-b:#16213e;--bull-bg:#0a1f16;--bear-bg:#1f0a10;--ring-track:#1a1a2e;
+  --topbar-bg:rgba(9,9,15,.95);--scrim:rgba(0,0,0,.75);--lift:none;
 }
 body[data-theme="neon"]{--bg:#09090f;--bg2:#0f0f1a;--bg3:#14141f;--bg4:#1a1a28;--border:#1e1e32;--border2:#2a2a42;--text:#e8e8ff;--text2:#9090b8;--text3:#5a5a7a;--cyan:#22d3ee;--cyan2:#0891b2;--violet:#7c3aed;--violet2:#a78bfa}
 body[data-theme="amber"]{--bg:#0c0900;--bg2:#141000;--bg3:#1a1500;--bg4:#221c00;--border:#2a2200;--border2:#382e00;--text:#fff8e1;--text2:#b8a060;--text3:#6b5a20;--cyan:#f59e0b;--cyan2:#b45309;--violet:#e07b00;--violet2:#fcd34d;--risk-color:#f59e0b}
 body[data-theme="emerald"]{--bg:#060e0a;--bg2:#0a160d;--bg3:#0f1e12;--bg4:#142718;--border:#1a3020;--border2:#24422a;--text:#e0f5e9;--text2:#70b888;--text3:#3a6b4a;--cyan:#10b981;--cyan2:#047857;--violet:#34d399;--violet2:#6ee7b7;--risk-color:#10b981}
 body[data-theme="rose"]{--bg:#0e0608;--bg2:#180a0d;--bg3:#200d12;--bg4:#2a1018;--border:#3a1520;--border2:#4a1e2c;--text:#ffe4ec;--text2:#c07080;--text3:#6b3040;--cyan:#f43f5e;--cyan2:#be123c;--violet:#fb7185;--violet2:#fda4af;--risk-color:#f43f5e}
-body[data-theme="arctic"]{--bg:#f0f4f8;--bg2:#e2eaf2;--bg3:#d4dde8;--bg4:#c6d0dc;--border:#b8c4d0;--border2:#a0b0c0;--text:#0f1923;--text2:#3a5068;--text3:#7090a8;--cyan:#0284c7;--cyan2:#0369a1;--violet:#6366f1;--violet2:#818cf8;--risk-color:#0284c7}
+/* Arctic: white cards on a pale-ice page. Text/semantic colours are tuned to WCAG AA on every surface. */
+body[data-theme="arctic"]{--bg:#edf2f7;--bg2:#ffffff;--bg3:#e7eef5;--bg4:#d9e3ed;--border:#d5dfe9;--border2:#bccbdb;--text:#0f1923;--text2:#364b60;--text3:#475f77;--cyan:#0369a1;--cyan2:#0369a1;--violet:#5a5ce6;--violet2:#4f46e5;--green:#047857;--red:#be123c;--amber:#a14d07;--risk-color:#0369a1;
+  --panel-a:#ffffff;--panel-b:#e4eff9;--bull-bg:#e6f6ee;--bear-bg:#fdeaee;--ring-track:#d5dfe9;--topbar-bg:rgba(255,255,255,.88);--scrim:rgba(15,25,35,.42);--lift:0 1px 2px rgba(15,25,35,.05),0 10px 26px -14px rgba(3,105,161,.28)}
+body[data-theme="arctic"] :is(.ticker-header,.gap-section,.groq-section,.sparkline-wrap,.port-card,.port-stat,.pos-table-wrap,.watch-card,.scanner-header,.scan-table-wrap,.strat-card,.advice-card,.card,.dash-card,.earnings-card,.metric-card,.how-it-works){box-shadow:var(--lift)}
 body[data-theme="midnight"]{--bg:#000;--bg2:#080808;--bg3:#101010;--bg4:#181818;--border:#202020;--border2:#303030;--text:#fff;--text2:#888;--text3:#444;--cyan:#fff;--cyan2:#aaa;--violet:#888;--violet2:#bbb;--risk-color:#fff}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -38,7 +43,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 
 /* ── SETUP ── */
 #setup-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;overflow-y:auto}
-.setup-box{width:100%;max-width:460px;background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:36px 32px;margin:auto}
+.setup-box{width:100%;max-width:460px;background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:36px 32px;margin:auto;position:relative}
 .setup-logo{font-size:30px;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--cyan),var(--violet2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
 .setup-tagline{font-size:13px;color:var(--text3);margin-bottom:28px}
 .setup-group{margin-bottom:18px}
@@ -56,6 +61,10 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .setup-btn:active{transform:scale(.98)}
 .setup-footer{font-size:10px;color:var(--text3);margin-top:14px;text-align:center;line-height:1.7}
 .setup-footer a{color:var(--cyan);text-decoration:none;font-weight:600}
+.setup-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text3);font-size:24px;line-height:1;cursor:pointer;padding:4px 10px;border-radius:8px;transition:color .2s,background .2s}
+.setup-close:hover{color:var(--text);background:var(--bg3)}
+.setup-skip{display:block;width:100%;margin-top:10px;padding:11px;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.setup-skip:hover{border-color:var(--cyan);color:var(--cyan)}
 #import-label:hover{border-color:var(--cyan)!important;color:var(--cyan)!important}
 .risk-chips{display:flex;gap:8px;flex-wrap:wrap}
 .risk-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2);background:var(--bg3)}
@@ -65,7 +74,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 #app{display:none;min-height:100vh;position:relative;z-index:1}
 
 /* ── TOPBAR ── */
-.topbar{position:sticky;top:0;z-index:100;background:rgba(9,9,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;width:100%}
+.topbar{position:sticky;top:0;z-index:100;background:var(--topbar-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;width:100%}
 .logo{font-size:20px;font-weight:900;letter-spacing:-.5px;background:linear-gradient(135deg,var(--cyan),var(--violet2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .topbar-right{display:flex;align-items:center;gap:8px;position:relative}
 .risk-badge-wrap{position:relative;cursor:pointer}
@@ -159,11 +168,11 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .add-trade-btn:hover{background:color-mix(in srgb,var(--cyan) 18%,transparent)}
 .add-trade-btn.violet{border-color:var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent);color:var(--violet2)}
 .add-trade-btn.violet:hover{background:color-mix(in srgb,var(--violet2) 18%,transparent)}
-.score-section{display:grid;grid-template-columns:auto 1fr;gap:18px;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:12px;position:relative;overflow:hidden}
+.score-section{display:grid;grid-template-columns:auto 1fr;gap:18px;background:linear-gradient(135deg,var(--panel-a),var(--panel-b));border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:12px;position:relative;overflow:hidden}
 .score-section::before{content:'';position:absolute;top:-40px;right:-40px;width:130px;height:130px;background:radial-gradient(circle,color-mix(in srgb,var(--cyan) 8%,transparent),transparent 70%)}
 .ring-wrap{position:relative;width:86px;height:86px;flex-shrink:0}
 .ring-svg{width:86px;height:86px;transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:#1a1a2e;stroke-width:6}
+.ring-bg{fill:none;stroke:var(--ring-track);stroke-width:6}
 .ring-fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .ring-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;line-height:1}
@@ -201,16 +210,16 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .rating-pct{font-size:11px;font-weight:700}
 .bull-bear{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .bull-card,.bear-card{border-radius:var(--radius);padding:18px}
-.bull-card{background:#0a1f16;border:1px solid #10b98133}
-.bear-card{background:#1f0a10;border:1px solid #f43f5e33}
+.bull-card{background:var(--bull-bg);border:1px solid color-mix(in srgb,var(--green) 25%,transparent)}
+.bear-card{background:var(--bear-bg);border:1px solid color-mix(in srgb,var(--red) 25%,transparent)}
 .bb-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px}
 .bull-card .bb-title{color:var(--green)}
 .bear-card .bb-title{color:var(--red)}
 .bb-points{list-style:none}
-.bb-points li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px;line-height:1.5;display:flex;gap:7px}
+.bb-points li{padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--text) 8%,transparent);font-size:11px;line-height:1.5;display:flex;gap:7px}
 .bb-points li:last-child{border-bottom:none}
-.bull-card .bb-points li{color:#6db89a}
-.bear-card .bb-points li{color:#b86d7a}
+.bull-card .bb-points li{color:color-mix(in srgb,var(--green) 55%,var(--text))}
+.bear-card .bb-points li{color:color-mix(in srgb,var(--red) 55%,var(--text))}
 .groq-section{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:12px}
 .groq-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .groq-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--cyan2),var(--violet));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
@@ -386,7 +395,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .advice-chip:hover{border-color:var(--violet2);color:var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent)}
 
 /* ── MODALS ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.modal-overlay{display:none;position:fixed;inset:0;background:var(--scrim);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:26px;width:100%;max-width:460px;animation:slideUp .3s ease;margin:auto}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -548,7 +557,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .earnings-name{font-size:10px;color:var(--text3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 
 /* ── AI BRIEFING ── */
-.briefing-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
+.briefing-card{background:linear-gradient(135deg,var(--panel-a),var(--panel-b));border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
 .briefing-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .briefing-title{font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
 .briefing-time{font-size:10px;color:var(--text3)}
@@ -588,7 +597,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .pdf-export-btn:hover{background:color-mix(in srgb,var(--violet2) 18%,transparent)}
 
 /* ── COMPARE VERDICT ── */
-.compare-verdict{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-top:16px}
+.compare-verdict{background:linear-gradient(135deg,var(--panel-a),var(--panel-b));border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-top:16px}
 .compare-verdict-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .compare-winner-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--cyan) 12%,transparent);border:1px solid var(--cyan);margin-bottom:12px}
 .compare-winner-sym{font-size:20px;font-weight:900;color:var(--cyan);letter-spacing:-1px}
@@ -650,11 +659,14 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .strategy-market-filter.active{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
 </style>
 </head>
-<body data-theme="neon">
+<body data-theme="arctic">
+<script>/* apply the saved theme before first paint (no flash). Same rule as axResolveTheme(). */
+try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen||(_s.themeChosen===undefined&&_s.theme&&_s.theme!=='neon')?_s.theme:'arctic';document.body.setAttribute('data-theme',_t||'arctic');}catch(e){}</script>
 
 <!-- ══ SETUP ══ -->
 <div id="setup-screen">
   <div class="setup-box">
+    <button class="setup-close" type="button" aria-label="Close setup and look around" title="Skip — just look around" onclick="skipSetup()">×</button>
     <div class="setup-logo">AXIOM</div>
     <div class="setup-tagline">AI Stock Intelligence · Paper Trading · Portfolio Analytics</div>
     <div class="setup-group">
@@ -671,7 +683,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         <a class="setup-link" href="https://financialmodelingprep.com/register" target="_blank">Get free key ↗</a>
       </div>
       <input class="setup-input" id="fmp-key-input" type="password" placeholder="Analyst targets & ratings">
-      <div class="setup-hint">250 free calls/day — <a href="https://financialmodelingprep.com" target="_blank" style="color:var(--cyan);text-decoration:none">financialmodelingprep.com</a></div>
+      <div class="setup-hint">Needed for analyst targets &amp; ratings · 250 free calls/day — <a href="https://financialmodelingprep.com" target="_blank" style="color:var(--cyan);text-decoration:none">financialmodelingprep.com</a></div>
     </div>
     <div class="setup-group">
       <span class="setup-label" style="margin-bottom:7px;display:block">Paper Trade Capital</span>
@@ -693,6 +705,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
       </div>
     </div>
     <button class="setup-btn" id="launch-btn" onclick="launchApp()">Launch AXIOM →</button>
+    <button class="setup-skip" type="button" onclick="skipSetup()">Skip for now — just look around</button>
 
     <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
       <div style="flex:1;height:1px;background:var(--border)"></div>
@@ -709,7 +722,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
       Prices via <a href="https://finance.yahoo.com" target="_blank">Yahoo Finance</a> (free) ·
       Analyst data via <a href="https://financialmodelingprep.com" target="_blank">FMP</a> (optional) ·
       AI by <a href="https://groq.com" target="_blank">Groq</a><br>
-      All keys stored locally only — never transmitted to any server.
+      Keys stay on this device and are sent only to Groq and FMP — never through third-party proxies.
     </div>
   </div>
 </div>
@@ -738,11 +751,11 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         <div class="theme-dropdown" id="theme-dropdown">
           <div class="theme-dropdown-title">Color Theme</div>
           <div class="theme-grid">
-            <div class="theme-swatch active" id="tsw-neon" onclick="setTheme('neon')"><div class="swatch-dot" style="background:conic-gradient(#22d3ee 0deg 180deg,#7c3aed 180deg 360deg)"></div><span class="swatch-name">Neon</span></div>
+            <div class="theme-swatch" id="tsw-neon" onclick="setTheme('neon')"><div class="swatch-dot" style="background:conic-gradient(#22d3ee 0deg 180deg,#7c3aed 180deg 360deg)"></div><span class="swatch-name">Neon</span></div>
             <div class="theme-swatch" id="tsw-amber" onclick="setTheme('amber')"><div class="swatch-dot" style="background:conic-gradient(#f59e0b 0deg 180deg,#b45309 180deg 360deg)"></div><span class="swatch-name">Amber</span></div>
             <div class="theme-swatch" id="tsw-emerald" onclick="setTheme('emerald')"><div class="swatch-dot" style="background:conic-gradient(#10b981 0deg 180deg,#047857 180deg 360deg)"></div><span class="swatch-name">Emerald</span></div>
             <div class="theme-swatch" id="tsw-rose" onclick="setTheme('rose')"><div class="swatch-dot" style="background:conic-gradient(#f43f5e 0deg 180deg,#be123c 180deg 360deg)"></div><span class="swatch-name">Rose</span></div>
-            <div class="theme-swatch" id="tsw-arctic" onclick="setTheme('arctic')"><div class="swatch-dot" style="background:conic-gradient(#0284c7 0deg 180deg,#e2eaf2 180deg 360deg)"></div><span class="swatch-name">Arctic</span></div>
+            <div class="theme-swatch active" id="tsw-arctic" onclick="setTheme('arctic')"><div class="swatch-dot" style="background:conic-gradient(#0284c7 0deg 180deg,#e2eaf2 180deg 360deg)"></div><span class="swatch-name">Arctic</span></div>
             <div class="theme-swatch" id="tsw-midnight" onclick="setTheme('midnight')"><div class="swatch-dot" style="background:conic-gradient(#fff 0deg 90deg,#888 90deg 360deg)"></div><span class="swatch-name">Midnight</span></div>
           </div>
         </div>
@@ -825,18 +838,18 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
         <div class="dash-card span-6">
           <div class="dash-card-title">
             <span>🌡 Market Sentiment</span>
-            <span style="font-size:9px;color:var(--text3)">Groq-estimated</span>
+            <span style="font-size:9px;color:var(--text3)">Calculated from SPY</span>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div>
-              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Fear & Greed</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Market Mood · SPY momentum</div>
               <svg class="fg-arc" viewBox="0 0 200 110" id="fg-svg">
                 <defs><linearGradient id="fgg" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stop-color="#f43f5e"/>
                   <stop offset="50%" stop-color="#f59e0b"/>
                   <stop offset="100%" stop-color="#10b981"/>
                 </linearGradient></defs>
-                <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1a1a28" stroke-width="14" stroke-linecap="round"/>
+                <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--bg4)" stroke-width="14" stroke-linecap="round"/>
                 <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#fgg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="126"/>
                 <line id="fg-needle" x1="100" y1="100" x2="100" y2="30" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
                 <circle cx="100" cy="100" r="5" fill="var(--text)"/>
@@ -928,7 +941,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">🧠 AI Analysis</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · qwen3.8-27b</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · ${groqModelLabel()}</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">⚠️ Important Notes</div>
@@ -1167,7 +1180,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
     <div class="view" id="view-scanner">
       <div class="scanner-header">
         <div class="scanner-title">⚡ Market Opportunity Scanner</div>
-        <div class="scanner-desc">Scans stocks in real-time — RSI, 200MA, analyst upside, Key Score. Select a market, click Run. Results appear as they load. Click any row to deep-dive.</div>
+        <div class="scanner-desc">Scans a market list with live quotes — RSI, 200-day average, distance to the 52-week high and a quick score. Select a market, click Run. Results appear as they load. Click any row to deep-dive.</div>
 
         <div class="market-filter-row">
           <span style="font-size:10px;color:var(--text3);font-weight:600">MARKET:</span>
@@ -1183,7 +1196,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 
         <div class="scan-controls">
           <span style="font-size:10px;color:var(--text3);font-weight:600">SORT:</span>
-          <div class="scan-filter active" onclick="setScanSort('upside',this)">↑ Upside</div>
+          <div class="scan-filter active" onclick="setScanSort('upside',this)">↑ Room to 52W High</div>
           <div class="scan-filter" onclick="setScanSort('score',this)">⚡ Score</div>
           <div class="scan-filter" onclick="setScanSort('rsi',this)">📉 RSI Oversold</div>
           <div class="scan-filter" onclick="setScanSort('ma',this)">📈 200MA</div>
@@ -1213,7 +1226,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
       <div class="advice-card">
         <div class="advice-header">
           <div class="groq-icon">🧠</div>
-          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)">qwen3.8-27b · Risk: <span id="advice-risk">Moderate</span></div></div>
+          <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)"><span class="groq-model-name">Groq</span> · Risk: <span id="advice-risk">Moderate</span></div></div>
         </div>
         <div class="advice-body" id="strategy-advice">Select a strategy below for specific stock picks, entry criteria, and risk rules tailored to your profile.</div>
         <div class="market-filter-row" style="margin-top:12px">
@@ -1317,6 +1330,15 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
     <div class="modal-group">
       <div class="setup-lbl-row" style="margin-bottom:7px"><span class="modal-label" style="margin-bottom:0">Groq API Key</span><a class="setup-link" href="https://console.groq.com/keys" target="_blank">console.groq.com ↗</a></div>
       <input class="setup-input" id="settings-groq" type="password" placeholder="gsk_...">
+      <div id="groq-model-block" style="display:none;margin-top:14px">
+        <span class="modal-label">AI Model</span>
+        <div class="setup-hint" style="margin:0 0 8px">Pulled live from your Groq account — the newest chat models your key can use. Used by every AI feature.</div>
+        <div class="setup-row" style="align-items:center">
+          <select class="setup-input" id="groq-model-select" style="flex:1"></select>
+          <button class="port-action-btn" id="btn-refresh-groq-models" type="button" style="justify-content:center">↺ Refresh</button>
+        </div>
+        <div class="setup-hint" id="groq-model-status"></div>
+      </div>
     </div>
     <div class="modal-group">
       <div class="setup-lbl-row" style="margin-bottom:7px"><span class="modal-label" style="margin-bottom:0">FMP API Key</span><a class="setup-link" href="https://financialmodelingprep.com/register" target="_blank">financialmodelingprep.com ↗</a></div>
@@ -1456,8 +1478,8 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 //  STATE
 // ══════════════════════════════════════════
 const DEFAULT_STATE={
-  groqKey:'',fmpKey:'',risk:'Moderate',
-  capital:100000,startCapital:100000,currency:'USD',theme:'neon',
+  groqKey:'',fmpKey:'',setupDone:false,risk:'Moderate',
+  capital:100000,startCapital:100000,currency:'USD',theme:'arctic',themeChosen:false,
   portfolios:[],  // array of portfolio objects
   activePortId:null,
   watchlist:[],   // array of {ticker, addedAt, lastPrice, lastScore}
@@ -1470,9 +1492,16 @@ const DEFAULT_STATE={
   }
 };
 let ST=Object.assign({},DEFAULT_STATE);
+// Arctic is the default. A saved theme is kept only if the user deliberately picked one
+// (themeChosen) or it is anything other than the old default, Neon.
+function axResolveTheme(st){
+  if(st.themeChosen===undefined) st.themeChosen=!!(st.theme&&st.theme!=='neon');
+  if(!st.themeChosen) st.theme='arctic';
+  return st;
+}
 try{
   const s=localStorage.getItem('axiom_v5');
-  if(s){const p=JSON.parse(s);ST=Object.assign({},DEFAULT_STATE,p);}
+  if(s){const p=JSON.parse(s);ST=axResolveTheme(Object.assign({},DEFAULT_STATE,p,{themeChosen:p.themeChosen}));}
   else{
     // migrate from v3
     const old=localStorage.getItem('axiom_v3')||localStorage.getItem('axiom_v2');
@@ -1497,7 +1526,11 @@ if(!ST.portfolios)ST.portfolios=[];
 if(!ST.watchlist)ST.watchlist=[];
 if(!ST.strategies)ST.strategies=DEFAULT_STATE.strategies;
 
-function save(){try{localStorage.setItem('axiom_v5',JSON.stringify(ST));}catch(e){}}
+var _axSaveT=null,_axNoSave=false;
+function saveNow(){ clearTimeout(_axSaveT); _axSaveT=null; if(_axNoSave) return; try{localStorage.setItem('axiom_v5',JSON.stringify(ST));}catch(e){} }
+function save(){ if(_axSaveT) return; _axSaveT=setTimeout(saveNow,200); }
+window.addEventListener('pagehide',saveNow);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveNow(); });
 
 // ── GLOBAL VARS — all declared here to prevent temporal dead zone errors ──
 let navHistory   = [];
@@ -1515,41 +1548,354 @@ let pendingRecs  = [];
 // ── PRICE CACHE — skip re-fetching same ticker within 5 min ──
 const priceCache = {};
 const CACHE_TTL  = 5 * 60 * 1000;
-function getCached(t){ const c=priceCache[t]; return(c&&Date.now()-c.ts<CACHE_TTL)?c.data:null; }
+// Open market: 5 min. Pre/after/closed/weekend/holiday: prices cannot change → 60 min.
+function axQuoteTTL(){ return axMarketStatus().state==='open' ? CACHE_TTL : 60*60*1000; }
+function getCached(t){ const c=priceCache[t]; return(c&&Date.now()-c.ts<axQuoteTTL())?c.data:null; }
+var axDashAt=0;
 function setCache(t,d){ priceCache[t]={data:d,ts:Date.now()}; }
 
 // ── BATCH FETCHER — runs up to `size` requests concurrently ──
 // Dramatically faster than sequential: 8 tickers in 2 batches vs 8 sequential
-async function fetchBatch(items, fn, size=4, onEach=null, delay=400){
+async function fetchBatch(items, fn, size=4, onEach=null, delay=150){
+  // Sliding worker pool: a slow ticker no longer stalls the whole chunk (old version waited for the slowest of each batch).
   const out=new Array(items.length).fill(null);
-  for(let i=0;i<items.length;i+=size){
-    const chunk=items.slice(i,i+size);
-    const settled=await Promise.allSettled(chunk.map(item=>fn(item)));
-    settled.forEach((r,j)=>{
-      if(r.status==='fulfilled') out[i+j]=r.value;
-      if(onEach) onEach(items[i+j],r.status==='fulfilled'?r.value:null,i+j);
-    });
-    if(i+size<items.length) await new Promise(r=>setTimeout(r,delay));
-  }
+  let next=0;
+  const worker=async()=>{
+    while(true){
+      const i=next++; if(i>=items.length) return;
+      let res=null; try{ res=await fn(items[i]); }catch(e){ res=null; }
+      out[i]=res;
+      if(onEach){ try{ onEach(items[i],res,i); }catch(e){ console.error(e); } }
+      if(delay&&next<items.length) await new Promise(r=>setTimeout(r,delay));
+    }
+  };
+  await Promise.all(Array.from({length:Math.min(size,items.length)},worker));
   return out;
 }
 
-const SC={
-  'Buy & Hold':{c:'#22d3ee',bg:'#22d3ee18',b:'#22d3ee44'},
-  'RSI Reversal':{c:'#10b981',bg:'#10b98118',b:'#10b98144'},
-  'Momentum':{c:'#f59e0b',bg:'#f59e0b18',b:'#f59e0b44'},
-  'Value Gap':{c:'#a78bfa',bg:'#a78bfa18',b:'#a78bfa44'},
-  'Mixed':{c:'#9090b8',bg:'#9090b818',b:'#9090b844'}
-};
+// Strategy colours come from the active theme, so they stay readable on light and dark.
+const axTint=(v,p)=>`color-mix(in srgb,${v} ${p}%,transparent)`;
+const SC=Object.fromEntries([['Buy & Hold','var(--cyan)'],['RSI Reversal','var(--green)'],['Momentum','var(--amber)'],['Value Gap','var(--violet2)'],['Mixed','var(--text2)']]
+  .map(([k,v])=>[k,{c:v,bg:axTint(v,10),b:axTint(v,30)}]));
 const RISK_COLORS={Conservative:'#10b981',Moderate:'#22d3ee',Aggressive:'#f59e0b',Speculative:'#f43f5e'};
+
+// ══════════════════════════════════════════
+//  AXIOM CLOCK — single source of truth for "what day / time is it"
+//  Everything date-related (market status, earnings math, backup names, and the
+//  date context injected into every AI request) goes through here, so the app
+//  and the AI always agree. Never use toISOString().slice(0,10) for "today":
+//  that is the UTC date, which flips to tomorrow around 8 PM Eastern.
+// ══════════════════════════════════════════
+const AX_MARKET_TZ = 'America/New_York';
+const AX_BUILD_ISO = '2026-10-02';            // floor for the device-clock sanity check
+const AX_BUILD_MS  = new Date(AX_BUILD_ISO + 'T00:00:00').getTime();
+
+function axLocalISODate(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function axTodayLong(d){ return (d||new Date()).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+
+// Whole calendar days from the user's local today to a YYYY-MM-DD date (0 = today).
+function axDaysUntil(iso){
+  const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso||''));
+  if(!m) return NaN;
+  const t=new Date();
+  return Math.round((Date.UTC(+m[1],+m[2]-1,+m[3]) - Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))/86400000);
+}
+
+// Wall-clock parts in New York (where the market lives).
+function axNY(d){
+  d=d||new Date();
+  const o={};
+  new Intl.DateTimeFormat('en-US',{timeZone:AX_MARKET_TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',weekday:'short',hourCycle:'h23'})
+    .formatToParts(d).forEach(p=>{o[p.type]=p.value;});
+  const hh=+o.hour, mm=+o.minute;
+  return {y:+o.year,m:+o.month,d:+o.day,hh,mm,mins:hh*60+mm,wd:{Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[o.weekday],iso:o.year+'-'+o.month+'-'+o.day};
+}
+
+// ── NYSE calendar (computed, so it never needs a yearly update) ──
+function axNthWeekday(y,m,wd,n){ // m 0-based, wd 0=Sun; n=-1 → last
+  if(n>0){ const first=new Date(Date.UTC(y,m,1)).getUTCDay(); return 1+((7+wd-first)%7)+(n-1)*7; }
+  const last=new Date(Date.UTC(y,m+1,0)); return last.getUTCDate()-((7+last.getUTCDay()-wd)%7);
+}
+function axEaster(y){
+  const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
+        h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+  return {m:Math.floor((h+l-7*m+114)/31), d:((h+l-7*m+114)%31)+1};
+}
+const _axHolCache={};
+function axNYSEHolidays(y){
+  if(_axHolCache[y]) return _axHolCache[y];
+  const H={}, pad=n=>String(n).padStart(2,'0');
+  const put=(dt,name)=>{ H[dt.getUTCFullYear()+'-'+pad(dt.getUTCMonth()+1)+'-'+pad(dt.getUTCDate())]=name; };
+  const fixed=(m,d,name,satToFri)=>{ // Sat → Friday (if satToFri) ; Sun → Monday
+    const dt=new Date(Date.UTC(y,m-1,d)), wd=dt.getUTCDay();
+    if(wd===6){ if(satToFri) put(new Date(Date.UTC(y,m-1,d-1)),name+' (observed)'); }
+    else if(wd===0) put(new Date(Date.UTC(y,m-1,d+1)),name+' (observed)');
+    else put(dt,name);
+  };
+  fixed(1,1,"New Year's Day",false);            // Jan 1 on a Saturday is NOT observed on Dec 31
+  put(new Date(Date.UTC(y,0,axNthWeekday(y,0,1,3))),'Martin Luther King Jr. Day');
+  put(new Date(Date.UTC(y,1,axNthWeekday(y,1,1,3))),"Washington's Birthday");
+  const e=axEaster(y); put(new Date(Date.UTC(y,e.m-1,e.d-2)),'Good Friday');
+  put(new Date(Date.UTC(y,4,axNthWeekday(y,4,1,-1))),'Memorial Day');
+  if(y>=2022) fixed(6,19,'Juneteenth',true);
+  fixed(7,4,'Independence Day',true);
+  put(new Date(Date.UTC(y,8,axNthWeekday(y,8,1,1))),'Labor Day');
+  put(new Date(Date.UTC(y,10,axNthWeekday(y,10,4,4))),'Thanksgiving Day');
+  fixed(12,25,'Christmas Day',true);
+  return (_axHolCache[y]=H);
+}
+function axEarlyClose(y,m,d){ // 1:00 PM ET closes
+  const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();
+  if(m===11 && d===axNthWeekday(y,10,4,4)+1) return true;   // day after Thanksgiving
+  if(m===12 && d===24 && wd>=1 && wd<=4) return true;
+  if(m===7  && d===3  && wd>=1 && wd<=4) return true;
+  return false;
+}
+
+// → {state:'open'|'pre'|'after'|'closed', label, detail}
+function axMarketStatus(d){
+  d=d||new Date();
+  const n=axNY(d), hol=axNYSEHolidays(n.y)[n.iso];
+  if(n.wd===0||n.wd===6) return {state:'closed',label:'Market Closed',detail:'Weekend — US markets are closed'};
+  if(hol) return {state:'closed',label:'Market Closed',detail:hol+' — US markets are closed'};
+  const early=axEarlyClose(n.y,n.m,n.d), close=early?780:960;
+  const closeTxt=early?'1:00 PM ET (early close)':'4:00 PM ET';
+  if(n.mins>=570 && n.mins<close) return {state:'open',label:'Market Open',detail:'Regular session until '+closeTxt};
+  if(n.mins>=240 && n.mins<570)   return {state:'pre',label:'Pre-Market',detail:'Regular session opens 9:30 AM ET; quotes shown are from the last session'};
+  if(n.mins>=close && n.mins<1200) return {state:'after',label:'After Hours',detail:'Regular session ended at '+closeTxt};
+  return {state:'closed',label:'Market Closed',detail:'Outside trading hours'};
+}
+
+// Date (as a UTC-midnight Date) of the most recent regular session that has started.
+function axLastSessionDate(d){
+  d=d||new Date();
+  const n=axNY(d); let t=Date.UTC(n.y,n.m-1,n.d);
+  const isTD=ms=>{ const x=new Date(ms), wd=x.getUTCDay(); if(wd===0||wd===6) return false; return !axNYSEHolidays(x.getUTCFullYear())[x.toISOString().slice(0,10)]; };
+  if(!(isTD(t) && n.mins>=570)){ do{ t-=86400000; }while(!isTD(t)); }
+  return new Date(t);
+}
+function axFmtSession(dt,opts){ return dt.toLocaleDateString('en-US',Object.assign({timeZone:'UTC'},opts)); }
+
+// Quotes are always the latest regular session: "today" only if that session is today's.
+function axSessionWord(){ const s=axMarketStatus().state; return (s==='open'||s==='after')?'today':'last session'; }
+function axPriceAsOfNote(){
+  const s=axMarketStatus().state;
+  return (s==='open'||s==='after') ? '' : ' · prices from '+axFmtSession(axLastSessionDate(),{weekday:'short',month:'short',day:'numeric'})+' close';
+}
+
+function axDateContext(){
+  const now=new Date(), st=axMarketStatus(now);
+  const ny=now.toLocaleString('en-US',{timeZone:AX_MARKET_TZ,weekday:'long',hour:'numeric',minute:'2-digit'});
+  const last=axFmtSession(axLastSessionDate(now),{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  return "Today's date is "+axTodayLong(now)+" (the user's local date; the current year is "+now.getFullYear()+"). US market clock: "+ny+" ET — "+st.label.toUpperCase()+" ("+st.detail+"). Most recent trading session: "+last+".";
+}
+function axGroundingText(){
+  return 'DATE & DATA RULES (apply to every answer):\n'
+   +'- '+axDateContext()+'\n'
+   +'- Your training data ends before today. Treat the date above as the only truth for "today", "this week", "this quarter" and the current year; never assume an earlier year.\n'
+   +'- Prices, % changes, ratings and metrics exist only in the data supplied in this conversation. Do not recall or invent prices, index levels, earnings results, analyst actions, headlines, or Fed/macro events. If something is not in the supplied data, say you do not have it.\n'
+   +"- Any date you state must be consistent with today's date above; label anything uncertain as an estimate.";
+}
+// Merge the rules into the existing system message, or add one.
+function axGroundMessages(messages){
+  const out=messages.map(m=>Object.assign({},m)), g=axGroundingText();
+  if(out[0] && out[0].role==='system') out[0].content=out[0].content+'\n\n'+g;
+  else out.unshift({role:'system',content:g});
+  return out;
+}
+// Live index snapshot for the briefing (so "market conditions" come from data, not memory).
+async function axLiveIndexLine(){
+  const names={SPY:'S&P 500 (SPY)',QQQ:'Nasdaq 100 (QQQ)',DIA:'Dow (DIA)',IWM:'Russell 2000 (IWM)'};
+  await Promise.allSettled(Object.keys(names).map(s=>fetchQuote(s)));
+  const w=axSessionWord();
+  const parts=Object.keys(names).map(s=>{ const q=getCached(s); return q?names[s]+' $'+q.price.toFixed(2)+' ('+(q.changePct>=0?'+':'')+q.changePct.toFixed(2)+'% '+w+')':null; }).filter(Boolean);
+  return parts.length?parts.join('; '):'(no live index data could be loaded)';
+}
+
+// ── Device-clock sanity check (a wrong clock would poison every date above) ──
+function axClockWarn(msg){
+  let b=document.getElementById('ax-clock-warn');
+  if(!b){
+    b=document.createElement('div'); b.id='ax-clock-warn';
+    b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2000;background:var(--amber);color:#000;font-size:12px;font-weight:700;padding:8px 36px 8px 14px;text-align:center';
+    const t=document.createElement('span'), x=document.createElement('span');
+    x.textContent='×'; x.style.cssText='position:absolute;right:12px;top:4px;cursor:pointer;font-size:18px'; x.onclick=()=>b.remove();
+    b.appendChild(t); b.appendChild(x); document.body.appendChild(b);
+  }
+  b.firstChild.textContent='⚠️ '+msg;
+}
+function axClockCheck(epochSec){ // a trade timestamp can't be in the future
+  if(epochSec && epochSec*1000 - Date.now() > 10*60*1000)
+    axClockWarn('Your device clock looks behind — the newest market trade ('+new Date(epochSec*1000).toLocaleString()+') is later than your device time. Fix date & time settings so market status and AI dates are right.');
+}
+if(Date.now() < AX_BUILD_MS) axClockWarn('Your device date ('+axTodayLong()+') is earlier than this app version. Fix date & time settings so market status and AI dates are right.');
+
+// Keep a long-open session honest: refresh status each minute; at midnight roll the dashboard.
+let axLastDay = axLocalISODate();
+function axTick(){
+  const day=axLocalISODate();
+  const h=new Date().getHours(), g=document.getElementById('dash-greeting'), de=document.getElementById('dash-date');
+  if(g) g.textContent=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  if(de) de.textContent=axTodayLong();
+  if(document.getElementById('mkt-dot')) updateMarketStatus();
+  if(day!==axLastDay){
+    axLastDay=day;
+    for(const k in priceCache) delete priceCache[k];
+    axDashAt=0;
+    if(currentView==='dashboard' && document.getElementById('app').style.display!=='none') initDashboard();
+  }
+}
+setInterval(axTick,60000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) axTick(); });
+
+/* ---------- Groq model list (auto-pulled from the user's key) ----------
+   Nothing is hardcoded except a last-resort fallback. On Save Key / Refresh
+   (and silently when the cached list is >3 days old) we ask Groq which models
+   this key can use, drop non-chat models (speech, TTS, guard/safety, embeddings,
+   compound agents), keep the newest few, and let the user pick. If Groq ever
+   rejects the selected model as retired, groqPost() re-pulls the list and
+   retries once on the best available replacement. */
+const GROQ_MODEL_FALLBACK = 'qwen/qwen3.8-27b';
+const GROQ_MODELS_CACHE_KEY = 'axiom_groq_models';
+const GROQ_MODEL_SELECTED_KEY = 'axiom_groq_model';
+const GROQ_MODEL_LIST_SIZE = 5;
+const GROQ_MODEL_STALE_MS = 3 * 24 * 60 * 60 * 1000;
+const GROQ_NON_CHAT = /whisper|tts|playai|orpheus|guard|safeguard|embed|compound|moderation|transcri/i;
+const groqNoExtras = new Set();   // models that rejected the reasoning params this session
+
+function getGroqKey() { return ST.groqKey || ''; }
+
+function getGroqModelCache() {
+  try { return JSON.parse(localStorage.getItem(GROQ_MODELS_CACHE_KEY) || 'null'); } catch (e) { return null; }
+}
+function getGroqModel() {
+  return localStorage.getItem(GROQ_MODEL_SELECTED_KEY) || GROQ_MODEL_FALLBACK;
+}
+function groqModelLabel() { return getGroqModel().split('/').pop(); }
+function updateGroqModelLabels() {
+  const l = groqModelLabel();
+  document.querySelectorAll('.groq-model-name').forEach(el => { el.textContent = l; });
+}
+// Reasoning controls differ by model family; send only what the chosen family accepts.
+function groqExtraParams(model) {
+  if (groqNoExtras.has(model)) return {};
+  if (/qwen/i.test(model)) return { reasoning_effort: 'none', reasoning_format: 'hidden' };
+  if (/gpt-oss/i.test(model)) return { reasoning_effort: 'low' };
+  return {};
+}
+
+// Rough size from the id ("...-70b-...", "...-120b") so the default pick
+// favours capable models over tiny instant ones. Users can always override.
+function groqModelSize(id) {
+  const m = /(\d+(?:\.\d+)?)b(?![a-z])/i.exec(id);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+function buildGroqModelList(raw) {
+  const chat = (raw || [])
+    .filter(m => m && m.id && m.active !== false && !GROQ_NON_CHAT.test(m.id))
+    .sort((a, b) => (b.created || 0) - (a.created || 0));
+  return chat.slice(0, GROQ_MODEL_LIST_SIZE).map(m => ({ id: m.id, created: m.created || 0 }));
+}
+
+function clearGroqModelState() {
+  localStorage.removeItem(GROQ_MODELS_CACHE_KEY);
+  localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);
+  renderGroqModelPicker();
+}
+
+async function refreshGroqModels(opts) {
+  const silent = opts && opts.silent;
+  const apiKey = (opts && opts.key) || getGroqKey();
+  const statusEl = document.getElementById('groq-model-status');
+  if (!apiKey) return null;
+  if (!silent && statusEl) { statusEl.textContent = 'Fetching models…'; }
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/models', {
+      headers: { 'Authorization': 'Bearer ' + apiKey },
+    });
+    if (!res.ok) {
+      if (res.status === 401) throw new Error('Groq rejected this API key.');
+      throw new Error('Could not load models (status ' + res.status + ').');
+    }
+    const body = await res.json();
+    const list = buildGroqModelList(body.data);
+    if (!list.length) throw new Error('No chat models came back for this key.');
+
+    // Keep the user's current choice if it is still available (even if it has
+    // slipped out of the newest few). With no choice yet, keep the model AXIOM
+    // already ran on (the fallback) while it is still offered, so nothing changes
+    // until the user picks; otherwise pick the best default.
+    const active = (body.data || []).filter(m => m && m.id && m.active !== false);
+    const exists = id => active.some(m => m.id === id);
+    const current = localStorage.getItem(GROQ_MODEL_SELECTED_KEY);
+    let pick = current && exists(current) ? current : null;
+    if (!pick && !current && exists(GROQ_MODEL_FALLBACK)) pick = GROQ_MODEL_FALLBACK;
+    if (!pick) {
+      pick = list.slice().sort((a, b) => groqModelSize(b.id) - groqModelSize(a.id) || b.created - a.created)[0].id;
+    }
+    if (!list.some(m => m.id === pick)) list.push({ id: pick, created: 0 });
+    localStorage.setItem(GROQ_MODEL_SELECTED_KEY, pick);
+    localStorage.setItem(GROQ_MODELS_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), list }));
+    renderGroqModelPicker();
+    return list;
+  } catch (e) {
+    if (!silent && statusEl) {
+      const offline = e instanceof TypeError;
+      statusEl.textContent = offline ? 'Couldn’t reach Groq — using the saved model.' : e.message;
+    }
+    return null;
+  }
+}
+
+function renderGroqModelPicker() {
+  updateGroqModelLabels();
+  const block = document.getElementById('groq-model-block');
+  const select = document.getElementById('groq-model-select');
+  const statusEl = document.getElementById('groq-model-status');
+  if (!block || !select) return;
+  const cache = getGroqModelCache();
+  if (!getGroqKey() || !cache || !cache.list || !cache.list.length) { block.style.display = 'none'; return; }
+  const selected = getGroqModel();
+  select.innerHTML = '';
+  const ids = cache.list.map(m => m.id);
+  if (!ids.includes(selected)) ids.unshift(selected);
+  ids.forEach(id => {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = id;
+    if (id === selected) opt.selected = true;
+    select.appendChild(opt);
+  });
+  block.style.display = '';
+  if (statusEl) statusEl.textContent = 'Updated ' + new Date(cache.fetchedAt).toLocaleDateString();
+}
+
+document.getElementById('groq-model-select').addEventListener('change', (e) => {
+  localStorage.setItem(GROQ_MODEL_SELECTED_KEY, e.target.value);
+  updateGroqModelLabels();
+});
+document.getElementById('btn-refresh-groq-models').addEventListener('click', () => {
+  const typed = (document.getElementById('settings-groq').value || '').trim();
+  refreshGroqModels({ key: typed || getGroqKey() });
+});
+
+// Silent background refresh when the cached list is old.
+(function () {
+  const cache = getGroqModelCache();
+  if (getGroqKey() && (!cache || Date.now() - cache.fetchedAt > GROQ_MODEL_STALE_MS)) {
+    refreshGroqModels({ silent: true });
+  }
+})();
 
 // ── THEME & RISK ──
 function applyTheme(t){
-  document.body.setAttribute('data-theme',t||'neon');
+  document.body.setAttribute('data-theme',t||'arctic');
+  const mt=document.querySelector('meta[name="theme-color"]'); if(mt){ const c=getComputedStyle(document.body).getPropertyValue('--bg').trim(); if(c) mt.setAttribute('content',c); }
   document.querySelectorAll('.theme-swatch').forEach(el=>el.classList.remove('active'));
   const sw=document.getElementById('tsw-'+t);if(sw)sw.classList.add('active');
 }
-function setTheme(t){ST.theme=t;applyTheme(t);save();closeAllDropdowns();showToast('🎨',t[0].toUpperCase()+t.slice(1)+' theme applied');}
+function setTheme(t){ST.theme=t;ST.themeChosen=true;applyTheme(t);save();closeAllDropdowns();showToast('🎨',t[0].toUpperCase()+t.slice(1)+' theme applied');}
 function toggleThemeDropdown(e){e.stopPropagation();closeAllDropdowns();document.getElementById('theme-dropdown').classList.toggle('open');}
 function applyRiskBadge(risk){
   const b=document.getElementById('risk-badge');if(b)b.textContent=risk.toUpperCase();
@@ -1575,15 +1921,29 @@ function selectNewPortRisk(el,val){document.querySelectorAll('#new-port-risk-chi
 function launchApp(){
   const gk=document.getElementById('groq-key-input').value.trim();
   ST.groqKey=gk; // optional — user can explore with live Yahoo data and add a key later for AI features
+  ST.setupDone=true;
   ST.fmpKey=document.getElementById('fmp-key-input').value.trim();
   const cap=parseFloat(document.getElementById('capital-input').value)||100000;
   ST.capital=cap; ST.startCapital=cap;
   ST.currency=document.getElementById('currency-input').value;
   ST.risk=selectedRisk;
-  if(!ST.theme) ST.theme='neon'; // preserve imported theme
-  save(); bootApp();
-  if(!gk) showToast('👀','Exploring without a Groq key — add one anytime in Settings for AI picks & insights');
+  if(!ST.theme) ST.theme='arctic'; // preserve imported theme
+  saveNow(); bootApp();
+  if(gk) refreshGroqModels();
+  else{ clearGroqModelState(); showToast('👀','Exploring without a Groq key — add one anytime in Settings for AI picks & insights'); }
 }
+
+// Exit the first-run screen without entering anything — just look around.
+// setupDone is remembered, so a reload doesn't throw the user back into setup.
+function skipSetup(){
+  ST.setupDone=true; saveNow(); bootApp();
+  showToast('👀','Just looking around — add a Groq key anytime in Settings ⚙️ to unlock AI features');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape') return;
+  const su=document.getElementById('setup-screen');
+  if(su && getComputedStyle(su).display!=='none') skipSetup();
+});
 
 function importSettingsFromSetup(e){
   const file=e.target.files[0];
@@ -1607,7 +1967,7 @@ function importSettingsFromSetup(e){
     if(d.capital)      ST.capital=parseFloat(d.capital)||100000;
     if(d.startCapital) ST.startCapital=parseFloat(d.startCapital)||ST.capital;
     if(d.currency)     ST.currency=d.currency;
-    if(d.theme)        ST.theme=d.theme;
+    if(d.theme)        { ST.theme=d.theme; ST.themeChosen=(d.themeChosen!==undefined)?!!d.themeChosen:d.theme!=='neon'; axResolveTheme(ST); }
     if(d.portfolios&&d.portfolios.length) ST.portfolios=d.portfolios;
     if(d.watchlist&&d.watchlist.length)   ST.watchlist=d.watchlist;
     if(d.strategies)   ST.strategies=d.strategies;
@@ -1638,6 +1998,7 @@ function importSettingsFromSetup(e){
     }
     if(label){ label.textContent='File loaded successfully'; label.style.color='#10b981'; }
     if(launchBtn){ launchBtn.textContent='Launch AXIOM'; }
+    if(d.groqKey) refreshGroqModels();
     if(d.groqKey) setTimeout(function(){ bootApp(); }, 2000);
     setTimeout(function(){ try{e.target.value='';}catch(x){} }, 3000);
   };
@@ -1649,7 +2010,8 @@ function importSettingsFromSetup(e){
 function bootApp(){
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  applyTheme(ST.theme||'neon'); applyRiskBadge(ST.risk||'Moderate');
+  applyTheme(ST.theme||'arctic'); applyRiskBadge(ST.risk||'Moderate');
+  renderGroqModelPicker();
   document.getElementById('settings-groq').value=ST.groqKey;
   document.getElementById('settings-fmp').value=ST.fmpKey;
   document.getElementById('settings-capital').value=ST.capital;
@@ -1661,7 +2023,6 @@ function bootApp(){
   // Default to dashboard
   switchView('dashboard');
 }
-if(ST.groqKey)bootApp();
 
 // ── NAV ──
 function switchView(v, addToHistory=true){
@@ -1717,23 +2078,24 @@ function showSettings(){
   document.getElementById('settings-capital').value=ST.capital;
   document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
   document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===ST.risk));
+  renderGroqModelPicker();
   document.getElementById('settings-modal').classList.add('show');
 }
 function closeSettings(){document.getElementById('settings-modal').classList.remove('show');}
 function saveSettings(){
   const gk=document.getElementById('settings-groq').value.trim();
-  if(!gk){showToast('⚠️','Groq key required');return;}
-  ST.groqKey=gk;ST.fmpKey=document.getElementById('settings-fmp').value.trim();ST.risk=selectedRisk;
+  ST.groqKey=gk;ST.fmpKey=document.getElementById('settings-fmp').value.trim();ST.risk=selectedRisk;ST.setupDone=true;
+  if(gk) refreshGroqModels(); else clearGroqModelState();
   const nc=parseFloat(document.getElementById('settings-capital').value);
   if(nc>0){ST.capital=nc;ST.startCapital=nc;}
-  applyRiskBadge(ST.risk);save();closeSettings();showToast('✅','Settings saved');
+  applyRiskBadge(ST.risk);saveNow();closeSettings();showToast('✅','Settings saved');
 }
 function exportSettings(){
   // Full backup — saves everything including portfolios, watchlist, settings
   const d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
-  a.download='axiom-full-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.download='axiom-full-backup-'+axLocalISODate()+'.json';
   a.click();
   showToast('⬇','Full backup exported (settings + portfolios + watchlist)');
 }
@@ -1760,7 +2122,7 @@ function applyImportedData(jsonText, source){
   if(d.capital)      { ST.capital=parseFloat(d.capital)||ST.capital; applied.push('capital'); }
   if(d.startCapital) { ST.startCapital=parseFloat(d.startCapital)||ST.startCapital; }
   if(d.currency)     { ST.currency=d.currency; }
-  if(d.theme)        { ST.theme=d.theme; }
+  if(d.theme)        { ST.theme=d.theme; ST.themeChosen=(d.themeChosen!==undefined)?!!d.themeChosen:d.theme!=='neon'; axResolveTheme(ST); }
   if(d.portfolios&&d.portfolios.length){
     // Merge: add portfolios not already present (by id)
     var added=0;
@@ -1785,9 +2147,10 @@ function applyImportedData(jsonText, source){
     return false;
   }
   save();
+  if(d.groqKey) refreshGroqModels();
   // Refresh live UI if app is running
   try{
-    applyTheme(ST.theme||'neon');
+    applyTheme(ST.theme||'arctic');
     applyRiskBadge(ST.risk||'Moderate');
     selectedRisk=ST.risk||'Moderate';
     var gkEl=document.getElementById('settings-groq');
@@ -1805,7 +2168,8 @@ function applyImportedData(jsonText, source){
 }
 function resetAllData(){
   if(!confirm('Reset everything? Clears all portfolios, watchlist, and settings.'))return;
-  localStorage.removeItem('axiom_v5');localStorage.removeItem('axiom_v3');localStorage.removeItem('axiom_v2');
+  _axNoSave=true;
+  localStorage.removeItem('axiom_v5');localStorage.removeItem('axiom_v3');localStorage.removeItem('axiom_v2');localStorage.removeItem(GROQ_MODELS_CACHE_KEY);localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);['axiom_analyst_cache','axiom_news_ai','axiom_earn_cache','axiom_proxy_stats'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 
@@ -1818,8 +2182,8 @@ function updateRecentChips(){
     .map(t=>`<div class="recent-chip" onclick="quickSearch('${t}')">${t}</div>`).join('');
 }
 function quickSearch(t){
-  const clean=(t||'').trim().toUpperCase();
-  if(!clean||clean.length>5||!/^[A-Z][A-Z0-9.-]{0,4}$/.test(clean)){showToast('⚠️','Invalid ticker: '+clean);return;}
+  const clean=axNormTicker(t);
+  if(!clean){showToast('⚠️','Invalid ticker: '+String(t||'').trim().toUpperCase().slice(0,12));return;}
   document.getElementById('ticker-input').value=clean;
   analyzeStock();
 }
@@ -1831,79 +2195,150 @@ function fetchWithTimeout(url,ms=15000){
     fetch(url).then(r=>{clearTimeout(t);resolve(r);}).catch(e=>{clearTimeout(t);reject(e);});
   });
 }
-async function yahooFetch(path){
-  const t1='https://query1.finance.yahoo.com'+path;
-  const t2='https://query2.finance.yahoo.com'+path;
-
-  // Multiple proxy options — tried in order, skipping on failure
-  const tries=[
-    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t1)}`,12000),
-    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t1)}`,12000),
-    ()=>fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(t2)}`,12000),
-    ()=>fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(t2)}`,12000),
-    ()=>fetchWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(t1)}`,12000),
-    ()=>fetchWithTimeout(`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(t1)}`,12000),
-  ];
-
-  let lastErr='All proxies failed';
-  for(let i=0;i<tries.length;i++){
-    try{
-      const r=await tries[i]();
-      // On 403/429 from Yahoo (rate limit), wait before trying next proxy
-      if(r.status===403||r.status===429){
-        lastErr=`HTTP ${r.status} (rate limited)`;
-        if(i<tries.length-1) await new Promise(res=>setTimeout(res,600));
-        continue;
-      }
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      const txt=await r.text();
-      if(!txt||txt.trim().length<10) throw new Error('Empty response');
-      if(txt.trim().startsWith('<')) throw new Error('Got HTML — proxy returned error page');
-      return JSON.parse(txt);
-    }catch(e){
-      lastErr=e.message;
-      // Small pause between proxy attempts to avoid hammering
-      if(i<tries.length-1) await new Promise(res=>setTimeout(res,300));
-    }
-  }
-  throw new Error(lastErr);
+// ══════════════════════════════════════════
+//  DATA LAYER — hedged proxy racing · in-flight dedupe · market-aware caching
+//  Public CORS proxies are flaky. Instead of trying them one at a time (up to
+//  12 s each), the best-performing proxy goes first and, if it hasn't answered
+//  in ~1.8 s, the next is launched IN PARALLEL. First valid answer wins and the
+//  rest are cancelled. Proxy health is remembered between visits.
+//  NOTE: API keys are never sent through these proxies (FMP is called directly).
+// ══════════════════════════════════════════
+const AX_PROXIES=[
+  {id:'allorigins', url:u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+  {id:'corsproxy',  url:u=>'https://corsproxy.io/?'+encodeURIComponent(u)},
+  {id:'codetabs',   url:u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+  {id:'thingproxy', url:u=>'https://thingproxy.freeboard.io/fetch/'+u}
+];
+let axProxyStats={};
+try{ axProxyStats=JSON.parse(localStorage.getItem('axiom_proxy_stats')||'{}')||{}; }catch(e){ axProxyStats={}; }
+function axProxyScore(id){ const s=axProxyStats[id]||{ok:0,fail:0,ms:0}; return s.ok - s.fail*1.5 - (s.ms||0)/4000; }
+function axProxyNote(id,ok,ms){
+  const s=axProxyStats[id]||(axProxyStats[id]={ok:0,fail:0,ms:0});
+  if(ok){ s.ok=Math.min(s.ok+1,30); s.fail=Math.max(0,s.fail-.5); s.ms=s.ms?s.ms*.7+ms*.3:ms; }
+  else  { s.fail=Math.min(s.fail+1,30); s.ok=Math.max(0,s.ok-1); }
+  try{ localStorage.setItem('axiom_proxy_stats',JSON.stringify(axProxyStats)); }catch(e){}
 }
+
+// Launch attempts one after another; start the next in parallel if the current is slow.
+function axRace(attempts,opts){
+  const stagger=(opts&&opts.stagger)||1800;
+  return new Promise((resolve,reject)=>{
+    let started=0,failed=0,done=false,timer=null,lastErr='All proxies failed';
+    const ctrls=[];
+    const end=(fn,v)=>{ if(done) return; done=true; clearTimeout(timer); ctrls.forEach(c=>{ try{c.abort();}catch(e){} }); fn(v); };
+    const arm=()=>{ clearTimeout(timer); if(!done&&started<attempts.length) timer=setTimeout(launch,stagger); };
+    const launch=()=>{
+      if(done||started>=attempts.length) return;
+      const att=attempts[started++], ctrl=new AbortController();
+      ctrls.push(ctrl);
+      const t0=Date.now(), tm=setTimeout(()=>ctrl.abort(),att.timeout||9000);
+      att.run(ctrl.signal).then(v=>{ clearTimeout(tm); axProxyNote(att.id,true,Date.now()-t0); end(resolve,v); })
+      .catch(e=>{
+        clearTimeout(tm);
+        if(done) return;                                   // lost the race — not a failure
+        if(e&&e.fatal) return end(reject,e);               // real answer from the source (e.g. "no such ticker")
+        if(e&&e.name==='AbortError') e=new Error('Timed out');
+        lastErr=(e&&e.message)||String(e); axProxyNote(att.id,false,0); failed++;
+        if(failed>=attempts.length) return end(reject,new Error(lastErr));
+        if(started<attempts.length) launch();
+      });
+      arm();
+    };
+    launch();
+  });
+}
+// urls = equivalent mirrors of one resource (e.g. query1/query2); tries best proxies first.
+function axProxyGet(urls,parse,opts){
+  const order=AX_PROXIES.slice().sort((a,b)=>axProxyScore(b.id)-axProxyScore(a.id));
+  const attempts=[];
+  urls.forEach(u=>order.forEach(p=>attempts.push({id:p.id,timeout:(opts&&opts.timeout)||9000,
+    run:async signal=>{ const r=await fetch(p.url(u),{signal}); return parse(r); }})));
+  return axRace(attempts.slice(0,(opts&&opts.max)||6),opts);
+}
+// Cap simultaneous races so a busy dashboard can't hammer the free proxies into 429s.
+const AX_MAX_RACES=6; let _axActive=0; const _axWait=[];
+function axLimit(fn){
+  return new Promise((resolve,reject)=>{
+    const run=()=>{ _axActive++; fn().then(resolve,reject).finally(()=>{ _axActive--; const n=_axWait.shift(); if(n) n(); }); };
+    if(_axActive<AX_MAX_RACES) run(); else _axWait.push(run);
+  });
+}
+async function axParseJson(r){
+  const txt=await r.text();
+  let j=null; try{ j=JSON.parse(txt); }catch(e){}
+  // Yahoo answered, and the answer is "no such symbol" — don't bother the other proxies.
+  if(j&&j.chart&&j.chart.error&&j.chart.error.code){ const e=new Error('No data for that ticker ('+j.chart.error.code+')'); e.fatal=true; throw e; }
+  if(r.status===403||r.status===429) throw new Error('HTTP '+r.status+' (rate limited)');
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  if(!txt||txt.trim().length<10) throw new Error('Empty response');
+  if(txt.trim().startsWith('<')) throw new Error('Got HTML — proxy returned error page');
+  if(j===null) throw new Error('Bad JSON');
+  return j;
+}
+async function axParseText(r){
+  if(r.status===403||r.status===429) throw new Error('HTTP '+r.status+' (rate limited)');
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const txt=await r.text();
+  if(!txt||txt.indexOf('<')<0) throw new Error('Empty response');
+  return txt;
+}
+
+// ── Yahoo JSON (de-duplicated: simultaneous identical requests share one race) ──
+const _axInflight={};
+function yahooFetch(path){
+  if(_axInflight[path]) return _axInflight[path];
+  const p=axLimit(()=>axProxyGet(['https://query1.finance.yahoo.com'+path,'https://query2.finance.yahoo.com'+path],axParseJson))
+    .finally(()=>{ delete _axInflight[path]; });
+  return (_axInflight[path]=p);
+}
+
+// ── Quotes: one cache, one in-flight map. Closed market = nothing can change, so cache for an hour. ──
+const _axQuoteInflight={};
 async function fetchQuote(ticker){
-  // Return cached data if fresh (avoids duplicate network calls within 5 min)
-  const cached = getCached(ticker);
+  const cached=getCached(ticker);
   if(cached) return cached;
+  if(_axQuoteInflight[ticker]) return _axQuoteInflight[ticker];
+  const p=(async()=>{
+    const j=await yahooFetch('/v8/finance/chart/'+encodeURIComponent(ticker)+'?interval=1d&range=1y&includePrePost=false');
+    if(!j||!j.chart||!j.chart.result||!j.chart.result[0]) throw new Error('No data for '+ticker);
+    const res=j.chart.result[0], meta=res.meta||{};
+    axClockCheck(meta.regularMarketTime);
+    const closes=((res.indicators&&res.indicators.quote&&res.indicators.quote[0]&&res.indicators.quote[0].close)||[]).filter(v=>v!=null&&v>0);
+    if(closes.length<10) throw new Error('Insufficient data for '+ticker);
+    const price=meta.regularMarketPrice||closes[closes.length-1];
+    const prev=meta.regularMarketPreviousClose||meta.previousClose||closes[closes.length-2]||price;
+    const ma200=closes.length>=200?closes.slice(-200).reduce((a,b)=>a+b,0)/200:closes.reduce((a,b)=>a+b,0)/closes.length;
+    const ma50=closes.length>=50?closes.slice(-50).reduce((a,b)=>a+b,0)/50:null;
+    const result={ticker,price,prev,change:price-prev,changePct:((price-prev)/prev)*100,
+      high52:meta.fiftyTwoWeekHigh||Math.max(...closes),low52:meta.fiftyTwoWeekLow||Math.min(...closes),
+      volume:meta.regularMarketVolume,currency:meta.currency||'USD',asOf:(meta.regularMarketTime||0)*1000,
+      longName:meta.longName||meta.shortName||ticker,exchange:meta.exchangeName||'',
+      marketCap:meta.marketCap,rsi:calcRSI(closes,14),ma200,ma50,closes,
+      priceVs200:((price-ma200)/ma200)*100};
+    setCache(ticker,result);
+    return result;
+  })().finally(()=>{ delete _axQuoteInflight[ticker]; });
+  return (_axQuoteInflight[ticker]=p);
+}
 
-  const j=await yahooFetch(`/v8/finance/chart/${ticker}?interval=1d&range=1y&includePrePost=false`);
-  if(!j?.chart?.result?.[0])throw new Error(`No data for ${ticker}`);
-  const meta=j.chart.result[0].meta;
-  const closes=(j.chart.result[0].indicators.quote[0].close||[]).filter(v=>v!=null&&v>0);
-  if(closes.length<10)throw new Error(`Insufficient data for ${ticker}`);
-  const price=meta.regularMarketPrice||closes[closes.length-1];
-  const prev=meta.regularMarketPreviousClose||meta.previousClose||closes[closes.length-2]||price;
-  const ma200=closes.length>=200?closes.slice(-200).reduce((a,b)=>a+b,0)/200:closes.reduce((a,b)=>a+b,0)/closes.length;
-  const ma50=closes.length>=50?closes.slice(-50).reduce((a,b)=>a+b,0)/50:null;
-  const result={ticker,price,prev,change:price-prev,changePct:((price-prev)/prev)*100,
-    high52:meta.fiftyTwoWeekHigh||Math.max(...closes),low52:meta.fiftyTwoWeekLow||Math.min(...closes),
-    volume:meta.regularMarketVolume,currency:meta.currency||'USD',
-    longName:meta.longName||meta.shortName||ticker,exchange:meta.exchangeName||'',
-    marketCap:meta.marketCap,rsi:calcRSI(closes,14),ma200,ma50,closes,
-    priceVs200:((price-ma200)/ma200)*100};
-  setCache(ticker, result);
-  return result;
-}
-// Single-call screener — returns today's most-active US tickers by volume
-// in ONE request, instead of one request per ticker. Used to build a fast,
-// genuinely-live "Top Volume" candidate pool instead of a static hardcoded list.
-async function fetchTopVolumeScreener(count=40){
+// ── Most-active screener: remember failures (it can be crumb-gated) so we don't re-pay the timeout each click ──
+let axScreenerFailUntil=0; const _axScreenerCache={};
+async function fetchTopVolumeScreener(count){
+  count=count||40;
+  const c=_axScreenerCache[count];
+  if(c&&Date.now()-c.ts<(axMarketStatus().state==='open'?5:60)*60000) return c.list;
+  if(Date.now()<axScreenerFailUntil) return [];
   try{
-    const j = await yahooFetch(`/v1/finance/screener/predefined/saved?count=${count}&scrIds=most_actives&formatted=false&lang=en-US&region=US`);
-    const quotes = j?.finance?.result?.[0]?.quotes || [];
-    return quotes
-      .filter(q=>q.symbol && q.regularMarketPrice)
-      .sort((a,b)=>(b.regularMarketVolume||0)-(a.regularMarketVolume||0))
-      .map(q=>q.symbol);
-  }catch(e){ return []; }
+    const j=await yahooFetch('/v1/finance/screener/predefined/saved?count='+count+'&scrIds=most_actives&formatted=false&lang=en-US&region=US');
+    const quotes=(j&&j.finance&&j.finance.result&&j.finance.result[0]&&j.finance.result[0].quotes)||[];
+    const list=quotes.filter(q=>q.symbol&&q.regularMarketPrice&&AX_TICKER_RE.test(q.symbol))
+      .sort((a,b)=>(b.regularMarketVolume||0)-(a.regularMarketVolume||0)).map(q=>q.symbol);
+    if(!list.length) throw new Error('empty');
+    _axScreenerCache[count]={ts:Date.now(),list};
+    return list;
+  }catch(e){ axScreenerFailUntil=Date.now()+30*60000; return []; }
 }
+
 function calcRSI(p,n=14){
   if(p.length<n+1)return 50;
   let ag=0,al=0;
@@ -1912,33 +2347,310 @@ function calcRSI(p,n=14){
   for(let i=n+1;i<p.length;i++){const d=p[i]-p[i-1];ag=(ag*(n-1)+(d>0?d:0))/n;al=(al*(n-1)+(d<0?Math.abs(d):0))/n;}
   return al===0?100:100-(100/(1+ag/al));
 }
-async function fetchAnalyst(ticker,q){
-  if(ST.fmpKey){
-    try{
-      const tpUrl=`https://financialmodelingprep.com/api/v3/price-target-consensus/${ticker}?apikey=${ST.fmpKey}`;
-      const r=await fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(tpUrl)}`,10000);
-      if(r.ok){
-        const tp=(d=>{return Array.isArray(d)?d[0]:d;})(JSON.parse(await r.text()));
-        if(tp?.targetConsensus){
-          const recUrl=`https://financialmodelingprep.com/api/v3/analyst-stock-recommendations/${ticker}?limit=5&apikey=${ST.fmpKey}`;
-          let buy=0,hold=0,sell=0,tot=1;
-          try{const r2=await fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(recUrl)}`,8000);
-            const recs=JSON.parse(await r2.text());
-            if(Array.isArray(recs)&&recs.length){const r0=recs[0];buy=(r0.analystRatingsStrongBuy||0)+(r0.analystRatingsBuy||0);hold=r0.analystRatingsHold||0;sell=(r0.analystRatingsSell||0)+(r0.analystRatingsStrongSell||0);tot=Math.max(buy+hold+sell,1);}
-          }catch(e2){}
-          return{targetMean:tp.targetConsensus,targetHigh:tp.targetHigh||tp.targetConsensus*1.2,targetLow:tp.targetLow||tp.targetConsensus*.8,targetMedian:tp.targetMedian||tp.targetConsensus,buyPct:Math.round(buy/tot*100),holdPct:Math.round(hold/tot*100),sellPct:Math.round(sell/tot*100),totalAnalysts:tot,source:'FMP'};
-        }
-      }
-    }catch(e){}
-  }
+// ══════════════════════════════════════════
+//  SMALL SHARED HELPERS
+// ══════════════════════════════════════════
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+// AI/user text → safe HTML with line breaks
+function axAiHtml(text){ return esc(text).replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>'); }
+// For values placed inside inline onclick="…('NAME')" attributes: allow-list, so a quote can never break out.
+function axAttrName(s){ return String(s==null?'':s).replace(/[^A-Za-z0-9 .,&\-]/g,'').slice(0,40); }
+function axThrottle(fn,ms){ let t=null,pending=false; return function(){ if(t){ pending=true; return; } fn(); t=setTimeout(()=>{ t=null; if(pending){ pending=false; fn(); } },ms); }; }
+function axHash(s){ let h=5381; for(let i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return (h>>>0).toString(36); }
+function axLoadJSON(key){ try{ return JSON.parse(localStorage.getItem(key)||'null')||{}; }catch(e){ return {}; } }
+function axSaveJSON(key,obj,max){
   try{
-    const d=await yahooFetch(`/v10/finance/quoteSummary/${ticker}?modules=financialData,recommendationTrend`);
-    const fd=d.quoteSummary?.result?.[0]?.financialData;const rt=d.quoteSummary?.result?.[0]?.recommendationTrend?.trend?.[0];
-    const tM=fd?.targetMeanPrice?.raw||q.price*1.15,tH=fd?.targetHighPrice?.raw||q.price*1.35,tL=fd?.targetLowPrice?.raw||q.price*.85;
-    const buy=(rt?.strongBuy||0)+(rt?.buy||0),hold=rt?.hold||0,sell=(rt?.sell||0)+(rt?.strongSell||0),tot=Math.max(buy+hold+sell,1);
-    return{targetMean:tM,targetHigh:tH,targetLow:tL,targetMedian:fd?.targetMedianPrice?.raw||tM,buyPct:Math.round(buy/tot*100),holdPct:Math.round(hold/tot*100),sellPct:Math.round(sell/tot*100),totalAnalysts:tot,source:'Yahoo'};
+    const ks=Object.keys(obj);
+    if(max&&ks.length>max) ks.sort((a,b)=>((obj[a]||{}).ts||0)-((obj[b]||{}).ts||0)).slice(0,ks.length-max).forEach(k=>delete obj[k]);
+    localStorage.setItem(key,JSON.stringify(obj));
   }catch(e){}
-  return{targetMean:q.price*1.15,targetHigh:q.price*1.38,targetLow:q.price*.85,targetMedian:q.price*1.12,buyPct:62,holdPct:26,sellPct:12,totalAnalysts:20,source:'Est.'};
+}
+// Tickers: AAPL · BRK-B (BRK.B is converted) · BTC-USD · ^VIX · SHOP.TO
+const AX_TICKER_RE=/^\^?[A-Z][A-Z0-9]{0,5}(?:[.\-][A-Z0-9]{1,3})?$/;
+function axNormTicker(raw){
+  let t=String(raw||'').trim().toUpperCase().replace(/[^A-Z0-9.\-^]/g,'');
+  if(/^[A-Z]{1,5}\.[A-Z]$/.test(t)) t=t.replace('.','-');
+  return AX_TICKER_RE.test(t)?t:'';
+}
+
+// ── Scoring (single copy; used by watchlist, compare, and the no-AI fallback) ──
+const AX_STRATS=['Buy & Hold','RSI Reversal','Momentum','Value Gap'];
+function axClamp(sc){ return Math.max(1,Math.min(10,Math.round(sc*10)/10)); }
+function axUpside(q,a){ return (a&&a.available&&a.targetMean>0&&q&&q.price>0)?((a.targetMean-q.price)/q.price)*100:null; }
+function axTechScore(q){ let sc=5; if(q.rsi<30)sc+=2; else if(q.rsi>70)sc-=2; if(q.priceVs200>0)sc+=1; return axClamp(sc); }
+function axAnalystAdjust(sc,q,a){
+  const up=axUpside(q,a); if(up==null) return sc;
+  if(up>20)sc+=2; else if(up>10)sc+=1; else if(up<0)sc-=2;
+  if(a.hasRatings&&a.buyPct>65)sc+=1;
+  return axClamp(sc);
+}
+function axVerdict(sc){ return sc>=8?'STRONG BUY':sc>=6.5?'BUY':sc>=4.5?'MONITOR':sc>=3?'AVOID':'STRONG SELL'; }
+// What we can honestly say from the numbers alone (used when Groq is unavailable).
+function axRuleBased(ticker,q,a,why){
+  const sc=axAnalystAdjust(axTechScore(q),q,a), up=axUpside(q,a), bull=[], bear=[];
+  const fromHigh=q.high52>0?(q.high52-q.price)/q.high52*100:0;
+  if(q.rsi<30) bull.push('RSI '+q.rsi.toFixed(0)+' is oversold (potential bounce)');
+  if(q.rsi>70) bear.push('RSI '+q.rsi.toFixed(0)+' is overbought');
+  if(q.priceVs200>=0) bull.push('Trading '+q.priceVs200.toFixed(1)+'% above its 200-day average'); else bear.push('Trading '+Math.abs(q.priceVs200).toFixed(1)+'% below its 200-day average');
+  if(up!=null&&up>10) bull.push('Analyst mean target implies '+up.toFixed(1)+'% upside');
+  if(up!=null&&up<0)  bear.push('Price is above the analyst mean target ('+up.toFixed(1)+'%)');
+  if(a&&a.hasRatings&&a.buyPct>65) bull.push(a.buyPct+'% of analyst ratings are Buy');
+  if(a&&a.hasRatings&&a.sellPct>20) bear.push(a.sellPct+'% of analyst ratings are Sell');
+  if(fromHigh>20) bull.push(fromHigh.toFixed(0)+'% below its 52-week high'); else if(fromHigh<3) bear.push('Trading at its 52-week high');
+  if(!bull.length) bull.push('No clear bullish signal in the data');
+  if(!bear.length) bear.push('No clear bearish signal in the data');
+  return {score:sc,verdict:axVerdict(sc),bullPoints:bull.slice(0,3),bearPoints:bear.slice(0,3),
+    strategy:(up!=null&&up>15)?'Value Gap':q.rsi<35?'RSI Reversal':(q.priceVs200>0&&q.changePct>0)?'Momentum':'Buy & Hold',
+    insight:(why?why+'. ':'')+'Score computed from market data only (no AI commentary).',
+    alternatives:getSectorAlts(ticker),sectorPosition:'—',
+    scoreBreakdown:'RSI '+q.rsi.toFixed(0)+(up!=null?', '+up.toFixed(0)+'% upside':'')+', '+(q.priceVs200>=0?'above':'below')+' 200MA',
+    newsTake:'',headlineSentiment:[],ai:false};
+}
+// Validate whatever the model returned: never trust types, strategy names, tickers or lengths.
+function axCleanAnalysis(r,ticker,q,a,newsLen){
+  const sc=parseFloat(r&&r.score); if(!isFinite(sc)||sc<=0) throw new Error('Incomplete');
+  const score=axClamp(sc), rb=axRuleBased(ticker,q,a,'');
+  const list=(v)=>Array.isArray(v)?v.map(x=>String(x).slice(0,220)).filter(Boolean).slice(0,4):[];
+  const bull=list(r.bullPoints), bear=list(r.bearPoints);
+  const hs=Array.isArray(r.headlineSentiment)?r.headlineSentiment.slice(0,newsLen||0).map(s=>/bull/i.test(s)?'Bullish':/bear/i.test(s)?'Bearish':'Neutral'):[];
+  return {score,verdict:axVerdict(score),                                   // verdict always agrees with the score
+    bullPoints:bull.length?bull:rb.bullPoints,bearPoints:bear.length?bear:rb.bearPoints,
+    strategy:AX_STRATS.includes(r.strategy)?r.strategy:rb.strategy,
+    insight:String(r.insight||'').slice(0,800)||rb.insight,
+    alternatives:(Array.isArray(r.alternatives)?r.alternatives:[]).map(axNormTicker).filter(t=>t&&t!==ticker&&!t.startsWith('^')).slice(0,3),
+    sectorPosition:String(r.sectorPosition||'—').slice(0,30),scoreBreakdown:String(r.scoreBreakdown||'').slice(0,200),
+    newsTake:String(r.newsTake||'').slice(0,300),headlineSentiment:hs,ai:true};
+}
+
+// ══════════════════════════════════════════
+//  ANALYST DATA — Financial Modeling Prep /stable API
+//  Called DIRECTLY from the browser: the key never passes through a third-party proxy.
+//  Yahoo's analyst endpoint needs a login cookie that public proxies can't carry, so
+//  without an FMP key we say "unavailable" instead of inventing numbers.
+//  Cached 12 h (consensus moves slowly) to protect the free 250-calls/day quota.
+// ══════════════════════════════════════════
+const AX_FMP='https://financialmodelingprep.com/stable';
+let axFmpBlockedUntil=0, axFmpBlockMsg='';
+const _axAnalystInflight={};
+function axErr(msg,code){ const e=new Error(msg); e.code=code; return e; }
+async function axFmp(path){
+  if(!ST.fmpKey) throw axErr('No FMP key','nokey');
+  if(Date.now()<axFmpBlockedUntil) throw axErr(axFmpBlockMsg||'FMP limit reached','blocked');
+  let r;
+  try{ r=await fetchWithTimeout(AX_FMP+path+(path.indexOf('?')>=0?'&':'?')+'apikey='+encodeURIComponent(ST.fmpKey),10000); }
+  catch(e){ throw axErr('Could not reach FMP (offline or blocked)','net'); }
+  if(r.status===401) throw axErr('FMP rejected your API key — check it in Settings ⚙️','auth');
+  if(r.status===429){ axFmpBlockedUntil=Date.now()+15*60000; axFmpBlockMsg='FMP rate/daily limit reached — try again later'; throw axErr(axFmpBlockMsg,'blocked'); }
+  if(r.status===402||r.status===403){ axFmpBlockedUntil=Date.now()+30*60000; axFmpBlockMsg='Your FMP plan does not include analyst data'; throw axErr(axFmpBlockMsg,'blocked'); }
+  if(!r.ok) throw axErr('FMP error '+r.status,'http');
+  const j=await r.json();
+  if(j&&!Array.isArray(j)&&(j['Error Message']||j.error)) throw axErr(String(j['Error Message']||j.error).slice(0,120),'http');
+  return j;
+}
+function axNone(reason){ return {available:false,reason:reason,source:'none'}; }
+// Never throws — always resolves to {available:true,…} or {available:false,reason}.
+function fetchAnalyst(ticker,q,opts){
+  const wantRatings=!(opts&&opts.ratings===false);
+  if(!ST.fmpKey) return Promise.resolve(axNone('Analyst targets & ratings need a free FMP key — add one in Settings ⚙️'));
+  const key=ticker+(wantRatings?':r':'');
+  if(_axAnalystInflight[key]) return _axAnalystInflight[key];
+  const p=_axAnalystCore(ticker,wantRatings).finally(()=>{ delete _axAnalystInflight[key]; });
+  return (_axAnalystInflight[key]=p);
+}
+async function _axAnalystCore(ticker,wantRatings){
+  const cache=axLoadJSON('axiom_analyst_cache'), ent=cache[ticker];
+  const fresh=!!(ent&&Date.now()-ent.ts<12*3600*1000);
+  const d=fresh?Object.assign({},ent.data):{};
+  const num=v=>(v!=null&&isFinite(+v)&&+v>0)?+v:null;
+  let changed=false, err=null;
+  try{
+    if(d.targetMean==null&&!d._noTarget){
+      const tp=await axFmp('/price-target-consensus?symbol='+encodeURIComponent(ticker));
+      const row=Array.isArray(tp)?tp[0]:tp;
+      if(row&&num(row.targetConsensus)){ d.targetMean=num(row.targetConsensus); d.targetHigh=num(row.targetHigh); d.targetLow=num(row.targetLow); d.targetMedian=num(row.targetMedian); }
+      else d._noTarget=true;
+      changed=true;
+    }
+    if(wantRatings&&d.targetMean!=null&&d.totalAnalysts==null&&!d._noRatings){
+      try{
+        const gc=await axFmp('/grades-consensus?symbol='+encodeURIComponent(ticker));
+        const g=(Array.isArray(gc)?gc[0]:gc)||{};
+        const buy=(+g.strongBuy||0)+(+g.buy||0), hold=+g.hold||0, sell=(+g.sell||0)+(+g.strongSell||0), tot=buy+hold+sell;
+        if(tot>0){ d.buyPct=Math.round(buy/tot*100); d.holdPct=Math.round(hold/tot*100); d.sellPct=Math.max(0,100-d.buyPct-d.holdPct); d.totalAnalysts=tot; }
+        else d._noRatings=true;
+        changed=true;
+      }catch(e){ if(e.code==='blocked'||e.code==='net'||e.code==='auth') err=err||e; else { d._noRatings=true; changed=true; } }
+    }
+  }catch(e){ err=e; }
+  if(changed){ cache[ticker]={ts:fresh?ent.ts:Date.now(),data:d}; axSaveJSON('axiom_analyst_cache',cache,250); }
+  if(d.targetMean==null) return axNone(err?err.message:(d._noTarget?'No analyst coverage found for '+ticker:'Analyst data unavailable'));
+  return {available:true,source:'FMP',targetMean:d.targetMean,targetHigh:d.targetHigh==null?null:d.targetHigh,targetLow:d.targetLow==null?null:d.targetLow,
+    targetMedian:d.targetMedian==null?null:d.targetMedian,hasRange:d.targetHigh!=null&&d.targetLow!=null&&d.targetHigh>d.targetLow,
+    hasRatings:d.totalAnalysts>0,buyPct:d.buyPct==null?null:d.buyPct,holdPct:d.holdPct==null?null:d.holdPct,sellPct:d.sellPct==null?null:d.sellPct,
+    totalAnalysts:d.totalAnalysts==null?null:d.totalAnalysts};
+}
+// One line of analyst context for AI prompts — says so when there is none.
+function axAnalystStr(d){
+  const parts=[];
+  parts.push(d.targetMean!=null?'analyst target $'+d.targetMean+(d.upside!=null?' ('+(d.upside>0?'+':'')+d.upside+'% upside)':''):'analyst target n/a');
+  if(d.buyPct!=null) parts.push(d.buyPct+'% analysts Buy');
+  if(d.fromHigh!=null) parts.push(d.fromHigh+'% below 52W high');
+  return parts.join(', ');
+}
+
+// ══════════════════════════════════════════
+//  NEWS — real headlines from Yahoo (search API + RSS) and other free RSS feeds, raced in parallel.
+//  Groq is then used to ASSESS those headlines — never to invent them.
+// ══════════════════════════════════════════
+const _axNewsCache={};
+function axAgeLabel(ms){ const m=Math.max(0,Math.floor((Date.now()-ms)/60000)); if(m<60) return m+'m ago'; const h=Math.floor(m/60); return h<48?h+'h ago':Math.floor(h/24)+'d ago'; }
+function axSafeUrl(u){ try{ const x=new URL(u); return (x.protocol==='https:'||x.protocol==='http:')?x.href:''; }catch(e){ return ''; } }
+function axNewsFresh(it,maxDays){ if(!it||!isFinite(it.time)) return false; const age=Date.now()-it.time; return age<(maxDays||7)*86400000&&age>-6*3600000; }
+function axParseRSSItems(xml,source){
+  const out=[];
+  try{
+    const doc=new DOMParser().parseFromString(xml,'text/xml');
+    doc.querySelectorAll('item').forEach(n=>{
+      const g=s=>{ const e=n.querySelector(s); return e&&e.textContent?e.textContent.trim():''; };
+      const t=Date.parse(g('pubDate'));
+      const title=g('title'); if(!title) return;
+      out.push({title:title.slice(0,240),link:g('link'),desc:g('description').replace(/<[^>]+>/g,'').slice(0,160),time:t,source:source});
+    });
+  }catch(e){}
+  return out;
+}
+function axFetchRSS(url,source){ return axLimit(()=>axProxyGet([url],axParseText,{timeout:8000,max:4})).then(x=>axParseRSSItems(x,source)); }
+function axFetchSearchNews(q,count){
+  return yahooFetch('/v1/finance/search?q='+encodeURIComponent(q)+'&quotesCount=0&listsCount=0&newsCount='+(count||8)).then(j=>
+    ((j&&j.news)||[]).map(n=>({title:String(n.title||'').slice(0,240),link:n.link||'',desc:'',time:(n.providerPublishTime||0)*1000,source:n.publisher||'Yahoo Finance'})).filter(n=>n.title));
+}
+function axMergeNews(items,maxDays,limit){
+  const seen=new Set(), out=[];
+  items.filter(i=>axNewsFresh(i,maxDays)).sort((a,b)=>b.time-a.time).forEach(i=>{
+    const k=i.title.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,60);
+    if(!seen.has(k)){ seen.add(k); out.push(i); }
+  });
+  return out.slice(0,limit);
+}
+async function fetchTickerNews(ticker,limit){
+  limit=limit||6;
+  const c=_axNewsCache['t:'+ticker];
+  if(c&&Date.now()-c.ts<10*60000) return c.items;
+  const bucket=[];
+  const jobs=[
+    axFetchSearchNews(ticker,8).then(x=>bucket.push.apply(bucket,x)).catch(()=>{}),
+    axFetchRSS('https://feeds.finance.yahoo.com/rss/2.0/headline?s='+encodeURIComponent(ticker)+'&region=US&lang=en-US','Yahoo Finance').then(x=>bucket.push.apply(bucket,x)).catch(()=>{})
+  ];
+  await Promise.race([Promise.all(jobs),new Promise(r=>setTimeout(r,4500))]);   // never hold the analysis hostage to news
+  const items=axMergeNews(bucket,14,limit);
+  if(items.length) _axNewsCache['t:'+ticker]={ts:Date.now(),items};
+  return items;
+}
+// Calls onUpdate(items) as each source lands, so headlines appear after the FIRST feed instead of the slowest.
+async function fetchMarketNews(onUpdate){
+  const c=_axNewsCache['mkt'];
+  if(c&&Date.now()-c.ts<8*60000){ onUpdate(c.items,c.sources); return c.items; }
+  const bucket=[], sources=new Set();
+  const add=(x,name)=>{ if(!x||!x.length) return; bucket.push.apply(bucket,x); sources.add(name); onUpdate(axMergeNews(bucket,3,8),[...sources]); };
+  const jobs=[
+    axFetchRSS('https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EGSPC&region=US&lang=en-US','Yahoo Finance').then(x=>add(x,'Yahoo Finance')),
+    axFetchSearchNews('stock market',10).then(x=>add(x,'Yahoo Finance')),
+    axFetchRSS('https://feeds.marketwatch.com/marketwatch/topstories/','MarketWatch').then(x=>add(x,'MarketWatch')),
+    axFetchRSS('https://www.cnbc.com/id/10000664/device/rss/rss.html','CNBC').then(x=>add(x,'CNBC'))
+  ].map(p=>p.catch(()=>{}));
+  await Promise.race([Promise.all(jobs),new Promise(r=>setTimeout(r,9000))]);
+  const items=axMergeNews(bucket,3,8);
+  if(items.length) _axNewsCache['mkt']={ts:Date.now(),items,sources:[...sources]};
+  return items;
+}
+// One cheap Groq call: tag each REAL headline and give the overall tone. Cached 6 h by headline set.
+async function axAssessHeadlines(items,scope){
+  if(!ST.groqKey||!items||!items.length) return null;
+  const h=axHash(scope+'|'+items.map(i=>i.title).join('|')), store=axLoadJSON('axiom_news_ai');
+  if(store[h]&&Date.now()-store[h].ts<6*3600000) return store[h].data;
+  const list=items.map((n,i)=>i+'. ['+axAgeLabel(n.time)+'] '+n.title+' ('+n.source+')').join('\n');
+  const prompt='Classify each REAL news headline below for a '+ST.risk+' stock investor. Use ONLY the headline text; do not add facts or numbers that are not in it.\n'+list+
+    '\n\nOutput ONLY a JSON object: {"items":[{"i":0,"s":"Bullish|Bearish|Neutral","why":"max 12 words"}],"mood":"one sentence on the overall tone of these headlines"}';
+  const d=await groqPost([{role:'user',content:prompt}],500,.2);
+  const raw=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'').replace(/```json|```/g,'');
+  const m=raw.match(/\{[\s\S]*\}/); if(!m) return null;
+  let j; try{ j=JSON.parse(m[0]); }catch(e){ return null; }
+  const map={};
+  (Array.isArray(j.items)?j.items:[]).forEach(x=>{ const i=parseInt(x.i,10); if(i>=0&&i<items.length) map[i]={s:/bull/i.test(x.s)?'Bullish':/bear/i.test(x.s)?'Bearish':'Neutral',why:String(x.why||'').slice(0,100)}; });
+  const data={map,mood:String(j.mood||'').slice(0,240)};
+  store[h]={ts:Date.now(),data}; axSaveJSON('axiom_news_ai',store,40);
+  return data;
+}
+function axSentColors(s){ return s==='Bullish'?['var(--green)','#10b98120']:s==='Bearish'?['var(--red)','#f43f5e20']:['var(--amber)','#f59e0b20']; }
+function axKeywordSentiment(title){
+  const tl=title.toLowerCase();
+  const bulls=['rise','gain','surge','beat','record','growth','profit','rally','strong','jump','soar'].filter(w=>tl.includes(w)).length;
+  const bears=['fall','drop','loss','miss','decline','weak','concern','risk','cut','plunge','slump','fear'].filter(w=>tl.includes(w)).length;
+  return bulls>bears?'Bullish':bears>bulls?'Bearish':'Neutral';
+}
+function renderNewsItems(el,items,ai){
+  el.innerHTML=items.map((item,i)=>{
+    const a=ai&&ai.map&&ai.map[i], s=a?a.s:axKeywordSentiment(item.title), c=axSentColors(s), href=axSafeUrl(item.link);
+    return '<div class="news-item" data-href="'+esc(href)+'" style="'+(href?'':'cursor:default')+'">'+
+      '<div class="news-headline">'+esc(item.title)+'</div>'+
+      '<div class="news-meta"><span>'+esc(item.source)+' · '+axAgeLabel(item.time)+'</span>'+
+      '<span class="news-sentiment" style="background:'+c[1]+';color:'+c[0]+'">'+s+(a?' · AI':'')+'</span></div>'+
+      (a&&a.why?'<div style="font-size:11px;color:var(--text3);margin-top:4px">'+esc(a.why)+'</div>':(item.desc?'<div style="font-size:11px;color:var(--text3);margin-top:3px;line-height:1.5">'+esc(item.desc)+'…</div>':''))+
+      '</div>';
+  }).join('')+(ai&&ai.mood?'<div style="font-size:11px;color:var(--text2);margin-top:10px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">🧠 '+esc(ai.mood)+'</div>':'');
+  if(!el._axNewsClick){ el._axNewsClick=true; el.addEventListener('click',e=>{ const n=e.target.closest&&e.target.closest('.news-item'); if(n&&n.dataset.href) window.open(n.dataset.href,'_blank','noopener'); }); }
+}
+function timeAgo(date){ return axAgeLabel(+date); }
+
+// ══════════════════════════════════════════
+//  ANALYST + NEWS UI PIECES FOR THE ANALYSIS PAGE (null-safe)
+// ══════════════════════════════════════════
+function axFm(v){ return (v==null||isNaN(v))?'—':'$'+Number(v).toFixed(2); }
+function axAnalystCards(q,a){
+  if(!a||!a.available) return '<div class="metric-card" style="grid-column:span 2"><div class="metric-label">Analyst Data</div><div class="metric-value" style="color:var(--text3);font-size:18px">Unavailable</div><div class="metric-sub">'+esc((a&&a.reason)||'')+'</div></div>';
+  const up=axUpside(q,a), u=up.toFixed(1);
+  let h='<div class="metric-card"><div class="metric-label">Analyst Target (Mean)</div><div class="metric-value" style="color:var(--cyan)">'+axFm(a.targetMean)+'</div>'+
+    '<div class="metric-sub">Upside: '+(up>=0?'+':'')+u+'%</div>'+
+    '<span class="metric-badge" style="background:'+(up>15?'#22d3ee20':up>0?'#f59e0b20':'#f43f5e20')+';color:'+(up>15?'var(--cyan)':up>0?'var(--amber)':'var(--red)')+'">'+(up>15?'HIGH UPSIDE':up>0?'MODERATE':'NO UPSIDE')+'</span></div>';
+  if(a.hasRatings){
+    const col=a.buyPct>55?'var(--green)':a.buyPct>35?'var(--amber)':'var(--red)';
+    h+='<div class="metric-card"><div class="metric-label">Analyst Consensus</div><div class="metric-value" style="color:'+col+'">'+a.buyPct+'% Buy</div>'+
+      '<div class="metric-sub">'+a.totalAnalysts+' ratings · '+a.holdPct+'% Hold · '+a.sellPct+'% Sell</div>'+
+      '<span class="metric-badge" style="background:'+(a.buyPct>55?'#10b98120':'#f59e0b20')+';color:'+(a.buyPct>55?'var(--green)':'var(--amber)')+'">'+(a.buyPct>55?'BULLISH':'MIXED')+'</span></div>';
+  } else h+='<div class="metric-card"><div class="metric-label">Analyst Consensus</div><div class="metric-value" style="color:var(--text3);font-size:18px">Not available</div><div class="metric-sub">No rating counts returned</div></div>';
+  return h;
+}
+function axAnalystSection(q,a){
+  if(!a||!a.available) return '';
+  const rows=[['High',a.targetHigh,'var(--green)'],['Mean',a.targetMean,'var(--cyan)'],['Median',a.targetMedian,'var(--text)'],['Low',a.targetLow,'var(--red)']].filter(r=>r[1]!=null);
+  const lbl='font-size:11px;color:var(--text3)', mono="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700";
+  let h='<div class="gap-section"><div class="gap-title">📍 Price vs Analyst Target Range</div>';
+  if(a.hasRange){
+    const pct=Math.min(100,Math.max(1,((q.price-a.targetLow)/((a.targetHigh-a.targetLow)||1))*100));
+    h+='<div style="position:relative;margin:22px 0 10px"><div class="gap-track"><div class="gap-fill" style="width:'+pct+'%"><div class="gap-cursor" style="right:-2px;left:auto">'+axFm(q.price)+'</div></div></div></div>'+
+       '<div class="gap-labels"><div style="color:var(--red)">Bear Low<strong>'+axFm(a.targetLow)+'</strong></div><div style="text-align:center;color:var(--cyan)">Consensus<strong>'+axFm(a.targetMean)+'</strong></div><div style="text-align:right;color:var(--green)">Bull High<strong>'+axFm(a.targetHigh)+'</strong></div></div>';
+  }
+  h+='<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+    '<div style="background:var(--bg3);border-radius:var(--radius-sm);padding:13px"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Analyst Price Targets</div>'+
+    rows.map(r=>'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="'+lbl+'">'+r[0]+'</span><span style="'+mono+';color:'+r[2]+'">'+axFm(r[1])+'</span></div>').join('')+
+    '<div style="border-top:1px solid var(--border);margin-top:6px;padding-top:6px;display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text2);font-weight:600">Current</span><span style="'+mono+'">'+axFm(q.price)+'</span></div></div>'+
+    '<div style="background:var(--bg3);border-radius:var(--radius-sm);padding:13px"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Upside/Downside</div>'+
+    rows.map(r=>{ const p=(r[1]-q.price)/q.price*100; return '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="'+lbl+'">To '+r[0]+'</span><span style="'+mono+';color:'+(p>=0?'var(--green)':'var(--red)')+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</span></div>'; }).join('')+
+    '<div style="border-top:1px solid var(--border);margin-top:6px;padding-top:6px;display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text2);font-weight:600">Source</span><span style="'+lbl+'">'+esc(a.source)+'</span></div></div></div>';
+  if(a.hasRatings) h+='<div style="margin-top:12px"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Analyst Rating Breakdown ('+a.totalAnalysts+' ratings)</div>'+
+    '<div style="display:flex;gap:4px;height:8px;border-radius:4px;overflow:hidden"><div style="flex:'+a.buyPct+';background:var(--green);min-width:'+(a.buyPct>0?'4px':'0')+'"></div><div style="flex:'+a.holdPct+';background:var(--amber);min-width:'+(a.holdPct>0?'4px':'0')+'"></div><div style="flex:'+a.sellPct+';background:var(--red);min-width:'+(a.sellPct>0?'4px':'0')+'"></div></div>'+
+    '<div style="display:flex;gap:16px;font-size:11px;margin-top:6px"><span style="color:var(--green)">● Buy '+a.buyPct+'%</span><span style="color:var(--amber)">● Hold '+a.holdPct+'%</span><span style="color:var(--red)">● Sell '+a.sellPct+'%</span></div></div>';
+  return h+'</div>';
+}
+function axNewsCard(news,g){
+  const hdr='<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">📰 Recent Headlines</div>';
+  if(!news||!news.length) return '<div class="card" style="margin-bottom:12px">'+hdr+'<div style="font-size:12px;color:var(--text3)">No recent headlines could be loaded for this ticker (feeds unreachable or nothing in the last 2 weeks).</div></div>';
+  const sent=(g&&g.headlineSentiment)||[];
+  return '<div class="card" style="margin-bottom:12px">'+hdr+
+    news.map((n,i)=>{ const s=sent[i], c=s?axSentColors(s):null, href=axSafeUrl(n.link);
+      return '<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:600;line-height:1.4">'+(href?'<a href="'+esc(href)+'" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none">'+esc(n.title)+'</a>':esc(n.title))+'</div>'+
+        '<div style="font-size:10px;color:var(--text3);margin-top:3px;display:flex;gap:8px;align-items:center"><span>'+esc(n.source)+' · '+axAgeLabel(n.time)+'</span>'+(c?'<span class="news-sentiment" style="background:'+c[1]+';color:'+c[0]+'">'+s+' · AI</span>':'')+'</div></div>'; }).join('')+
+    (g&&g.newsTake?'<div style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.6">🧠 '+esc(g.newsTake)+'</div>':'')+'</div>';
 }
 
 // ══════════════════════════════════════════
@@ -2001,7 +2713,7 @@ function renderScanInterim(marketName, done, total, stage, partial){
       <div class="scan-live-sym"><div class="scan-live-dot"></div>${d.ticker}<span style="font-weight:400;color:var(--text3);font-size:10px">${(d.longName||'').slice(0,22)}</span></div>
       <div style="display:flex;align-items:center;gap:10px;font-size:11px">
         <span style="color:var(--text3);font-family:'JetBrains Mono',monospace">$${d.price} · RSI ${d.rsi}</span>
-        <span style="font-weight:800;color:${parseFloat(d.upside)>0?'var(--green)':'var(--red)'}">${d.upside>0?'+':''}${d.upside}%</span>
+        ${axInterimBadge(d)}
       </div>
     </div>`).join('');
   return `<div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px">
@@ -2011,10 +2723,11 @@ function renderScanInterim(marketName, done, total, stage, partial){
 
 async function scanMarketLive(tickers, mode, onProgress){
   const depth = SCAN_DEPTH[scanDepth] || SCAN_DEPTH.standard;
+  const clean = tickers.map(axNormTicker).filter(Boolean);
   // Cap the field first (top slice of the curated, cap-weighted list — not random)
-  const pool = depth.listCap ? tickers.slice(0, depth.listCap) : tickers;
+  const pool = depth.listCap ? clean.slice(0, depth.listCap) : clean;
 
-  // Stage 1 — quote-only technical pass across the capped pool, 6-wide concurrent batches, short pause
+  // Stage 1 — quote-only technical pass (sliding pool of 6; quotes are cached, so repeat scans are near-instant)
   const scored=[];
   let done=0;
   await fetchBatch(pool, async t=>{
@@ -2024,39 +2737,51 @@ async function scanMarketLive(tickers, mode, onProgress){
     done++;
     if(res) scored.push(res);
     if(onProgress) onProgress(done, pool.length, `Scanning ${t}...`, 'scan', null);
-  }, 200);
+  }, 60);
   scored.sort((a,b)=>b.score-a.score);
   const top=scored.slice(0, depth.topN);
   if(!top.length) return [];
 
-  // Stage 2 — analyst data only for the finalists, 5-wide batches (heavier proxy calls)
-  // liveData is passed back through onProgress as it fills in, so the UI can render
-  // picks as they arrive instead of waiting for the whole batch to finish
-  let done2=0;
+  const row=(cand,a)=>{
+    const q=cand.q, up=axUpside(q,a);
+    return {
+      ticker:cand.ticker, longName:q.longName,
+      price:q.price.toFixed(2), changePct:q.changePct.toFixed(2),
+      rsi:q.rsi.toFixed(1), priceVs200:q.priceVs200.toFixed(1),
+      upside:up==null?null:up.toFixed(1),
+      buyPct:(a&&a.hasRatings)?a.buyPct:null,
+      targetMean:(a&&a.available)?a.targetMean.toFixed(2):null,
+      fromHigh:q.high52>0?(((q.high52-q.price)/q.high52)*100).toFixed(1):null
+    };
+  };
+
+  // Stage 2 — analyst targets for the finalists. Without an FMP key there is nothing real to fetch,
+  // so the stage is skipped entirely (faster) instead of filling in invented numbers.
   const liveData=[];
-  await fetchBatch(top, async cand=>{
-    const a=await fetchAnalyst(cand.ticker, cand.q);
-    return {cand, a};
-  }, 5, (cand,res)=>{
+  if(!ST.fmpKey){
+    top.forEach(c=>liveData.push(row(c,null)));
+    if(onProgress) onProgress(top.length, top.length, 'Technical shortlist ready', 'analyst', liveData.slice());
+    return liveData;
+  }
+  let done2=0;
+  await fetchBatch(top, async cand=>({cand, a:await fetchAnalyst(cand.ticker, cand.q, {ratings:false})}), 5, (cand,res)=>{
     done2++;
-    if(res){
-      const {q}=res.cand, {a}=res;
-      liveData.push({
-        ticker:res.cand.ticker, longName:q.longName,
-        price:q.price.toFixed(2), changePct:q.changePct.toFixed(2),
-        rsi:q.rsi.toFixed(1), priceVs200:q.priceVs200.toFixed(1),
-        upside:((a.targetMean-q.price)/q.price*100).toFixed(1),
-        buyPct:a.buyPct, targetMean:a.targetMean.toFixed(2)
-      });
-    }
+    if(res) liveData.push(row(res.cand,res.a));
     if(onProgress) onProgress(done2, top.length, `Pulling analyst data — ${cand.ticker}...`, 'analyst', liveData.slice());
-  }, 300);
+  }, 40);
+  const order=new Map(top.map((c,i)=>[c.ticker,i]));
+  liveData.sort((a,b)=>order.get(a.ticker)-order.get(b.ticker));
   return liveData;
 }
 
+function axInterimBadge(d){
+  if(d.upside!=null){ const u=parseFloat(d.upside); return `<span style="font-weight:800;color:${u>0?'var(--green)':'var(--red)'}">${u>0?'+':''}${d.upside}% to target</span>`; }
+  const v=parseFloat(d.priceVs200);
+  return `<span style="font-weight:700;color:${v>=0?'var(--green)':'var(--red)'}">${v>=0?'↑':'↓'} ${Math.abs(v)}% vs 200MA</span>`;
+}
 
 // ── GROQ ──
-function groqPost(messages,maxTokens=600,temp=.2){
+function groqRequest(body){
   return new Promise((resolve,reject)=>{
     const xhr=new XMLHttpRequest();
     xhr.open('POST','https://api.groq.com/openai/v1/chat/completions',true);
@@ -2066,51 +2791,76 @@ function groqPost(messages,maxTokens=600,temp=.2){
     xhr.ontimeout=()=>reject(new Error('Groq timed out'));
     xhr.onerror=()=>reject(new Error('Cannot reach Groq. Open file locally in browser.'));
     xhr.onload=()=>{
-      try{
-        const d=JSON.parse(xhr.responseText);
-        if(xhr.status===401)return reject(new Error('Invalid Groq key — update in Settings ⚙️'));
-        if(xhr.status===429)return reject(new Error('Rate limited — wait 10s'));
-        if(xhr.status>=400)return reject(new Error('Groq error: '+(d.error?.message||xhr.status)));
-        // Strip any leaked Qwen3 chain-of-thought reasoning before it reaches callers
-        const msg=d.choices?.[0]?.message;
-        if(msg&&typeof msg.content==='string'){
-          let text=msg.content;
-          text=text.replace(/<think>[\s\S]*?<\/think>/gi,'').trim();
-          text=text.replace(/^thinking process:[\s\S]*?(?=\n{2,}[a-z0-9])/i,'').trim();
-          text=text.replace(/^(\d+\.\s+\*\*[\s\S]*?)(?=\n{2,}(?!\d+\.\s))/i,'').trim();
-          msg.content=text;
-        }
-        resolve(d);
-      }catch(e){reject(new Error('Bad response from Groq'));}
+      let d=null;
+      try{ d=JSON.parse(xhr.responseText); }catch(e){}
+      resolve({status:xhr.status,data:d});
     };
-    xhr.send(JSON.stringify({model:'qwen/qwen3.8-27b',reasoning_effort:'none',reasoning_format:'hidden',max_tokens:maxTokens,temperature:temp,messages}));
+    xhr.send(JSON.stringify(body));
   });
+}
+// Same name + signature as before, so every AI feature keeps working untouched.
+// The model comes from the picker (getGroqModel()), the date/data rules are injected
+// into every request, and if Groq says the model is retired we re-pull the list and retry once.
+async function groqPost(messages,maxTokens=600,temp=.2,_retried){
+  const model=getGroqModel();
+  const body=Object.assign({model,max_tokens:maxTokens,temperature:temp,messages:axGroundMessages(messages)},groqExtraParams(model));
+  const {status,data:d}=await groqRequest(body);
+  if(status===401) throw new Error('Invalid Groq key — update in Settings ⚙️');
+  if(status===429) throw new Error('Rate limited — wait 10s');
+  if(status>=400){
+    const detail=JSON.stringify((d&&d.error)||d||'');
+    // This model family doesn't take the reasoning params → remember and retry without them.
+    if(status===400 && /reasoning/i.test(detail) && Object.keys(groqExtraParams(model)).length){
+      groqNoExtras.add(model);
+      return groqPost(messages,maxTokens,temp,_retried);
+    }
+    // Selected model retired → drop it, re-pull the list, retry once on the replacement.
+    if(!_retried && (status===400||status===404) && /model/i.test(detail)){
+      localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);
+      await refreshGroqModels({silent:true});
+      if(getGroqModel()!==model) return groqPost(messages,maxTokens,temp,true);
+    }
+    throw new Error('Groq error: '+((d&&d.error&&d.error.message)||status));
+  }
+  if(!d) throw new Error('Bad response from Groq');
+  // Strip any leaked chain-of-thought reasoning before it reaches callers
+  const msg=d.choices?.[0]?.message;
+  if(msg&&typeof msg.content==='string'){
+    let text=msg.content;
+    text=text.replace(/<think>[\s\S]*?<\/think>/gi,'').trim();
+    text=text.replace(/^thinking process:[\s\S]*?(?=\n{2,}[a-z0-9])/i,'').trim();
+    text=text.replace(/^(\d+\.\s+\*\*[\s\S]*?)(?=\n{2,}(?!\d+\.\s))/i,'').trim();
+    msg.content=text;
+  }
+  return d;
 }
 
 // ── ANALYZE STOCK ──
 async function analyzeStock(){
-  const ticker=document.getElementById('ticker-input').value.trim().toUpperCase().replace(/[^A-Z.]/g,'');
+  const ticker=axNormTicker(document.getElementById('ticker-input').value);
   if(!ticker){showToast('⚠️','Enter a ticker');return;}
   if(!ST.groqKey){showToast('⚠️','Add Groq API key in Settings ⚙️');return;}
 
   // Clear cache for this ticker so explicit analyze always gets fresh data
-  delete priceCache[ticker];
+  if(axMarketStatus().state==='open') delete priceCache[ticker];
 
   const loading=document.getElementById('loading');
   const result=document.getElementById('analysis-result');
   const tip=document.getElementById('analyze-tip');
   loading.classList.add('show');result.classList.remove('show');result.innerHTML='';
   if(tip)tip.style.display='none';
-  const steps=['Fetching live price data...','Calculating RSI & moving averages...','Pulling analyst targets...','Running Groq AI analysis...','Building Key Action Score...'];
+  const steps=['Fetching live price data...','Calculating RSI & moving averages...','Pulling analyst targets & news...','Running Groq AI analysis...','Building Key Action Score...'];
   const se=document.getElementById('loading-steps');se.innerHTML='';
   steps.forEach((s,i)=>{const d=document.createElement('div');d.className='loading-step';d.textContent=s;d.style.animationDelay=(i*.7)+'s';se.appendChild(d);});
   try{
-    const q=await fetchQuote(ticker);
-    const a=await fetchAnalyst(ticker,q);
-    const g=await groqAnalyze(ticker,q,a);
+    // Quote, analyst data and headlines load in PARALLEL (was: one after another)
+    const qP=fetchQuote(ticker), aP=fetchAnalyst(ticker,null), nP=fetchTickerNews(ticker,6).catch(()=>[]);
+    const q=await qP;
+    const [a,news]=await Promise.all([aP,nP]);
+    const g=await groqAnalyze(ticker,q,a,news);
     ST.recentTickers=[...new Set([...(ST.recentTickers||[]),ticker])].slice(-10);save();
     loading.classList.remove('show');
-    renderAnalysis(ticker,q,a,g);
+    renderAnalysis(ticker,q,a,g,news);
   }catch(err){
     loading.classList.remove('show');
     result.innerHTML=`<div class="card" style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">Analysis Failed</div><div style="font-size:13px;color:var(--text3);margin-bottom:14px">${err.message}</div><div style="font-size:11px;color:var(--text3);line-height:2;text-align:left;max-width:380px;margin:0 auto">
@@ -2140,34 +2890,34 @@ function getSectorAlts(ticker){
   return map[ticker]||['SPY','QQQ','VTI'];
 }
 
-async function groqAnalyze(ticker,q,a){
-  const up=((a.targetMean-q.price)/q.price*100).toFixed(1);
-  const prompt=`Analyze ${ticker} for a ${ST.risk} risk investor. Price $${q.price.toFixed(2)} (${q.changePct>=0?'+':''}${q.changePct.toFixed(2)}% today). RSI ${q.rsi.toFixed(1)} (${q.rsi<30?'OVERSOLD':q.rsi>70?'OVERBOUGHT':'NEUTRAL'}). vs 200MA: ${q.priceVs200>=0?'+':''}${q.priceVs200.toFixed(1)}%. 52W $${q.low52.toFixed(2)}-$${q.high52.toFixed(2)}. Analyst target $${a.targetMean.toFixed(2)} (${up}% upside), range $${a.targetLow.toFixed(2)}-$${a.targetHigh.toFixed(2)}. Ratings: ${a.buyPct}% Buy, ${a.holdPct}% Hold, ${a.sellPct}% Sell. Score: start 5, RSI<30=+2, RSI>70=-2, upside>20%=+2, upside>10%=+1, upside<0%=-2, buy>65%=+1, above200MA=+1, clamp 1-10. Output ONLY valid JSON, no markdown: {"score":7.2,"verdict":"BUY","bullPoints":["specific reason 1","specific reason 2","specific reason 3"],"bearPoints":["specific risk 1","specific risk 2","specific risk 3"],"strategy":"Value Gap","insight":"2 sentences for ${ST.risk} investor about ${ticker}","alternatives":["MSFT","GOOGL","META"],"sectorPosition":"Leader","scoreBreakdown":"brief"} IMPORTANT: the alternatives array must contain 3 real S&P 500 ticker symbols from the same sector as ${ticker} — never use placeholder text.`;
+async function groqAnalyze(ticker,q,a,news){
+  a=a||axNone(''); news=news||[];
+  const up=axUpside(q,a);
+  const analystTxt=a.available
+    ? 'Analyst target $'+a.targetMean.toFixed(2)+(up!=null?' ('+(up>=0?'+':'')+up.toFixed(1)+'% upside)':'')+(a.hasRange?', range $'+a.targetLow.toFixed(2)+'-$'+a.targetHigh.toFixed(2):'')+'.'+(a.hasRatings?' Ratings: '+a.buyPct+'% Buy, '+a.holdPct+'% Hold, '+a.sellPct+'% Sell.':'')
+    : 'Analyst data: NOT AVAILABLE — do not mention analyst targets, ratings or upside; judge from technicals and headlines only.';
+  const newsTxt=news.length
+    ? 'Recent headlines (real, from a news feed, newest first):\n'+news.map((n,i)=>i+'. ['+axAgeLabel(n.time)+'] '+n.title+' ('+n.source+')').join('\n')
+    : 'Recent headlines: none available — do not claim or imply any news.';
+  const rule='Score: start 5, RSI<30=+2, RSI>70=-2, above200MA=+1'+(up!=null?', upside>20%=+2, upside>10%=+1, upside<0%=-2':'')+(a.hasRatings?', buy>65%=+1':'')+', clamp 1-10. Headlines may move the score by at most ±1.';
+  const prompt=`Analyze ${ticker} (${q.longName}) for a ${ST.risk} risk investor. Price $${q.price.toFixed(2)} (${q.changePct>=0?'+':''}${q.changePct.toFixed(2)}% ${axSessionWord()}). RSI ${q.rsi.toFixed(1)} (${q.rsi<30?'OVERSOLD':q.rsi>70?'OVERBOUGHT':'NEUTRAL'}). vs 200MA: ${q.priceVs200>=0?'+':''}${q.priceVs200.toFixed(1)}%. 52W $${q.low52.toFixed(2)}-$${q.high52.toFixed(2)}. ${analystTxt}\n${newsTxt}\n${rule}\nOutput ONLY valid JSON, no markdown: {"score":<number 1-10>,"verdict":"<STRONG BUY|BUY|MONITOR|AVOID|STRONG SELL>","bullPoints":["specific reason 1","specific reason 2","specific reason 3"],"bearPoints":["specific risk 1","specific risk 2","specific risk 3"],"strategy":"<Buy & Hold|RSI Reversal|Momentum|Value Gap>","insight":"2 sentences for ${ST.risk} investor about ${ticker}, using only the data above","alternatives":["<3 real S&P 500 tickers in the same sector as ${ticker}>"],"sectorPosition":"<Leader|Challenger|Laggard>","scoreBreakdown":"brief","newsTake":"one sentence on what the headlines imply, or empty string if none","headlineSentiment":["Bullish|Bearish|Neutral — one entry per headline, in order"]} Use ONLY the data above; never invent prices, targets, ratings, or news.`;
   try{
-    const d=await groqPost([{role:'user',content:prompt}],550,.2);
-    let raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-    const m=raw.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');
-    const r=JSON.parse(m[0]);if(!r.score||!r.verdict)throw new Error('Incomplete');
-    return r;
+    const d=await groqPost([{role:'user',content:prompt}],800,.2);
+    const raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
+    const m=raw.match(/\{[\s\S]*\}/); if(!m) throw new Error('No JSON');
+    return axCleanAnalysis(JSON.parse(m[0]),ticker,q,a,news.length);
   }catch(e){
-    let sc=5;const up2=((a.targetMean-q.price)/q.price)*100;
-    if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-    if(up2>20)sc+=2;else if(up2>10)sc+=1;else if(up2<0)sc-=2;
-    if(a.buyPct>65)sc+=1;if(q.priceVs200>0)sc+=1;
-    sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-    const vd=sc>=8?'STRONG BUY':sc>=6.5?'BUY':sc>=4.5?'MONITOR':sc>=3?'AVOID':'STRONG SELL';
-    return{score:sc,verdict:vd,bullPoints:['Analyst consensus positive','Technical improving','Relative value intact'],bearPoints:[`⚠️ Groq unavailable: ${e.message}`,'Market risk','Sector risk'],strategy:up2>15?'Value Gap':q.rsi<35?'RSI Reversal':'Buy & Hold',insight:`Score calculated from market data. Groq unavailable: ${e.message}`,alternatives:getSectorAlts(ticker),sectorPosition:'—',scoreBreakdown:`RSI ${q.rsi.toFixed(0)}, ${up2.toFixed(0)}% upside`};
+    return axRuleBased(ticker,q,a,'Groq unavailable: '+e.message);
   }
 }
 
 // ── RENDER ANALYSIS ──
-function renderAnalysis(ticker,q,a,g){
-  const up=((a.targetMean-q.price)/q.price*100).toFixed(1);
+function renderAnalysis(ticker,q,a,g,news){
+  window._axCloses=q.closes;
   const isPos=q.changePct>=0;
   const sc=g.score>=7?'var(--cyan)':g.score>=4.5?'var(--amber)':'var(--red)';
   const vc=g.score>=7?'var(--green)':g.score>=4.5?'var(--amber)':'var(--red)';
   const ringD=(g.score/10)*216;
-  const pct=Math.min(100,Math.max(1,((q.price-a.targetLow)/(a.targetHigh-a.targetLow))*100));
   const sclr=SC[g.strategy]||SC['Buy & Hold'];
 
   // Build sparkline from closes
@@ -2179,14 +2929,14 @@ function renderAnalysis(ticker,q,a,g){
       <div class="ticker-name">${q.longName} · ${q.exchange}</div>
       <div class="ticker-symbol">${ticker}</div>
       <div class="ticker-price">$${q.price.toFixed(2)}</div>
-      <div class="ticker-change ${isPos?'pos':'neg'}">${isPos?'▲':'▼'} ${Math.abs(q.changePct).toFixed(2)}% &nbsp;|&nbsp; ${isPos?'+':''}$${Math.abs(q.change).toFixed(2)} today</div>
+      <div class="ticker-change ${isPos?'pos':'neg'}">${isPos?'▲':'▼'} ${Math.abs(q.changePct).toFixed(2)}% &nbsp;|&nbsp; ${isPos?'+':''}$${Math.abs(q.change).toFixed(2)} ${axSessionWord()}</div>
       <div class="ticker-meta">
         <span class="meta-chip">52W L: $${q.low52.toFixed(2)}</span>
         <span class="meta-chip">52W H: $${q.high52.toFixed(2)}</span>
         ${q.marketCap?`<span class="meta-chip">MCap: ${q.marketCap>=1e12?(q.marketCap/1e12).toFixed(2)+'T':q.marketCap>=1e9?(q.marketCap/1e9).toFixed(1)+'B':'—'}</span>`:''}
-        <span class="meta-chip">${g.sectorPosition}</span>
+        <span class="meta-chip">${esc(g.sectorPosition)}</span>
         <span class="meta-chip" style="background:${sclr.bg};border-color:${sclr.b};color:${sclr.c}">${g.strategy}</span>
-        <span class="meta-chip" style="color:var(--text3)">Data: ${a.source}</span>
+        <span class="meta-chip" style="color:var(--text3)">Data: Yahoo${a.available?' + FMP':''}</span>
       </div>
     </div>
     <div class="add-btns">
@@ -2201,10 +2951,10 @@ function renderAnalysis(ticker,q,a,g){
     <div class="sparkline-header">
       <span class="sparkline-title">30-Day Price Chart</span>
       <div class="sparkline-range">
-        <button class="spark-btn active" onclick="updateSparkRange(this,${JSON.stringify(q.closes)},30,'${isPos?'var(--green)':'var(--red)'}')">1M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,${JSON.stringify(q.closes)},90,'${isPos?'var(--green)':'var(--red)'}')">3M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,${JSON.stringify(q.closes)},180,'${isPos?'var(--green)':'var(--red)'}')">6M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,${JSON.stringify(q.closes)},365,'${isPos?'var(--green)':'var(--red)'}')">1Y</button>
+        <button class="spark-btn active" onclick="updateSparkRange(this,30,'${isPos?'var(--green)':'var(--red)'}')">1M</button>
+        <button class="spark-btn" onclick="updateSparkRange(this,90,'${isPos?'var(--green)':'var(--red)'}')">3M</button>
+        <button class="spark-btn" onclick="updateSparkRange(this,180,'${isPos?'var(--green)':'var(--red)'}')">6M</button>
+        <button class="spark-btn" onclick="updateSparkRange(this,365,'${isPos?'var(--green)':'var(--red)'}')">1Y</button>
       </div>
     </div>
     <svg id="main-sparkline" class="sparkline-svg">${spark}</svg>
@@ -2221,8 +2971,8 @@ function renderAnalysis(ticker,q,a,g){
     <div class="score-info">
       <div class="score-label">Key Action Score</div>
       <div class="score-verdict" style="color:${vc}">${g.verdict}</div>
-      <div style="font-size:10px;color:var(--text2);margin-top:3px">${g.scoreBreakdown}</div>
-      <span class="score-pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40">Strategy: ${g.strategy}</span>
+      <div style="font-size:10px;color:var(--text2);margin-top:3px">${esc(g.scoreBreakdown)}</div>
+      <span class="score-pill" style="background:${axTint(sc,12)};color:${sc};border:1px solid ${axTint(sc,30)}">Strategy: ${g.strategy}</span>
     </div>
   </div>
 
@@ -2239,87 +2989,17 @@ function renderAnalysis(ticker,q,a,g){
       <div class="metric-sub">200MA: $${q.ma200.toFixed(2)} · 50MA: ${q.ma50?'$'+q.ma50.toFixed(2):'N/A'}</div>
       <span class="metric-badge" style="background:${q.priceVs200>=0?'#10b98120':'#f43f5e20'};color:${q.priceVs200>=0?'var(--green)':'var(--red)'}">${q.priceVs200>=0?'ABOVE MA':'BELOW MA'}</span>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">Analyst Target (Mean)</div>
-      <div class="metric-value" style="color:var(--cyan)">$${a.targetMean.toFixed(2)}</div>
-      <div class="metric-sub">Upside: ${parseFloat(up)>=0?'+':''}${up}%</div>
-      <span class="metric-badge" style="background:${parseFloat(up)>15?'#22d3ee20':parseFloat(up)>0?'#f59e0b20':'#f43f5e20'};color:${parseFloat(up)>15?'var(--cyan)':parseFloat(up)>0?'var(--amber)':'var(--red)'}">${parseFloat(up)>15?'HIGH UPSIDE':parseFloat(up)>0?'MODERATE':'NO UPSIDE'}</span>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Analyst Consensus</div>
-      <div class="metric-value" style="color:${a.buyPct>55?'var(--green)':a.buyPct>35?'var(--amber)':'var(--red)'}">${a.buyPct}% Buy</div>
-      <div class="metric-sub">${a.totalAnalysts} analysts · ${a.holdPct}% Hold · ${a.sellPct}% Sell</div>
-      <span class="metric-badge" style="background:${a.buyPct>55?'#10b98120':'#f59e0b20'};color:${a.buyPct>55?'var(--green)':'var(--amber)'}">${a.buyPct>55?'BULLISH':'MIXED'}</span>
-    </div>
+    ${axAnalystCards(q,a)}
   </div>
 
-  <div class="gap-section">
-    <div class="gap-title">📍 Price vs Analyst Target Range</div>
-    <div style="position:relative;margin:22px 0 10px">
-      <div class="gap-track">
-        <div class="gap-fill" style="width:${pct}%">
-          <div class="gap-cursor" style="right:-2px;left:auto">$${q.price.toFixed(2)}</div>
-        </div>
-      </div>
-    </div>
-    <div class="gap-labels">
-      <div style="color:var(--red)">Bear Low<strong>$${a.targetLow.toFixed(2)}</strong></div>
-      <div style="text-align:center;color:var(--cyan)">Consensus<strong>$${a.targetMean.toFixed(2)}</strong></div>
-      <div style="text-align:right;color:var(--green)">Bull High<strong>$${a.targetHigh.toFixed(2)}</strong></div>
-    </div>
-    <div class="analyst-consensus">
-      <div class="consensus-box"><div class="consensus-lbl">Mean</div><div class="consensus-val" style="color:var(--cyan)">$${a.targetMean.toFixed(2)}</div></div>
-      <div class="consensus-box"><div class="consensus-lbl">Median</div><div class="consensus-val">$${a.targetMedian.toFixed(2)}</div></div>
-      <div class="consensus-box"><div class="consensus-lbl">Analysts</div><div class="consensus-val">${a.totalAnalysts}</div></div>
-    </div>
-
-    <!-- Analyst Projections Detailed -->
-    <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:13px">
-        <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">12-Month Targets</div>
-        ${[['High',a.targetHigh,'var(--green)'],['Mean',a.targetMean,'var(--cyan)'],['Median',a.targetMedian,'var(--text)'],['Low',a.targetLow,'var(--red)']].map(([l,v,c])=>`
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-          <span style="font-size:11px;color:var(--text3)">${l}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${c}">$${v.toFixed(2)}</span>
-        </div>`).join('')}
-        <div style="border-top:1px solid var(--border);margin-top:6px;padding-top:6px;display:flex;justify-content:space-between">
-          <span style="font-size:11px;color:var(--text2);font-weight:600">Current</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700">$${q.price.toFixed(2)}</span>
-        </div>
-      </div>
-      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:13px">
-        <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Upside/Downside</div>
-        ${[['To High',a.targetHigh,'var(--green)'],['To Mean',a.targetMean,'var(--cyan)'],['To Median',a.targetMedian,'var(--text)'],['To Low',a.targetLow,'var(--red)']].map(([l,v,c])=>{const pct2=((v-q.price)/q.price*100).toFixed(1);return`
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-          <span style="font-size:11px;color:var(--text3)">${l}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${parseFloat(pct2)>=0?'var(--green)':'var(--red)'}">${parseFloat(pct2)>=0?'+':''}${pct2}%</span>
-        </div>`}).join('')}
-        <div style="border-top:1px solid var(--border);margin-top:6px;padding-top:6px;display:flex;justify-content:space-between">
-          <span style="font-size:11px;color:var(--text2);font-weight:600">Source</span>
-          <span style="font-size:11px;color:var(--text3)">${a.source}</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:12px">
-      <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Analyst Rating Breakdown (${a.totalAnalysts} analysts)</div>
-      <div style="display:flex;gap:4px;height:8px;border-radius:4px;overflow:hidden">
-        <div style="flex:${a.buyPct};background:var(--green);min-width:${a.buyPct>0?'4px':'0'}"></div>
-        <div style="flex:${a.holdPct};background:var(--amber);min-width:${a.holdPct>0?'4px':'0'}"></div>
-        <div style="flex:${a.sellPct};background:var(--red);min-width:${a.sellPct>0?'4px':'0'}"></div>
-      </div>
-      <div style="display:flex;gap:16px;font-size:11px;margin-top:6px">
-        <span style="color:var(--green)">● Buy ${a.buyPct}%</span>
-        <span style="color:var(--amber)">● Hold ${a.holdPct}%</span>
-        <span style="color:var(--red)">● Sell ${a.sellPct}%</span>
-      </div>
-    </div>
-  </div>
+  ${axAnalystSection(q,a)}
 
   <div class="bull-bear">
-    <div class="bull-card"><div class="bb-title">▲ Bull Case</div><ul class="bb-points">${g.bullPoints.map(p=>`<li><span style="flex-shrink:0">✦</span>${p}</li>`).join('')}</ul></div>
-    <div class="bear-card"><div class="bb-title">▼ Bear Case</div><ul class="bb-points">${g.bearPoints.map(p=>`<li><span style="flex-shrink:0">⚠</span>${p}</li>`).join('')}</ul></div>
+    <div class="bull-card"><div class="bb-title">▲ Bull Case</div><ul class="bb-points">${g.bullPoints.map(p=>`<li><span style="flex-shrink:0">✦</span>${esc(p)}</li>`).join('')}</ul></div>
+    <div class="bear-card"><div class="bb-title">▼ Bear Case</div><ul class="bb-points">${g.bearPoints.map(p=>`<li><span style="flex-shrink:0">⚠</span>${esc(p)}</li>`).join('')}</ul></div>
   </div>
+
+  ${axNewsCard(news,g)}
 
   <div class="card" style="margin-bottom:12px">
     <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">📊 Key Statistics</div>
@@ -2334,7 +3014,7 @@ function renderAnalysis(ticker,q,a,g){
   </div>
 
   <div class="groq-section">
-    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · qwen3.8-27b · ${ST.risk} Profile</div></div></div>
+    <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · ${groqModelLabel()} · ${ST.risk} Profile</div></div></div>
     <div class="groq-body">${enhanceInsight(g.insight)}</div>
     <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
       <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1px;margin-bottom:4px">ADD TO PORTFOLIO WITH STRATEGY</div>
@@ -2373,7 +3053,8 @@ function buildSparkline(closes,color='var(--cyan)',height=80){
     <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
     <polygon points="${fillPts}" fill="url(#sg)"/>`;
 }
-function updateSparkRange(btn,closes,days,color){
+function updateSparkRange(btn,days,color){
+  const closes=window._axCloses||[];
   document.querySelectorAll('.spark-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
   const svg=document.getElementById('main-sparkline');
   if(svg)svg.innerHTML=buildSparkline(closes.slice(-days),color);
@@ -2652,10 +3333,8 @@ function closePos(id){
 async function refreshPrices(){
   const p=getActivePort();if(!p||!p.positions.length){showToast('ℹ️','No positions');return;}
   showToast('🔄','Refreshing prices...');let updated=0;
-  for(const pos of p.positions){
-    try{const q=await fetchQuote(pos.ticker);pos.currentPrice=q.price;updated++;}catch(e){}
-    await new Promise(r=>setTimeout(r,300));
-  }
+  if(axMarketStatus().state==='open') p.positions.forEach(pos=>delete priceCache[pos.ticker]);   // explicit refresh = fresh while trading
+  await fetchBatch(p.positions, async pos=>({pos,q:await fetchQuote(pos.ticker)}), 5, (item,res)=>{ if(res){ res.pos.currentPrice=res.q.price; updated++; } }, 40);
   save();updateActivePortStats();renderPositions();showToast('✅',`Updated ${updated}/${p.positions.length}`);
 }
 function exportPortfolio(){
@@ -2666,7 +3345,7 @@ function exportPortfolio(){
     const ret=(((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100).toFixed(2);
     rows.push(`${pos.ticker},${pos.strategy},${pos.shares},${pos.entryPrice},${pos.currentPrice},${pnl},${ret},"${pos.note}",${pos.addedAt}`);
   });
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download=`axiom-${p.name.replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.csv`;a.click();showToast('⬇','Portfolio exported');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download=`axiom-${p.name.replace(/\s+/g,'-')}-${axLocalISODate()}.csv`;a.click();showToast('⬇','Portfolio exported');
 }
 function importPortfolio(e){
   const p=getActivePort();if(!p)return;
@@ -2691,7 +3370,7 @@ function exportAllPortfolios(){
   var d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
-  a.download='axiom-full-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.download='axiom-full-backup-'+axLocalISODate()+'.json';
   a.click();
   showToast('⬇','Full backup exported');
 }
@@ -2724,7 +3403,7 @@ async function groqPortfolioAnalysis(){
   try{
     const d=await groqPost([{role:'user',content:prompt}],700,.4);
     const text=d.choices?.[0]?.message?.content||'';
-    body.innerHTML=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+    body.innerHTML=axAiHtml(text);
     // Parse tickers from response
     const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6))];
     if(tickers.length){
@@ -2737,50 +3416,11 @@ async function groqPortfolioAnalysis(){
 
 // ── WATCHLIST ──
 function addToWatchlist(){
-  const ticker=(document.getElementById('watch-input').value||'').trim().toUpperCase().replace(/[^A-Z.]/g,'');
+  const ticker=axNormTicker(document.getElementById('watch-input').value);
   if(!ticker){showToast('⚠️','Enter a ticker');return;}
   addToWatchlistDirect(ticker);document.getElementById('watch-input').value='';
 }
 
-async function addToWatchlistDirect(ticker){
-  if(ST.watchlist.find(w=>w.ticker===ticker)){showToast('ℹ️',`${ticker} already in watchlist`);return;}
-  ST.watchlist.push({ticker,addedAt:new Date().toISOString(),lastPrice:null,changePct:null,lastScore:null,longName:ticker,rsi:null,priceVs200:null,analystTarget:null,upside:null,_loading:true});
-  save(); renderWatchlist();
-  showToast('👁',`${ticker} added`);
-
-  // FAST PATH — price only (1 Yahoo call, uses cache if already fetched)
-  try{
-    const q = await fetchQuote(ticker);
-    const w = ST.watchlist.find(x=>x.ticker===ticker);
-    if(w){
-      w.lastPrice=q.price; w.changePct=q.changePct; w.longName=q.longName;
-      w.rsi=q.rsi.toFixed(1); w.priceVs200=q.priceVs200.toFixed(1);
-      w._loading=false;
-      // Quick score from technicals only — no analyst call needed
-      let sc=5;
-      if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-      if(q.priceVs200>0)sc+=1;
-      sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-      w.lastScore=sc;
-      save(); renderWatchlist();
-    }
-
-    // RICH PATH — analyst target + upside loads async, no blocking
-    fetchAnalyst(ticker,q).then(a=>{
-      const w2=ST.watchlist.find(x=>x.ticker===ticker);
-      if(!w2) return;
-      const up=((a.targetMean-q.price)/q.price)*100;
-      let sc2=w2.lastScore||5;
-      if(up>20)sc2+=2;else if(up>10)sc2+=1;else if(up<0)sc2-=2;
-      if(a.buyPct>65)sc2+=1;
-      sc2=Math.max(1,Math.min(10,Math.round(sc2*10)/10));
-      w2.analystTarget=a.targetMean.toFixed(2);
-      w2.upside=up.toFixed(1); w2.lastScore=sc2;
-      save(); renderWatchlist();
-    }).catch(()=>{});
-
-  }catch(e){ showToast('⚠️',`Could not fetch ${ticker}`); }
-}
 function removeFromWatchlist(ticker){ST.watchlist=ST.watchlist.filter(w=>w.ticker!==ticker);save();renderWatchlist();showToast('🗑',`${ticker} removed`);}
 function clearWatchlist(){if(!confirm('Clear watchlist?'))return;ST.watchlist=[];save();renderWatchlist();showToast('🗑','Watchlist cleared');}
 async function refreshWatchlist(){
@@ -2788,41 +3428,21 @@ async function refreshWatchlist(){
   showToast('🔄',`Refreshing ${ST.watchlist.length} tickers...`);
   let updated=0;
 
-  // FAST PASS: batch fetch prices (3 concurrent) — cards update as each batch arrives
-  await fetchBatch([...ST.watchlist], async(w)=>{
-    const q=await fetchQuote(w.ticker);
-    return{w,q};
-  }, 3, (item,result)=>{
+  // FAST PASS: prices in a sliding pool — each card updates the moment its quote lands
+  await fetchBatch([...ST.watchlist], async w=>({w,q:await fetchQuote(w.ticker)}), 5, (item,result)=>{
     if(!result) return;
-    const {w,q}=result;
-    w.lastPrice=q.price; w.changePct=q.changePct; w.longName=q.longName;
-    w.rsi=q.rsi.toFixed(1); w.priceVs200=q.priceVs200.toFixed(1);
-    w._loading=false;
-    let sc=5;
-    if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-    if(q.priceVs200>0)sc+=1;
-    sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-    w.lastScore=sc; updated++;
-    save(); renderWatchlist(); // live update as each batch resolves
-  });
-
+    axWatchApplyQuote(result.w,result.q); updated++;
+    renderWatchlistSoon();
+  }, 60);
+  save(); renderWatchlist();
   checkAlerts();
   showToast('✅',`Updated ${updated}/${ST.watchlist.length} prices`);
 
-  // RICH PASS: analyst data loads async in background — no spinner, fills in quietly
+  // RICH PASS: analyst data fills in quietly (cached 12 h, so this is mostly free)
   ST.watchlist.forEach(w=>{
     const cached=getCached(w.ticker);
     if(!cached||!w.lastPrice) return;
-    fetchAnalyst(w.ticker,cached).then(a=>{
-      const up=((a.targetMean-cached.price)/cached.price)*100;
-      let sc2=w.lastScore||5;
-      if(up>20)sc2+=2;else if(up>10)sc2+=1;else if(up<0)sc2-=2;
-      if(a.buyPct>65)sc2+=1;
-      sc2=Math.max(1,Math.min(10,Math.round(sc2*10)/10));
-      w.analystTarget=a.targetMean.toFixed(2);
-      w.upside=up.toFixed(1); w.lastScore=sc2;
-      save(); renderWatchlist();
-    }).catch(()=>{});
+    fetchAnalyst(w.ticker,cached).then(a=>{ if(axWatchApplyAnalyst(w,cached,a)){ save(); renderWatchlistSoon(); } });
   });
 }
 function renderWatchlist(){
@@ -2844,7 +3464,7 @@ function renderWatchlist(){
           <div class="watch-sym">${w.ticker}</div>
           ${w.longName&&w.longName!==w.ticker?`<div class="watch-name">${w.longName}</div>`:''}
         </div>
-        ${sc?`<span class="watch-score-pill" style="background:${scColor}20;color:${scColor};border:1px solid ${scColor}40;flex-shrink:0">${sc}/10</span>`:''}
+        ${sc?`<span class="watch-score-pill" style="background:${axTint(scColor,12)};color:${scColor};border:1px solid ${axTint(scColor,30)};flex-shrink:0">${sc}/10</span>`:''}
       </div>
 
       ${loading
@@ -2888,7 +3508,7 @@ function renderWatchlist(){
 
       <!-- Action buttons — consistent with pos-btn standard -->
       <div class="watch-actions">
-        <button class="watch-btn" onclick="openActionCard('${w.ticker}','${w.lastPrice||0}','${(w.longName||w.ticker).replace(/'/g,'&apos;')}')">Actions ▾</button>
+        <button class="watch-btn" onclick="openActionCard('${w.ticker}','${w.lastPrice||0}','${axAttrName(w.longName||w.ticker)}')">Actions ▾</button>
         <button class="watch-btn" onclick="quickSearch('${w.ticker}');switchView('analyze')">Analyze</button>
         <button class="watch-btn danger" onclick="removeFromWatchlist('${w.ticker}')" title="Remove">✕</button>
       </div>
@@ -2897,6 +3517,7 @@ function renderWatchlist(){
 }
 
 // ── SCANNER ──
+const axRenderScanSoon=axThrottle(()=>renderScanTable(),150);
 function setScanSort(s,el){scanSort=s;document.querySelectorAll('.scan-filter').forEach(c=>c.classList.remove('active'));el.classList.add('active');if(scanResults.length)renderScanTable();}
 function renderScanTable(){
   let sorted=[...scanResults];
@@ -2911,19 +3532,19 @@ function renderScanTable(){
       <th onclick="setScanSort('score',this)" style="cursor:pointer">Score ↕</th>
       <th onclick="setScanSort('rsi',this)" style="cursor:pointer">RSI ↕</th>
       <th onclick="setScanSort('ma',this)" style="cursor:pointer">vs 200MA ↕</th>
-      <th onclick="setScanSort('upside',this)" style="cursor:pointer">Est. Upside ↕</th>
+      <th onclick="setScanSort('upside',this)" style="cursor:pointer">To 52W High ↕</th>
       <th>Actions</th>
     </tr></thead>
     <tbody>${sorted.map(r=>{
-      const sc=r.score>=7?'#22d3ee':r.score>=4.5?'#f59e0b':'#f43f5e';
+      const sc=r.score>=7?'var(--cyan)':r.score>=4.5?'var(--amber)':'var(--red)';
       const rsiColor=r.rsi<30?'var(--green)':r.rsi>70?'var(--red)':'var(--amber)';
       const rsiLabel=r.rsi<30?'Oversold':r.rsi>70?'Overbought':'';
       return`<tr>
-        <td onclick="openActionCard('${r.ticker}','${r.price}','${(r.longName||r.ticker).replace(/'/g,'')}')" style="cursor:pointer">
+        <td onclick="openActionCard('${r.ticker}','${r.price}','${axAttrName(r.longName||r.ticker)}')" style="cursor:pointer">
           <strong style="font-size:14px;font-weight:800">${r.ticker}</strong>
           <div style="font-size:9px;color:var(--text3)">${(r.longName||'').slice(0,22)}</div>
         </td>
-        <td><span class="score-pill" style="background:${sc}22;color:${sc}">${r.score}</span></td>
+        <td><span class="score-pill" style="background:${axTint(sc,14)};color:${sc}">${r.score}</span></td>
         <td style="font-family:'JetBrains Mono',monospace">
           <span style="color:${rsiColor}">${r.rsi.toFixed(1)}</span>
           ${rsiLabel?`<span style="font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:${r.rsi<30?'#10b98120':'#f43f5e20'};color:${rsiColor};margin-left:4px">${rsiLabel}</span>`:''}
@@ -3003,7 +3624,7 @@ async function getStrategyAdvice(strategy){
 
   if(!liveData.length){ el.innerHTML=`<span style="color:var(--amber)">⚠️ Could not fetch market data for ${marketName}</span>`; return; }
 
-  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% today), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, analyst target $${d.targetMean} (${d.upside>0?'+':''}${d.upside}% upside), ${d.buyPct}% analysts Buy`).join('\n');
+  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% ${axSessionWord()}), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, ${axAnalystStr(d)}`).join('\n');
 
   const prompt=strategy==='General'
     ?`You are AXIOM, elite advisor for a ${ST.risk} risk investor. Today is ${todayStr}. Here is LIVE market data from the ${marketName} universe:\n${dataStr}\n\nRecommend the top 2 strategies from: Buy & Hold, RSI Reversal, Momentum, Value Gap for current conditions. For each, name 3 specific tickers FROM THE DATA ABOVE that fit it best right now, citing the real numbers, and briefly why. Plain text only. Already holding: ${held}.`
@@ -3021,7 +3642,7 @@ async function getStrategyAdvice(strategy){
     ).slice(0,8))];
 
     // Render body with tickers highlighted as inline clickable chips
-    let body=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+    let body=axAiHtml(text);
     tickers2.forEach(t=>{
       const re=new RegExp(`\\b${t}\\b`,'g');
       body=body.replace(re,`<button onclick="openActionCard('${t}',null,'${t}')" style="padding:1px 8px;border-radius:12px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent);color:var(--cyan);font-size:11px;font-weight:800;cursor:pointer;font-family:'JetBrains Mono',monospace;display:inline-block;margin:1px;vertical-align:middle">${t}</button>`);
@@ -3060,11 +3681,12 @@ function setStrategyMarket(market, el){
 
 function initDashboard(){
   const h=new Date().getHours();
+  axLastDay=axLocalISODate();
   const greeting=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
   const el=document.getElementById('dash-greeting');
   if(el) el.textContent=greeting;
   const dateEl=document.getElementById('dash-date');
-  if(dateEl) dateEl.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  if(dateEl) dateEl.textContent=axTodayLong();
 
   updateMarketStatus();
   renderDashPortfolios();
@@ -3078,31 +3700,27 @@ function initDashboard(){
       if(!q) return;
       const w=ST.watchlist.find(x=>x.ticker===item.ticker);
       if(!w) return;
-      w.lastPrice=q.price;w.changePct=q.changePct;w.longName=q.longName;
-      w.rsi=q.rsi.toFixed(1);w.priceVs200=q.priceVs200.toFixed(1);
-      let sc=5;if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;if(q.priceVs200>0)sc+=1;
-      sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-      w.lastScore=sc;save();renderDashWatchlist();
+      axWatchApplyQuote(w,q); save(); renderDashWatchlist();
+      fetchAnalyst(w.ticker,q).then(a=>{ if(axWatchApplyAnalyst(w,q,a)){ save(); renderDashWatchlist(); } });   // cached → keeps the analyst-adjusted score
     });
   }
 
   // Fire these in parallel — they update their own DOM sections independently
-  loadMarketTickers();
-  loadSentiment();
-  loadRSSNews();
+  // Network loads only if the last one is >3 min old (switching tabs used to re-fetch everything every time)
+  if(Date.now()-axDashAt>3*60*1000){
+    axDashAt=Date.now();
+    loadMarketTickers();
+    loadSentiment();
+    loadRSSNews();
+  }
 }
 
 function updateMarketStatus(){
-  const now = new Date();
-  const nyTime = new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
-  const day = nyTime.getDay(); // 0=Sun, 6=Sat
-  const hrs = nyTime.getHours() + nyTime.getMinutes()/60;
-  const isWeekday = day >= 1 && day <= 5;
-  const isOpen = isWeekday && hrs >= 9.5 && hrs < 16;
+  const st = axMarketStatus();
   const dot = document.getElementById('mkt-dot');
   const txt = document.getElementById('mkt-status-text');
-  if(dot){ dot.className = 'mkt-status-dot ' + (isOpen ? 'open' : 'closed'); }
-  if(txt){ txt.textContent = isOpen ? 'Market Open' : 'Market Closed'; }
+  if(dot){ dot.className = 'mkt-status-dot ' + (st.state==='open' ? 'open' : 'closed'); }
+  if(txt){ txt.textContent = st.label; txt.title = st.detail; }
 }
 
 async function loadMarketTickers(){
@@ -3111,7 +3729,7 @@ async function loadMarketTickers(){
     {sym:'QQQ', name:'NASDAQ 100'},
     {sym:'DIA', name:'Dow Jones'},
     {sym:'IWM', name:'Russell 2000'},
-    {sym:'VIX', name:'Volatility'},
+    {sym:'^VIX', lbl:'VIX', name:'Volatility'},
     {sym:'GLD', name:'Gold'},
     {sym:'TLT', name:'20Y Bonds'},
     {sym:'BTC-USD', name:'Bitcoin'},
@@ -3123,7 +3741,7 @@ async function loadMarketTickers(){
   // Show skeleton immediately
   container.innerHTML = indices.map((idx,i)=>`
     <div class="mkt-ticker" id="mkt-${i}">
-      <div class="mkt-ticker-sym">${idx.sym}</div>
+      <div class="mkt-ticker-sym">${idx.lbl||idx.sym}</div>
       <div class="mkt-ticker-name">${idx.name}</div>
       <div class="mkt-ticker-price" style="color:var(--text3)">—</div>
       <div class="mkt-ticker-chg" style="color:var(--text3)">Loading...</div>
@@ -3136,9 +3754,9 @@ async function loadMarketTickers(){
     if(q){
       const isPos=q.changePct>=0;
       cell.innerHTML=`
-        <div class="mkt-ticker-sym">${idx.sym}</div>
+        <div class="mkt-ticker-sym">${idx.lbl||idx.sym}</div>
         <div class="mkt-ticker-name">${q.longName||idx.name}</div>
-        <div class="mkt-ticker-price" style="color:var(--text)">$${q.price.toFixed(2)}</div>
+        <div class="mkt-ticker-price" style="color:var(--text)">${idx.sym[0]==='^'?'':'$'}${q.price.toFixed(2)}</div>
         <div class="mkt-ticker-chg ${isPos?'pos':'neg'}">${isPos?'▲':'▼'} ${Math.abs(q.changePct).toFixed(2)}%</div>`;
       cell.onclick=()=>{quickSearch(idx.sym);switchView('analyze');};
       cell.style.cursor='pointer';
@@ -3147,7 +3765,7 @@ async function loadMarketTickers(){
     }
   });
 
-  if(updated) updated.textContent='Updated '+new Date().toLocaleTimeString();
+  if(updated) updated.textContent='Updated '+new Date().toLocaleTimeString()+axPriceAsOfNote();
   updateFearGreed();
 }
 
@@ -3182,54 +3800,26 @@ async function loadSentiment(){
 }
 
 function updateFearGreed(){
-  // Estimate F&G from VIX + market momentum (rough proxy)
+  // Built from real SPY data (14-day RSI + distance from the 200-day MA).
+  // This is a momentum gauge, NOT CNN's Fear & Greed index.
   const svg = document.getElementById('fg-svg');
   const scoreEl = document.getElementById('fg-score');
   const labelEl = document.getElementById('fg-label');
   if(!svg||!scoreEl) return;
-  // Use a random-seeded but deterministic value based on date for demo
-  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
-  const seed = (dayOfYear * 17 + 43) % 100;
-  const score = 35 + Math.floor(seed * 0.45); // keep in 35-80 range
+  const q = getCached('SPY');
+  if(!q){ scoreEl.textContent='—'; scoreEl.style.color='var(--text3)'; labelEl.textContent='No data yet'; return; }
+  const rsiPart   = Math.max(0,Math.min(1,(q.rsi-30)/40))*100;
+  const trendPart = Math.max(0,Math.min(1,(q.priceVs200+10)/20))*100;
+  const score = Math.round(rsiPart*.5 + trendPart*.5);
   const angle = (score / 100) * 180 - 90; // -90 = fear, +90 = greed
   const rad = (angle * Math.PI) / 180;
   const x2 = 100 + 65 * Math.sin(rad);
   const y2 = 100 - 65 * Math.cos(rad);
-  const needle = svg.getElementById ? svg.querySelector('#fg-needle') : null;
+  const needle = svg.querySelector('#fg-needle');
   if(needle){ needle.setAttribute('x2', x2.toFixed(1)); needle.setAttribute('y2', y2.toFixed(1)); }
   scoreEl.textContent = score;
   scoreEl.style.color = score < 30 ? 'var(--red)' : score < 50 ? 'var(--amber)' : score < 70 ? 'var(--green)' : 'var(--cyan)';
   labelEl.textContent = score < 25 ? 'Extreme Fear' : score < 45 ? 'Fear' : score < 55 ? 'Neutral' : score < 75 ? 'Greed' : 'Extreme Greed';
-}
-
-async function loadHeadlines(){
-  const el = document.getElementById('headlines-list');
-  if(!el) return;
-  if(!ST.groqKey){ el.innerHTML = '<div style="font-size:12px;color:var(--amber)">⚠️ Add Groq key in Settings for AI headlines</div>'; return; }
-  el.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Generating headlines...</div>';
-  const todayStr = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const prompt = `You are a financial news AI. Today is ${todayStr}. Generate 5 concise, realistic market headlines for today. Each should be specific and impactful. For each headline provide: title (max 12 words), source (e.g. Reuters, Bloomberg, WSJ), sentiment (Bullish/Bearish/Neutral), and a 1-sentence summary. Output ONLY JSON array: [{"title":"...","source":"...","sentiment":"Bullish","summary":"..."}]`;
-  try{
-    const d = await groqPost([{role:'user',content:prompt}], 600, .7);
-    let raw = (d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-    const m = raw.match(/\[[\s\S]*\]/);
-    const headlines = m ? JSON.parse(m[0]) : [];
-    if(!headlines.length) throw new Error('No headlines');
-    el.innerHTML = headlines.map(h=>{
-      const sc = h.sentiment==='Bullish'?'var(--green)':h.sentiment==='Bearish'?'var(--red)':'var(--amber)';
-      const bg = h.sentiment==='Bullish'?'#10b98120':h.sentiment==='Bearish'?'#f43f5e20':'#f59e0b20';
-      return `<div class="news-item">
-        <div class="news-headline">${h.title}</div>
-        <div class="news-meta">
-          <span>${h.source}</span>
-          <span class="news-sentiment" style="background:${bg};color:${sc}">${h.sentiment}</span>
-        </div>
-        <div style="font-size:11px;color:var(--text3);margin-top:4px">${h.summary}</div>
-      </div>`;
-    }).join('');
-  }catch(e){
-    el.innerHTML = `<div style="font-size:12px;color:var(--amber)">⚠️ ${e.message}</div>`;
-  }
 }
 
 async function loadWatchers(){
@@ -3271,17 +3861,17 @@ async function loadWatchers(){
 
   el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Asking Groq to rank picks using live data...</div>';
 
-  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% today), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, analyst target $${d.targetMean} (${d.upside>0?'+':''}${d.upside}% upside), ${d.buyPct}% analysts Buy`).join('\n');
+  const dataStr = liveData.map(d=>`${d.ticker} (${d.longName}): Price $${d.price} (${d.changePct>0?'+':''}${d.changePct}% ${axSessionWord()}), RSI ${d.rsi}, vs200MA ${d.priceVs200>0?'+':''}${d.priceVs200}%, ${axAnalystStr(d)}`).join('\n');
 
   const prompt = `You are AXIOM, an elite stock analyst. Today is ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}. A ${ST.risk} risk investor wants your top 5 picks from the ${marketName} universe for the ${horizon} timeframe, focused on ${criteria}.
 
 Here is LIVE market data for the strongest technical candidates from that universe:
 ${dataStr}
 
-Based ONLY on this real data, rank the top 5 stocks for the ${horizon} timeframe. For each explain: why it fits the ${isShort?'short-term':'long-term'} criteria specifically citing the real numbers above, key risk to watch, and realistic price target for the period.
+Based ONLY on this real data, rank the top 5 stocks for the ${horizon} timeframe. For each explain: why it fits the ${isShort?'short-term':'long-term'} criteria specifically citing the real numbers above, key risk to watch, and the one thing that would invalidate the pick. Do NOT give price targets or upside percentages — those come from real data.
 
 Output ONLY JSON array:
-[{"ticker":"NVDA","name":"NVIDIA Corp","upside":${isShort?'12':'28'},"target":"$${isShort?'145':'165'}","reason":"Specific reason based on the live data above","risk":"Key risk","timeframe":"${horizon}"}]`;
+[{"ticker":"<a ticker from the data above>","name":"<company name>","reason":"Specific reason citing the live numbers above","risk":"Key risk","timeframe":"${horizon}"}]`;
 
   try{
     const d = await groqPost([{role:'user',content:prompt}], 1600, .5);
@@ -3297,6 +3887,7 @@ Output ONLY JSON array:
       const objs = raw.match(/\{[^{}]*\}/g) || [];
       for(const o of objs){ try{ picks.push(JSON.parse(o)); }catch(e2){} }
     }
+    picks = picks.filter(p=>p&&liveData.some(l=>l.ticker===p.ticker));   // only tickers that were in the supplied data
     if(!picks.length) throw new Error('No picks returned');
 
     el.innerHTML = picks.slice(0,5).map((p,i)=>renderWatcherCard(p,i,liveData)).join('');
@@ -3371,30 +3962,6 @@ function renderDashWatchlist(){
       </div>
     </div>`;
   }).join('') + (ST.watchlist.length > 6 ? `<div style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px;cursor:pointer" onclick="switchView('watchlist')">+${ST.watchlist.length-6} more →</div>` : '');
-}
-
-function renderDashActivity(){
-  const el = document.getElementById('dash-activity');
-  if(!el) return;
-  const recentTrades = ST.portfolios.flatMap(p=>p.positions.map(pos=>({...pos, portName:p.name}))).sort((a,b)=>new Date(b.addedAt)-new Date(a.addedAt)).slice(0,5);
-  const recentTickers = (ST.recentTickers||[]).slice(-5).reverse();
-  if(!recentTrades.length && !recentTickers.length){ el.innerHTML = '<div style="font-size:12px;color:var(--text3)">No recent activity yet.</div>'; return; }
-  let html = '';
-  if(recentTrades.length){
-    html += recentTrades.map(pos=>{
-      const ret = ((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100;
-      return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
-        <div style="font-size:16px">📈</div>
-        <div style="flex:1"><div style="font-size:12px;font-weight:700">${pos.ticker} <span style="font-weight:400;color:var(--text3)">→ ${pos.portName}</span></div><div style="font-size:10px;color:var(--text3)">${new Date(pos.addedAt).toLocaleDateString()} · ${pos.strategy}</div></div>
-        <div style="font-size:12px;font-weight:700;color:${ret>=0?'var(--green)':'var(--red)'}">${ret>=0?'+':''}${ret.toFixed(1)}%</div>
-      </div>`;
-    }).join('');
-  }
-  if(recentTickers.length){
-    html += `<div style="font-size:10px;color:var(--text3);margin-top:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Recent Searches</div>`;
-    html += `<div style="display:flex;gap:6px;flex-wrap:wrap">${recentTickers.map(t=>`<button onclick="quickSearch('${t}');switchView('analyze')" style="padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">${t}</button>`).join('')}</div>`;
-  }
-  el.innerHTML = html;
 }
 
 function updateDataSourceCard(){
@@ -3514,10 +4081,6 @@ function confirmAddRecs(){
   if(added > 0){ switchView('portfolio'); setTimeout(()=>openPortDetail(portId),200); }
 }
 
-// ── PATCH: Fix groqPortfolioAnalysis realloc chips to use openAddRecsModal ──
-// Override the chip rendering in groqPortfolioAnalysis
-const _origGroqPortAnal = window.groqPortfolioAnalysis;
-
 // ══════════════════════════════════════════
 //  AI DAILY BRIEFING
 // ══════════════════════════════════════════
@@ -3538,11 +4101,12 @@ async function loadBriefing(){
   const totalPnl = allPos.reduce((s,p)=>(s+(p.currentPrice-p.entryPrice)*p.shares),0);
   const watchTickers = ST.watchlist.map(w=>w.ticker).join(', ')||'none';
 
+  const liveIdx = await axLiveIndexLine();
   const prompt = `You are AXIOM, an elite financial analyst. Today is ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}. Write a concise 3-paragraph daily market briefing for a ${ST.risk} risk investor.
 
 Portfolio context: ${portSummary}. Total unrealized P&L: ${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(0)}. Watchlist: ${watchTickers}.
 
-Paragraph 1 — MARKET CONDITIONS: Current macro environment and key market themes (rates, AI, sector rotation, etc) as of today's date above. Do not reference any date other than today.
+Paragraph 1 — MARKET CONDITIONS: Describe how the market is behaving using ONLY this live data: ${liveIdx}. Do not cite Fed decisions, economic reports, earnings, headlines or any other event — you have no verified news feed. If the data is missing, say in one sentence that live index data was not available. Do not reference any date other than today.
 Paragraph 2 — PORTFOLIO HEALTH: Based on their positions and P&L, assess overall portfolio health and any positions that need attention. If no positions, give general advice for a ${ST.risk} investor.
 Paragraph 3 — TODAY'S OPPORTUNITIES: 2-3 specific actionable ideas or themes to watch today. Name real tickers.
 
@@ -3551,7 +4115,7 @@ Plain text only. No markdown. No bullet points. Just 3 clean paragraphs separate
   try{
     const d = await groqPost([{role:'user',content:prompt}], 500, .5);
     const text = d.choices?.[0]?.message?.content || '';
-    body.innerHTML = parseBriefingText(text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>'));
+    body.innerHTML = parseBriefingText(axAiHtml(text));
     if(timeEl) timeEl.textContent = '— ' + new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
     briefingLoaded = true;
   }catch(e){
@@ -3566,87 +4130,26 @@ async function loadRSSNews(){
   const el = document.getElementById('headlines-list');
   const label = document.getElementById('news-source-label');
   if(!el) return;
-  el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Fetching headlines...</div>';
-
-  // Multiple RSS feeds to try via allorigins proxy
-  const feeds = [
-    { url:'https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC&region=US&lang=en-US', name:'Yahoo Finance' },
-    { url:'https://www.reutersagency.com/feed/?best-topics=business-finance&post_type=best', name:'Reuters' },
-    { url:'https://feeds.marketwatch.com/marketwatch/topstories/', name:'MarketWatch' },
-  ];
-
-  for(const feed of feeds){
+  if(!el.querySelector('.news-item')){
+    el.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3)"><div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></div> Fetching headlines...</div>';
+  }
+  let base='';
+  // Feeds are raced in parallel; headlines appear as soon as the FIRST source answers.
+  const items = await fetchMarketNews((list,srcs)=>{
+    if(list.length){ renderNewsItems(el,list,null); base=srcs.join(' · '); if(label) label.textContent=base; }
+  });
+  if(!items.length){
+    if(label) label.textContent='Unavailable';
+    el.innerHTML='<div style="font-size:12px;color:var(--text3)">No current headlines could be loaded (feeds unreachable or out of date). Tap ↺ to retry.</div>';
+    return;
+  }
+  // Groq ASSESSES the real headlines (sentiment + overall tone). It never writes them.
+  if(ST.groqKey){
     try{
-      const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
-      const r = await fetchWithTimeout(proxy, 10000);
-      if(!r.ok) continue;
-      const xml = await r.text();
-      if(xml.trim().startsWith('<')) {
-        const items = parseRSS(xml).slice(0,8);
-        if(items.length){
-          if(label) label.textContent = feed.name + ' RSS';
-          renderNewsItems(el, items);
-          return;
-        }
-      }
+      const ai = await axAssessHeadlines(items,'market');
+      if(ai){ renderNewsItems(el,items,ai); if(label) label.textContent=base+' · AI-tagged'; }
     }catch(e){}
   }
-
-  // Final fallback: ask Groq for headlines if all RSS fail
-  if(ST.groqKey){
-    if(label) label.textContent = 'AI-Generated';
-    await loadHeadlines();
-  } else {
-    el.innerHTML='<div style="font-size:12px;color:var(--text3)">RSS feeds unavailable. Add a Groq key in Settings for AI headlines.</div>';
-  }
-}
-
-function parseRSS(xml){
-  const items = [];
-  try{
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xml,'text/xml');
-    const nodes = doc.querySelectorAll('item');
-    nodes.forEach(node=>{
-      const title = node.querySelector('title')?.textContent?.trim() || '';
-      const link  = node.querySelector('link')?.textContent?.trim() || '';
-      const desc  = node.querySelector('description')?.textContent?.replace(/<[^>]+>/g,'').trim().slice(0,120) || '';
-      const pubDate = node.querySelector('pubDate')?.textContent?.trim() || '';
-      if(title) items.push({title, link, desc, pubDate});
-    });
-  }catch(e){}
-  return items;
-}
-
-function renderNewsItems(el, items){
-  el.innerHTML = items.map(item=>{
-    const ago = item.pubDate ? timeAgo(new Date(item.pubDate)) : '';
-    // Simple sentiment guess from title keywords
-    const bullWords = ['rise','gain','surge','up','beat','record','growth','profit','rally','strong'];
-    const bearWords = ['fall','drop','loss','down','miss','decline','weak','concern','risk','cut'];
-    const tl = item.title.toLowerCase();
-    const bulls = bullWords.filter(w=>tl.includes(w)).length;
-    const bears = bearWords.filter(w=>tl.includes(w)).length;
-    const sentiment = bulls>bears?'Bullish':bears>bulls?'Bearish':'Neutral';
-    const sc = sentiment==='Bullish'?'var(--green)':sentiment==='Bearish'?'var(--red)':'var(--amber)';
-    const sbg = sentiment==='Bullish'?'#10b98120':sentiment==='Bearish'?'#f43f5e20':'#f59e0b20';
-    return`<div class="news-item" onclick="${item.link?`window.open('${item.link.replace(/'/g,"\\'")}','_blank')`:''}">
-      <div class="news-headline">${item.title}</div>
-      <div class="news-meta">
-        ${ago?`<span>${ago}</span>`:''}
-        <span class="news-sentiment" style="background:${sbg};color:${sc}">${sentiment}</span>
-      </div>
-      ${item.desc?`<div style="font-size:11px;color:var(--text3);margin-top:3px;line-height:1.5">${item.desc}...</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-function timeAgo(date){
-  const mins = Math.floor((Date.now()-date)/60000);
-  if(mins<60) return mins+'m ago';
-  const hrs = Math.floor(mins/60);
-  if(hrs<24) return hrs+'h ago';
-  return Math.floor(hrs/24)+'d ago';
 }
 
 // ══════════════════════════════════════════
@@ -3658,7 +4161,7 @@ async function runCompare(){
   const t1 = (document.getElementById('cmp-1').value||'').trim().toUpperCase();
   const t2 = (document.getElementById('cmp-2').value||'').trim().toUpperCase();
   const t3 = (document.getElementById('cmp-3').value||'').trim().toUpperCase();
-  const tickers = [t1,t2,t3].filter(t=>t&&/^[A-Z][A-Z0-9.-]{0,4}$/.test(t));
+  const tickers = [...new Set([t1,t2,t3].map(axNormTicker).filter(Boolean))];
   if(tickers.length < 2){ showToast('⚠️','Enter at least 2 valid tickers'); return; }
 
   const result = document.getElementById('compare-result');
@@ -3691,47 +4194,33 @@ async function runCompare(){
 
   renderStatus();
 
-  for(const t of tickers){
+  // All tickers in parallel (was sequential with an 800 ms pause after each)
+  await Promise.all(tickers.map(async t=>{
     let attempts = 0;
     while(attempts < 2){
       try{
-        // Step 1: fetch price data
-        const q = await fetchQuote(t);
-        const a = await fetchAnalyst(t,q);
-        compareData[t] = {q, a, partial:true}; // mark as partial while Groq runs
+        const [q,a] = await Promise.all([fetchQuote(t), fetchAnalyst(t,null)]);
+        compareData[t] = {q, a, partial:true};
         renderStatus();
-
-        // Step 2: run Groq analysis (separate try so price data survives Groq failure)
         try{
-          const g = await groqAnalyze(t,q,a);
-          compareData[t] = {q, a, g}; // fully complete
+          const g = await groqAnalyze(t,q,a,[]);
+          compareData[t] = {q, a, g};
         }catch(groqErr){
-          // Groq failed but we still have price/analyst data — build fallback score
-          const up=((a.targetMean-q.price)/q.price)*100;
-          let sc=5;
-          if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-          if(up>20)sc+=2;else if(up>10)sc+=1;else if(up<0)sc-=2;
-          if(a.buyPct>65)sc+=1;if(q.priceVs200>0)sc+=1;
-          sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-          const vd=sc>=8?'STRONG BUY':sc>=6.5?'BUY':sc>=4.5?'MONITOR':sc>=3?'AVOID':'STRONG SELL';
-          compareData[t]={q,a,g:{score:sc,verdict:vd,bullPoints:['—','—','—'],bearPoints:['—','—','—'],strategy:'Buy & Hold',insight:'Groq unavailable',alternatives:getSectorAlts(t),sectorPosition:'—',scoreBreakdown:'Calculated from market data'}};
+          compareData[t] = {q, a, g:axRuleBased(t,q,a,'Groq unavailable')};
         }
         renderStatus();
-        break; // success — exit retry loop
+        break;
       }catch(fetchErr){
         attempts++;
         if(attempts >= 2){
           compareData[t] = {error:fetchErr.message};
           renderStatus();
         } else {
-          // Wait longer before retry
-          await new Promise(r=>setTimeout(r,2000));
+          await new Promise(r=>setTimeout(r,800));
         }
       }
     }
-    // Pause between tickers
-    await new Promise(r=>setTimeout(r,800));
-  }
+  }));
 
   const valid = tickers.filter(t=>compareData[t]&&!compareData[t].error);
   if(!valid.length){
@@ -3754,6 +4243,7 @@ function renderCompareTable(tickers){
 
   // Helper to find best/worst value in a row
   const rank = (vals, higherIsBetter=true) => {
+    if(vals.some(v=>v==='n/a'||v==='N/A')) return vals.map(()=>'');   // don't crown a winner on missing data
     const nums = vals.map(v=>parseFloat(v)||0);
     const best = higherIsBetter ? Math.max(...nums) : Math.min(...nums);
     const worst = higherIsBetter ? Math.min(...nums) : Math.max(...nums);
@@ -3767,10 +4257,10 @@ function renderCompareTable(tickers){
     { label:'Verdict', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':d.g.verdict; }), higher:null },
     { label:'RSI (14-day)', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':d.q.rsi.toFixed(1); }), higher:false, mono:true },
     { label:'vs 200-Day MA', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':(d.q.priceVs200>=0?'+':'')+d.q.priceVs200.toFixed(1)+'%'; }), higher:true, color:true, mono:true },
-    { label:'Analyst Target', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':'$'+d.a.targetMean.toFixed(2); }), higher:true, mono:true },
-    { label:'Upside to Target', vals: valid.map(t=>{ const d=compareData[t]; if(d.error) return 'N/A'; const u=((d.a.targetMean-d.q.price)/d.q.price*100); return (u>=0?'+':'')+u.toFixed(1)+'%'; }), higher:true, color:true, mono:true },
-    { label:'Buy Rating %', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':d.a.buyPct+'%'; }), higher:true, mono:true },
-    { label:'# Analysts', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':d.a.totalAnalysts; }), higher:true, mono:true },
+    { label:'Analyst Target', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':(d.a.available?'$'+d.a.targetMean.toFixed(2):'n/a'); }), higher:true, mono:true },
+    { label:'Upside to Target', vals: valid.map(t=>{ const d=compareData[t]; if(d.error) return 'N/A'; const u=axUpside(d.q,d.a); if(u==null) return 'n/a'; return (u>=0?'+':'')+u.toFixed(1)+'%'; }), higher:true, color:true, mono:true },
+    { label:'Buy Rating %', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':(d.a.hasRatings?d.a.buyPct+'%':'n/a'); }), higher:true, mono:true },
+    { label:'# Analysts', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':(d.a.hasRatings?d.a.totalAnalysts:'n/a'); }), higher:true, mono:true },
     { label:'52W High', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':'$'+d.q.high52.toFixed(2); }), higher:null, mono:true },
     { label:'52W Low', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':'$'+d.q.low52.toFixed(2); }), higher:null, mono:true },
     { label:'Recommended Strategy', vals: valid.map(t=>{ const d=compareData[t]; return d.error?'N/A':d.g.strategy; }), higher:null },
@@ -3861,94 +4351,74 @@ async function loadEarnings(){
   }
 }
 
+function axFmtBig(n){ n=+n; if(!isFinite(n)||n<=0) return null; return n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(1)+'M':String(Math.round(n)); }
+
 async function loadEarningsFMP(tickers, portTickers, watchTickers, el){
   earningsData = [];
-  // FMP correct endpoint: /api/v3/earning_calendar with from/to date range
+  const key = axHash(tickers.join(',')+'|'+axLocalISODate());
+  const store = axLoadJSON('axiom_earn_cache'), hit = store[key];
+  if(hit && Date.now()-hit.ts < 6*3600000){
+    earningsData = hit.data.map(e=>Object.assign({},e,{daysOut:axDaysUntil(e.date)})).filter(e=>e.daysOut>=0);
+    if(earningsData.length){ renderEarnings(el); return; }
+  }
   const today = new Date();
-  const from = today.toISOString().slice(0,10);
-  const to = new Date(today.getTime()+90*86400000).toISOString().slice(0,10);
+  const from = axLocalISODate(today);
+  const to = axLocalISODate(new Date(today.getTime()+90*86400000));
+  let note = '';
   try{
-    const url=`https://financialmodelingprep.com/api/v3/earning_calendar?from=${from}&to=${to}&apikey=${ST.fmpKey}`;
-    const proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-    const r=await fetchWithTimeout(proxy,12000);
-    if(r.ok){
-      const data=JSON.parse(await r.text());
-      if(Array.isArray(data)&&data.length){
-        // Filter to our tickers
-        const filtered=data.filter(e=>tickers.includes(e.symbol));
-        earningsData=filtered.map(e=>{
-          const daysOut=Math.ceil((new Date(e.date)-new Date())/86400000);
-          return{
-            ticker:e.symbol, date:e.date, daysOut,
-            eps:e.epsEstimated!=null?e.epsEstimated.toFixed(2):null,
-            revenue:e.revenueEstimated,
-            inPortfolio:portTickers.includes(e.symbol),
-            inWatchlist:watchTickers.includes(e.symbol),
-            longName:e.symbol, source:'FMP'
-          };
-        }).filter(e=>e.daysOut>=0).sort((a,b)=>a.daysOut-b.daysOut);
-        if(earningsData.length){ renderEarnings(el); return; }
-      }
-    }
-  }catch(err){}
-  // Fallback to Groq if FMP returns nothing
-  await loadEarningsGroq(tickers, portTickers, watchTickers, el);
+    const data = await axFmp('/earnings-calendar?from='+from+'&to='+to);   // direct call — key never touches a proxy
+    if(Array.isArray(data) && data.length){
+      const want = new Set(tickers), seen = new Set();
+      earningsData = data.filter(e=>e&&want.has(e.symbol)&&e.date&&!seen.has(e.symbol)&&seen.add(e.symbol)).map(e=>({
+        ticker:e.symbol, date:String(e.date).slice(0,10), daysOut:axDaysUntil(e.date),
+        eps:e.epsEstimated!=null?(+e.epsEstimated).toFixed(2):null,
+        revenue:axFmtBig(e.revenueEstimated),
+        inPortfolio:portTickers.includes(e.symbol), inWatchlist:watchTickers.includes(e.symbol),
+        longName:e.symbol, source:'FMP'
+      })).filter(e=>e.daysOut>=0).sort((a,b)=>a.daysOut-b.daysOut);
+      if(earningsData.length){ store[key]={ts:Date.now(),data:earningsData}; axSaveJSON('axiom_earn_cache',store,6); renderEarnings(el); return; }
+      note = 'FMP has no scheduled reports for these tickers in the next 90 days.';
+    } else note = 'FMP returned no calendar data.';
+  }catch(err){ note = err.message; }
+  await loadEarningsGroq(tickers, portTickers, watchTickers, el, note);
 }
 
-async function loadEarningsGroq(tickers, portTickers, watchTickers, el){
+// Last resort: AI-ESTIMATED report dates only. No EPS/revenue (a language model cannot know those), clearly labelled.
+async function loadEarningsGroq(tickers, portTickers, watchTickers, el, note){
   earningsData = [];
-  const today = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if(!ST.groqKey){ el.innerHTML=`<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ ${esc(note||'No earnings source available')}<br><span style="font-size:12px;color:var(--text3)">Add an FMP key in Settings for confirmed dates.</span></div>`; return; }
+  const today = axTodayLong();
   const chunks=[];
   for(let i=0;i<tickers.length;i+=8) chunks.push(tickers.slice(i,i+8));
-
-  const parseEarningsJson=(raw)=>{
+  const parseJson=(raw)=>{
     let picks=[];
     const m=raw.match(/\[[\s\S]*\]/);
     if(m){ try{ picks=JSON.parse(m[0]); }catch(e){ picks=[]; } }
-    if(!picks.length){
-      // Salvage individual {...} objects if the array got cut off mid-response
-      const objs=raw.match(/\{[^{}]*\}/g)||[];
-      for(const o of objs){ try{ picks.push(JSON.parse(o)); }catch(e2){} }
-    }
+    if(!picks.length){ const objs=raw.match(/\{[^{}]*\}/g)||[]; for(const o of objs){ try{ picks.push(JSON.parse(o)); }catch(e2){} } }
     return picks;
   };
-
+  el.innerHTML=`<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text3);font-size:13px">Estimating report dates (${chunks.length} request${chunks.length>1?'s':''} in parallel)...</div></div>`;
   try{
-    for(let i=0;i<chunks.length;i++){
-      const batch=chunks[i];
-      el.innerHTML=`<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text3);font-size:13px">Estimating earnings dates — batch ${i+1}/${chunks.length}...</div></div>`;
-
-      const prompt=`Today is ${today}. For each of these stocks, estimate their next quarterly earnings report date based on their typical fiscal calendar and reporting cadence: ${batch.join(', ')}.
-
-Output ONLY a valid JSON array with no extra text, no markdown, no explanation:
-[{"ticker":"AAPL","date":"YYYY-MM-DD","epsEstimate":"1.62","revenueEstimate":"94.2B","fiscalQuarter":"Q_ FY____","confidence":"High"}]
-
-The date must be the next upcoming report date after today (${today}). Include exactly one entry per ticker listed.`;
-
-      const d=await groqPost([{role:'user',content:prompt}],1400,.2);
-      const raw=(d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim();
-      const items=parseEarningsJson(raw);
-
-      const mapped=items.map(e=>{
-        const daysOut=Math.ceil((new Date(e.date)-new Date())/86400000);
-        return{
-          ticker:e.ticker, date:e.date, daysOut,
-          eps:e.epsEstimate, revenue:e.revenueEstimate,
-          fiscalQuarter:e.fiscalQuarter,
-          confidence:e.confidence||'Estimated',
-          inPortfolio:portTickers.includes(e.ticker),
-          inWatchlist:watchTickers.includes(e.ticker),
-          longName:e.ticker, source:'Groq Est.'
-        };
-      }).filter(e=>e.date && !isNaN(e.daysOut) && e.daysOut>=0);
-
-      earningsData=[...earningsData,...mapped].sort((a,b)=>a.daysOut-b.daysOut);
-    }
-
-    if(!earningsData.length) throw new Error('No earnings data returned');
+    const results = await Promise.all(chunks.map(async batch=>{
+      const prompt=`Today is ${today}. From your general knowledge of each company's usual fiscal calendar, estimate the NEXT quarterly earnings report date after today for: ${batch.join(', ')}.\nThese are estimates and may be wrong — set confidence to "Low" when unsure.\n\nOutput ONLY a valid JSON array, no markdown, one entry per ticker:\n[{"ticker":"<ticker>","date":"YYYY-MM-DD","confidence":"High|Medium|Low"}]\nThe date must be after today and within the next 100 days.`;
+      const d=await groqPost([{role:'user',content:prompt}],700,.1);
+      return {batch, items:parseJson((d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim())};
+    }));
+    results.forEach(({batch,items})=>{
+      items.forEach(e=>{
+        const t=axNormTicker(e&&e.ticker);
+        if(!t||!batch.includes(t)||!/^\d{4}-\d{2}-\d{2}$/.test(String(e.date||''))) return;
+        const daysOut=axDaysUntil(e.date);
+        if(isNaN(daysOut)||daysOut<0||daysOut>130) return;
+        earningsData.push({ticker:t,date:e.date,daysOut,confidence:(/^(High|Medium|Low)$/.test(e.confidence)?e.confidence:'Low')+' confidence',
+          inPortfolio:portTickers.includes(t),inWatchlist:watchTickers.includes(t),longName:t,source:'AI estimate (unverified)'});
+      });
+    });
+    earningsData.sort((a,b)=>a.daysOut-b.daysOut);
+    if(!earningsData.length) throw new Error('No earnings dates returned');
     renderEarnings(el);
   }catch(e){
-    el.innerHTML=`<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ ${e.message}</div>`;
+    el.innerHTML=`<div style="text-align:center;padding:30px;color:var(--amber)">⚠️ ${esc(e.message)}</div>`;
   }
 }
 
@@ -3969,7 +4439,7 @@ function renderEarnings(el){
   if(!data.length){ el.innerHTML='<div class="earnings-empty"><div style="font-size:32px;margin-bottom:10px">✅</div><div style="font-size:14px;font-weight:700">No earnings in this window</div><div style="font-size:12px;color:var(--text3);margin-top:6px">Try a wider date range</div></div>'; return; }
   el.innerHTML=`
     <div style="font-size:10px;color:var(--text3);margin-bottom:12px;padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border)">
-      📊 ${data.length} upcoming earnings · Source: ${data[0]?.source||'Groq Est.'} · Dates are estimates — always verify before trading
+      📊 ${data.length} upcoming earnings · Source: ${esc(data[0]?.source||'FMP')}${(data[0]?.source||'').startsWith('AI')?' · ⚠️ AI-estimated dates are unverified — add an FMP key in Settings for confirmed dates':' · always confirm with the company before trading'}
     </div>
     <div class="earnings-list">${data.map(e=>{
     const urgent=e.daysOut<=7;
@@ -3977,7 +4447,7 @@ function renderEarnings(el){
     const boxBg=veryClose?'var(--red)':urgent?'var(--amber)':e.inPortfolio?'color-mix(in srgb,var(--cyan) 20%,var(--bg4))':'var(--bg4)';
     const boxColor=veryClose||urgent?'#000':'var(--text2)';
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    return`<div class="earnings-card ${veryClose?'overdue':urgent?'urgent':''}" onclick="quickSearch('${e.ticker}');switchView('analyze')">
+    return`<div class="earnings-card ${veryClose?'overdue':urgent?'urgent':''}" onclick="quickSearch('${esc(e.ticker)}');switchView('analyze')">
       <div class="earnings-days-box" style="background:${boxBg};color:${boxColor}">
         <div style="font-size:${e.daysOut>99?'14px':'18px'};font-weight:900;line-height:1">${e.daysOut===0?'📅':e.daysOut}</div>
         <div style="font-size:9px;font-weight:700;margin-top:2px">${e.daysOut===0?'TODAY':e.daysOut===1?'TMRW':'DAYS'}</div>
@@ -4102,7 +4572,7 @@ async function sendAskMessage(){
 function appendAskMessage(role, text){
   const messages=document.getElementById('ask-messages');
   const isUser=role==='user';
-  const formatted=text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+  const formatted=axAiHtml(text);
   const el=document.createElement('div');
   el.className=`ask-msg${isUser?' user':''}`;
   el.innerHTML=`<div class="ask-avatar ${role}">${isUser?'👤':'🧠'}</div>
@@ -4187,7 +4657,7 @@ async function runCompareVerdict(tickers){
 
   const summary=valid.map(t=>{
     const d=compareData[t];
-    return`${t}: Score ${d.g.score}/10 (${d.g.verdict}), RSI ${d.q.rsi.toFixed(1)}, vs200MA ${d.q.priceVs200>=0?'+':''}${d.q.priceVs200.toFixed(1)}%, analyst upside ${((d.a.targetMean-d.q.price)/d.q.price*100).toFixed(1)}%, ${d.a.buyPct}% Buy ratings, strategy: ${d.g.strategy}`;
+    return`${t}: Score ${d.g.score}/10 (${d.g.verdict}), RSI ${d.q.rsi.toFixed(1)}, vs200MA ${d.q.priceVs200>=0?'+':''}${d.q.priceVs200.toFixed(1)}%, ${axUpside(d.q,d.a)!=null?'analyst upside '+axUpside(d.q,d.a).toFixed(1)+'%':'analyst data n/a'}${d.a.hasRatings?', '+d.a.buyPct+'% Buy ratings':''}, strategy: ${d.g.strategy}`;
   }).join('\n');
 
   const prompt=`You are AXIOM comparing these stocks for a ${ST.risk} risk investor:\n${summary}\n\nGive a 3-4 sentence head-to-head verdict: which stock wins for this investor right now and exactly why, which is riskier, and one sentence on when you'd switch your preference. Name the winner clearly. Plain text only.`;
@@ -4204,7 +4674,7 @@ async function runCompareVerdict(tickers){
       <div class="compare-winner-sym">${winner}</div>
       <div style="font-size:11px;color:var(--text2)"><div style="font-weight:700">${winnerData?.g?.verdict||'BUY'}</div><div style="color:var(--text3)">Score ${winnerData?.g?.score||'—'}/10</div></div>
     </div>
-    <div class="compare-verdict-body">${text.replace(/\n/g,'<br>')}</div>`;
+    <div class="compare-verdict-body">${axAiHtml(text)}</div>`;
   }catch(e){el.innerHTML=`<span style="color:var(--amber)">⚠️ ${e.message}</span>`;}
 }
 
@@ -4516,46 +4986,40 @@ function setMarketFilter(market, el){
 }
 
 // ══════════════════════════════════════════
-//  SPEED: FAST-PATH WATCHLIST ADD
+//  WATCHLIST — fast path (price) then rich path (analyst); one shared scoring helper
 // ══════════════════════════════════════════
-// Override addToWatchlistDirect with two-tier approach: price first (fast), rich data async
+function axWatchApplyQuote(w,q){
+  w.lastPrice=q.price; w.changePct=q.changePct; w.longName=q.longName;
+  w.rsi=q.rsi.toFixed(1); w.priceVs200=q.priceVs200.toFixed(1);
+  w._loading=false; w.lastScore=axTechScore(q);
+}
+function axWatchApplyAnalyst(w,q,a){
+  if(!a||!a.available) return false;
+  w.analystTarget=a.targetMean.toFixed(2); w.upside=axUpside(q,a).toFixed(1);
+  w.lastScore=axAnalystAdjust(axTechScore(q),q,a);
+  return true;
+}
+const renderWatchlistSoon=axThrottle(()=>renderWatchlist(),120);
 async function addToWatchlistDirect(ticker){
+  ticker=axNormTicker(ticker);
+  if(!ticker){ showToast('⚠️','Invalid ticker'); return; }
   if(ST.watchlist.find(w=>w.ticker===ticker)){showToast('ℹ️',`${ticker} already in watchlist`);return;}
   ST.watchlist.push({ticker,addedAt:new Date().toISOString(),lastPrice:null,changePct:null,lastScore:null,longName:ticker,rsi:null,priceVs200:null,analystTarget:null,upside:null,_loading:true});
   save(); renderWatchlist();
   showToast('👁',`${ticker} added to watchlist`);
-
-  // FAST PATH: Yahoo price only — no analyst call, no Groq
   try{
     const q = await fetchQuote(ticker);
     const w = ST.watchlist.find(x=>x.ticker===ticker);
-    if(w){
-      w.lastPrice=q.price; w.changePct=q.changePct; w.longName=q.longName;
-      w.rsi=q.rsi.toFixed(1); w.priceVs200=q.priceVs200.toFixed(1);
-      w._loading=false;
-      // Quick score from technicals only (no analyst call needed)
-      let sc=5;
-      if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-      if(q.priceVs200>0)sc+=1;
-      sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
-      w.lastScore=sc;
-    }
+    if(w) axWatchApplyQuote(w,q);
     save(); renderWatchlist();
-
-    // RICH PATH: analyst data loads async in background, no spinner blocking UI
     fetchAnalyst(ticker,q).then(a=>{
       const w2=ST.watchlist.find(x=>x.ticker===ticker);
-      if(!w2) return;
-      const up=((a.targetMean-q.price)/q.price)*100;
-      let sc2=w2.lastScore||5;
-      if(up>20)sc2+=2;else if(up>10)sc2+=1;else if(up<0)sc2-=2;
-      if(a.buyPct>65)sc2+=1;
-      sc2=Math.max(1,Math.min(10,Math.round(sc2*10)/10));
-      w2.analystTarget=a.targetMean.toFixed(2);
-      w2.upside=up.toFixed(1); w2.lastScore=sc2;
-      save(); renderWatchlist();
-    }).catch(()=>{});
-  }catch(e){ showToast('⚠️',`Could not fetch ${ticker}`); }
+      if(w2 && axWatchApplyAnalyst(w2,q,a)){ save(); renderWatchlist(); }
+    });
+  }catch(e){
+    const w=ST.watchlist.find(x=>x.ticker===ticker); if(w){ w._loading=false; save(); renderWatchlist(); }
+    showToast('⚠️',`Could not fetch ${ticker}`);
+  }
 }
 
 // ══════════════════════════════════════════
@@ -4584,8 +5048,7 @@ function runScanner(){
       const q=await fetchQuote(ticker);
       let sc=5;
       if(q.rsi<30)sc+=2;else if(q.rsi>70)sc-=2;
-      const estTarget=q.high52*1.05;
-      const upside=((estTarget-q.price)/q.price)*100;
+      const upside=q.high52>0?((q.high52-q.price)/q.price)*100:0;   // real distance to the 52-week high (NOT an analyst target)
       if(upside>20)sc+=2;else if(upside>10)sc+=1;else if(upside<0)sc-=1;
       if(q.priceVs200>0)sc+=1;
       sc=Math.max(1,Math.min(10,Math.round(sc*10)/10));
@@ -4594,8 +5057,9 @@ function runScanner(){
       done++;
       label.textContent=`Scanning ${done}/${tickers.length} — ${ticker}`;
       fill.style.width=(done/tickers.length*100)+'%';
-      if(res){ scanResults.push(res); renderScanTable(); }
-    }, 200);
+      if(res){ scanResults.push(res); axRenderScanSoon(); }
+    }, 60);
+    renderScanTable();
     btn.disabled=false; btn.textContent='▶ Re-Scan'; prog.classList.remove('show');
     showToast('✅',`${scanResults.length} ${MARKET_NAMES[currentMarket]||''} stocks scanned`);
   })();
@@ -4665,26 +5129,27 @@ function parseBriefingText(text){
 // Watchers with action buttons
 function renderWatcherCard(p, i, liveData){
   const live=liveData.find(l=>l.ticker===p.ticker)||{};
-  const scColor=p.upside>20?'var(--cyan)':p.upside>10?'var(--green)':'var(--amber)';
+  const upv=live.upside!=null?parseFloat(live.upside):null;
+  const scColor=upv==null?'var(--text3)':upv>20?'var(--cyan)':upv>10?'var(--green)':upv>0?'var(--amber)':'var(--red)';
   return`<div style="padding:11px 0;border-bottom:1px solid var(--border)">
     <div style="display:flex;align-items:flex-start;gap:10px">
       <div class="watcher-rank">${i+1}</div>
       <div style="flex:1;min-width:0">
         <div class="watcher-sym" onclick="quickSearch('${p.ticker}');switchView('analyze')" style="cursor:pointer">${p.ticker}
-          <span style="font-size:10px;font-weight:400;color:var(--text3)">${p.name||live.longName||''}</span>
+          <span style="font-size:10px;font-weight:400;color:var(--text3)">${esc(p.name||live.longName||'')}</span>
         </div>
-        <div class="watcher-reason" style="margin-top:2px">${p.reason}</div>
-        ${p.risk?`<div style="font-size:9px;color:var(--red);margin-top:2px">⚠ ${p.risk}</div>`:''}
+        <div class="watcher-reason" style="margin-top:2px">${esc(p.reason)}</div>
+        ${p.risk?`<div style="font-size:9px;color:var(--red);margin-top:2px">⚠ ${esc(p.risk)}</div>`:''}
         ${live.price?`<div style="font-size:10px;color:var(--text3);margin-top:3px;font-family:'JetBrains Mono',monospace">$${live.price} · RSI ${live.rsi} · ${parseFloat(live.priceVs200)>=0?'+':''}${live.priceVs200}% vs 200MA</div>`:''}
         <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap">
-          <button onclick="openActionCard('${p.ticker}','${live.price||0}','${(p.name||p.ticker).replace(/'/g,'')}')" style="padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif">🔍 Actions</button>
+          <button onclick="openActionCard('${p.ticker}','${live.price||0}','${axAttrName(p.name||live.longName||p.ticker)}')" style="padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif">🔍 Actions</button>
           <button onclick="addToWatchlistDirect('${p.ticker}')" style="padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif">👁 Watch</button>
           <button onclick="openTradeModalWith('${p.ticker}',${live.price||0})" style="padding:4px 10px;border-radius:10px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 8%,transparent);color:var(--cyan);font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">＋ Portfolio</button>
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0">
-        <div class="watcher-upside" style="color:${scColor}">+${p.upside}%</div>
-        ${p.target?`<div style="font-size:9px;color:var(--text3);margin-top:2px">${p.target}</div>`:''}
+        <div class="watcher-upside" style="color:${scColor}">${upv==null?'—':(upv>=0?'+':'')+live.upside+'%'}</div>
+        <div style="font-size:9px;color:var(--text3);margin-top:2px">${live.targetMean!=null?'analyst target $'+live.targetMean:(live.fromHigh!=null?live.fromHigh+'% below 52W high':'no analyst data')}</div>
       </div>
     </div>
   </div>`;
@@ -4695,6 +5160,7 @@ function renderWatcherCard(p, i, liveData){
 // ══════════════════════════════════════════
 function enhanceInsight(text){
   if(!text) return text;
+  text=esc(text);
   // Bold $ price levels
   let out = text.replace(/\$([0-9,]+(?:\.[0-9]{1,2})?)/g, '<strong style="color:var(--cyan);font-family:\'JetBrains Mono\',monospace">$$$1</strong>');
   // Bold % figures with color
@@ -4723,7 +5189,7 @@ function enhanceInsight(text){
 // ══════════════════════════════════════════
 // Snapshots portfolio value once per day on app open
 function takePortfolioSnapshot(){
-  const today = new Date().toISOString().slice(0,10);
+  const today = axLocalISODate();
   ST.portfolios.forEach(p=>{
     if(!p.snapshots) p.snapshots=[];
     // Only one snapshot per day
@@ -4983,6 +5449,14 @@ function showToast(icon,msg){
   document.getElementById('toast-icon').textContent=icon+' ';document.getElementById('toast-msg').textContent=msg;
   t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
 }
+// ── BOOT (last, so every const/let above is initialised before the first render) ──
+if(ST.groqKey||ST.setupDone)bootApp();
+// PWA shortcuts (#analyze, #portfolio, #scanner …)
+(function(){
+  const h=(location.hash||'').slice(1);
+  if(['dashboard','analyze','portfolio','watchlist','compare','earnings','ask','scanner','strategies'].includes(h)
+     && document.getElementById('app').style.display!=='none') switchView(h);
+})();
 </script>
 <script>
 // Service Worker registration for PWA install
