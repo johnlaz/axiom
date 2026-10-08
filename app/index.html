@@ -8,7 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>AXIOM — AI Stock Intelligence</title>
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -238,12 +239,20 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 
 /* ── SPARKLINE ── */
 .sparkline-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.sparkline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sparkline-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .sparkline-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)}
 .sparkline-range{display:flex;gap:6px}
 .spark-btn{padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;border:1px solid var(--border);background:none;color:var(--text3);cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
 .spark-btn.active{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
-.sparkline-svg{width:100%;height:80px}
+.sparkline-svg{width:100%;height:140px;display:block}
+.chart-stats{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--text3);margin-bottom:8px;font-family:'JetBrains Mono',monospace}
+.chart-stats b{font-weight:700}
+.chart-box{position:relative;touch-action:pan-y;cursor:crosshair}
+.chart-xh{position:absolute;top:0;bottom:0;width:1px;background:var(--text3);opacity:.6;display:none;pointer-events:none}
+.chart-dot{position:absolute;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;border:2px solid var(--bg2);display:none;pointer-events:none}
+.chart-tip{position:absolute;top:2px;display:none;pointer-events:none;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:4px 8px;font-size:11px;white-space:nowrap;color:var(--text);font-family:'JetBrains Mono',monospace;z-index:2}
+.chart-axis{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px}
+.ax-ver{font-size:9px;font-weight:600;letter-spacing:.5px;color:var(--text3);-webkit-text-fill-color:var(--text3);opacity:.8;margin-left:6px;font-family:'JetBrains Mono',monospace;vertical-align:middle}
 
 /* ── PORTFOLIO ── */
 .port-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;width:100%}
@@ -731,7 +740,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
 <div id="app">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:10px">
-      <div class="logo" onclick="switchView('dashboard')" style="cursor:pointer" title="Dashboard">AXIOM</div>
+      <div class="logo" onclick="switchView('dashboard')" style="cursor:pointer" title="Dashboard">AXIOM<span class="ax-ver"></span></div>
       <button id="back-btn" onclick="navBack()" title="Go back (Alt+←)" style="display:none;align-items:center;gap:4px;padding:4px 11px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">← Back</button>
     </div>
     <div class="topbar-right">
@@ -842,7 +851,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div>
-              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Market Mood · SPY momentum</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Market Mood · SPY momentum (not CNN's index)</div>
               <svg class="fg-arc" viewBox="0 0 200 110" id="fg-svg">
                 <defs><linearGradient id="fgg" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stop-color="#f43f5e"/>
@@ -1324,7 +1333,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
   <div class="modal" style="max-width:500px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div class="modal-title" style="margin-bottom:0">⚙️ Settings</div>
-      <button onclick="closeSettings()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer">×</button>
+      <button onclick="closeSettings()" aria-label="Close settings" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer">×</button>
     </div>
     <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">API Keys</div>
     <div class="modal-group">
@@ -1376,6 +1385,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
     <hr class="modal-divider">
     <button class="port-action-btn danger" onclick="resetAllData()" style="width:100%;justify-content:center">🗑 Reset All Data</button>
     <div class="modal-btns"><button class="modal-cancel" onclick="closeSettings()">Cancel</button><button class="modal-confirm" onclick="saveSettings()">Save Settings</button></div>
+    <div style="text-align:center;font-size:10px;color:var(--text3);margin-top:12px;font-family:'JetBrains Mono',monospace">AXIOM <span class="ax-ver"></span></div>
   </div>
 </div>
 
@@ -1587,6 +1597,7 @@ const RISK_COLORS={Conservative:'#10b981',Moderate:'#22d3ee',Aggressive:'#f59e0b
 //  that is the UTC date, which flips to tomorrow around 8 PM Eastern.
 // ══════════════════════════════════════════
 const AX_MARKET_TZ = 'America/New_York';
+const AX_VERSION   = '3.1';                   // keep in sync with VERSION in sw.js (axiom-app-v3.1)
 const AX_BUILD_ISO = '2026-10-02';            // floor for the device-clock sanity check
 const AX_BUILD_MS  = new Date(AX_BUILD_ISO + 'T00:00:00').getTime();
 
@@ -2294,27 +2305,49 @@ function yahooFetch(path){
 
 // ── Quotes: one cache, one in-flight map. Closed market = nothing can change, so cache for an hour. ──
 const _axQuoteInflight={};
+// Build one quote object from aligned closes/times (+ optional Yahoo meta). Shared by Yahoo and FMP paths.
+function axBuildQuote(ticker,closes,times,meta,source){
+  meta=meta||{};
+  const price=meta.regularMarketPrice||closes[closes.length-1];
+  const prev=meta.regularMarketPreviousClose||meta.previousClose||closes[closes.length-2]||price;
+  const ma200=closes.length>=200?closes.slice(-200).reduce((a,b)=>a+b,0)/200:closes.reduce((a,b)=>a+b,0)/closes.length;
+  const ma50=closes.length>=50?closes.slice(-50).reduce((a,b)=>a+b,0)/50:null;
+  return {ticker,price,prev,change:price-prev,changePct:((price-prev)/prev)*100,
+    high52:meta.fiftyTwoWeekHigh||Math.max(...closes),low52:meta.fiftyTwoWeekLow||Math.min(...closes),
+    volume:meta.regularMarketVolume,currency:meta.currency||'USD',asOf:(meta.regularMarketTime?meta.regularMarketTime*1000:(times[times.length-1]||0)),
+    longName:meta.longName||meta.shortName||ticker,exchange:meta.exchangeName||'',
+    marketCap:meta.marketCap,rsi:calcRSI(closes,14),ma200,ma50,closes,times,source:source||'Yahoo',
+    priceVs200:((price-ma200)/ma200)*100};
+}
+// Fallback when Yahoo/proxies fail: daily closes from FMP (uses the key the user already saved).
+async function axQuoteFromFmp(ticker){
+  const rows=await axFmp('/historical-price-eod/light?symbol='+encodeURIComponent(ticker));
+  const list=(Array.isArray(rows)?rows:(rows&&rows.historical)||[])
+    .map(r=>({t:Date.parse(String(r.date||'')+'T12:00:00Z'),c:+(r.price!=null?r.price:r.close)}))
+    .filter(r=>isFinite(r.t)&&r.c>0).sort((a,b)=>a.t-b.t).slice(-260);
+  if(list.length<10) throw new Error('Insufficient data for '+ticker);
+  return axBuildQuote(ticker,list.map(r=>r.c),list.map(r=>r.t),{},'FMP');
+}
 async function fetchQuote(ticker){
   const cached=getCached(ticker);
   if(cached) return cached;
   if(_axQuoteInflight[ticker]) return _axQuoteInflight[ticker];
   const p=(async()=>{
-    const j=await yahooFetch('/v8/finance/chart/'+encodeURIComponent(ticker)+'?interval=1d&range=1y&includePrePost=false');
-    if(!j||!j.chart||!j.chart.result||!j.chart.result[0]) throw new Error('No data for '+ticker);
-    const res=j.chart.result[0], meta=res.meta||{};
-    axClockCheck(meta.regularMarketTime);
-    const closes=((res.indicators&&res.indicators.quote&&res.indicators.quote[0]&&res.indicators.quote[0].close)||[]).filter(v=>v!=null&&v>0);
-    if(closes.length<10) throw new Error('Insufficient data for '+ticker);
-    const price=meta.regularMarketPrice||closes[closes.length-1];
-    const prev=meta.regularMarketPreviousClose||meta.previousClose||closes[closes.length-2]||price;
-    const ma200=closes.length>=200?closes.slice(-200).reduce((a,b)=>a+b,0)/200:closes.reduce((a,b)=>a+b,0)/closes.length;
-    const ma50=closes.length>=50?closes.slice(-50).reduce((a,b)=>a+b,0)/50:null;
-    const result={ticker,price,prev,change:price-prev,changePct:((price-prev)/prev)*100,
-      high52:meta.fiftyTwoWeekHigh||Math.max(...closes),low52:meta.fiftyTwoWeekLow||Math.min(...closes),
-      volume:meta.regularMarketVolume,currency:meta.currency||'USD',asOf:(meta.regularMarketTime||0)*1000,
-      longName:meta.longName||meta.shortName||ticker,exchange:meta.exchangeName||'',
-      marketCap:meta.marketCap,rsi:calcRSI(closes,14),ma200,ma50,closes,
-      priceVs200:((price-ma200)/ma200)*100};
+    let result;
+    try{
+      const j=await yahooFetch('/v8/finance/chart/'+encodeURIComponent(ticker)+'?interval=1d&range=1y&includePrePost=false');
+      if(!j||!j.chart||!j.chart.result||!j.chart.result[0]) throw new Error('No data for '+ticker);
+      const res=j.chart.result[0], meta=res.meta||{};
+      axClockCheck(meta.regularMarketTime);
+      const rawC=(res.indicators&&res.indicators.quote&&res.indicators.quote[0]&&res.indicators.quote[0].close)||[], rawT=res.timestamp||[];
+      const closes=[], times=[];                                   // keep dates aligned with prices
+      rawC.forEach((v,i)=>{ if(v!=null&&v>0&&rawT[i]!=null){ closes.push(v); times.push(rawT[i]*1000); } });
+      if(closes.length<10) throw new Error('Insufficient data for '+ticker);
+      result=axBuildQuote(ticker,closes,times,meta,'Yahoo');
+    }catch(e){
+      if((e&&e.fatal)||!ST.fmpKey) throw e;                         // real "no such ticker", or no fallback available
+      try{ result=await axQuoteFromFmp(ticker); }catch(e2){ throw e; }
+    }
     setCache(ticker,result);
     return result;
   })().finally(()=>{ delete _axQuoteInflight[ticker]; });
@@ -2913,15 +2946,13 @@ async function groqAnalyze(ticker,q,a,news){
 
 // ── RENDER ANALYSIS ──
 function renderAnalysis(ticker,q,a,g,news){
-  window._axCloses=q.closes;
-  const isPos=q.changePct>=0;
+    const isPos=q.changePct>=0;
   const sc=g.score>=7?'var(--cyan)':g.score>=4.5?'var(--amber)':'var(--red)';
   const vc=g.score>=7?'var(--green)':g.score>=4.5?'var(--amber)':'var(--red)';
   const ringD=(g.score/10)*216;
   const sclr=SC[g.strategy]||SC['Buy & Hold'];
 
-  // Build sparkline from closes
-  const spark=buildSparkline(q.closes.slice(-30),q.changePct>=0?'var(--green)':'var(--red)');
+  window._axQ=q;
 
   const html=`
   <div class="ticker-header">
@@ -2936,7 +2967,7 @@ function renderAnalysis(ticker,q,a,g,news){
         ${q.marketCap?`<span class="meta-chip">MCap: ${q.marketCap>=1e12?(q.marketCap/1e12).toFixed(2)+'T':q.marketCap>=1e9?(q.marketCap/1e9).toFixed(1)+'B':'—'}</span>`:''}
         <span class="meta-chip">${esc(g.sectorPosition)}</span>
         <span class="meta-chip" style="background:${sclr.bg};border-color:${sclr.b};color:${sclr.c}">${g.strategy}</span>
-        <span class="meta-chip" style="color:var(--text3)">Data: Yahoo${a.available?' + FMP':''}</span>
+        <span class="meta-chip" style="color:var(--text3)">Data: ${q.source||'Yahoo'}${a.available&&q.source!=='FMP'?' + FMP':''}</span>
       </div>
     </div>
     <div class="add-btns">
@@ -2949,15 +2980,20 @@ function renderAnalysis(ticker,q,a,g,news){
 
   <div class="sparkline-wrap">
     <div class="sparkline-header">
-      <span class="sparkline-title">30-Day Price Chart</span>
-      <div class="sparkline-range">
-        <button class="spark-btn active" onclick="updateSparkRange(this,30,'${isPos?'var(--green)':'var(--red)'}')">1M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,90,'${isPos?'var(--green)':'var(--red)'}')">3M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,180,'${isPos?'var(--green)':'var(--red)'}')">6M</button>
-        <button class="spark-btn" onclick="updateSparkRange(this,365,'${isPos?'var(--green)':'var(--red)'}')">1Y</button>
+      <span class="sparkline-title" id="chart-title">1-Month Price Chart</span>
+      <div class="sparkline-range" role="group" aria-label="Chart range">
+        <button class="spark-btn active" onclick="axSetRange(this,30)">1M</button>
+        <button class="spark-btn" onclick="axSetRange(this,90)">3M</button>
+        <button class="spark-btn" onclick="axSetRange(this,180)">6M</button>
+        <button class="spark-btn" onclick="axSetRange(this,365)">1Y</button>
       </div>
     </div>
-    <svg id="main-sparkline" class="sparkline-svg">${spark}</svg>
+    <div class="chart-stats" id="chart-stats"></div>
+    <div class="chart-box" id="chart-box" role="img" aria-label="Price chart">
+      <svg id="main-sparkline" class="sparkline-svg" viewBox="0 0 800 140" preserveAspectRatio="none"></svg>
+      <div class="chart-xh" id="chart-xh"></div><div class="chart-dot" id="chart-dot"></div><div class="chart-tip" id="chart-tip"></div>
+    </div>
+    <div class="chart-axis"><span id="chart-x0"></span><span id="chart-x1"></span></div>
   </div>
 
   <div class="score-section">
@@ -3041,23 +3077,56 @@ function renderAnalysis(ticker,q,a,g,news){
   </div>`;
 
   const el=document.getElementById('analysis-result');el.innerHTML=html;el.classList.add('show');
+  axDrawChart(30);
 }
 
-// ── SPARKLINE ──
-function buildSparkline(closes,color='var(--cyan)',height=80){
-  if(!closes||closes.length<2)return'';
-  const min=Math.min(...closes),max=Math.max(...closes),range=max-min||1;
-  const w=800,h=height-10,pts=closes.map((v,i)=>`${(i/(closes.length-1))*w},${h-((v-min)/range)*h}`).join(' ');
-  const fillPts=`0,${h} ${pts} ${w},${h}`;
-  return`<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity=".3"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
-    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-    <polygon points="${fillPts}" fill="url(#sg)"/>`;
+// ── PRICE CHART ──
+// Real calendar ranges (1M = 30 calendar days, not 30 trading days), a fixed viewBox so the whole
+// line always fits, dates + high/low, and hover/touch readout. Colour follows the period, not today.
+const AX_RANGE_LABEL={30:'1-Month',90:'3-Month',180:'6-Month',365:'1-Year'};
+function axFmtDate(ms,withYear){ try{ return new Date(ms).toLocaleDateString('en-US',{month:'short',day:'numeric',year:withYear?'numeric':undefined,timeZone:AX_MARKET_TZ}); }catch(e){ return ''; } }
+function axChartSlice(q,days){
+  const c=q.closes||[], t=q.times;
+  if(!t||t.length!==c.length){ const n=Math.max(2,Math.round(days*5/7)); return {c:c.slice(-n),t:null}; }   // legacy data without dates
+  const cutoff=t[t.length-1]-days*86400000; let i=0; while(i<t.length-2&&t[i]<cutoff) i++;
+  return {c:c.slice(i),t:t.slice(i)};
 }
-function updateSparkRange(btn,days,color){
-  const closes=window._axCloses||[];
-  document.querySelectorAll('.spark-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  const svg=document.getElementById('main-sparkline');
-  if(svg)svg.innerHTML=buildSparkline(closes.slice(-days),color);
+function axSetRange(btn,days){
+  document.querySelectorAll('.spark-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  axDrawChart(days);
+}
+function axDrawChart(days){
+  const q=window._axQ, svg=document.getElementById('main-sparkline'); if(!q||!svg) return;
+  const {c,t}=axChartSlice(q,days), n=c.length;
+  const stats=document.getElementById('chart-stats'), box=document.getElementById('chart-box');
+  document.getElementById('chart-title').textContent=(AX_RANGE_LABEL[days]||days+'-Day')+' Price Chart';
+  if(n<2){ svg.innerHTML=''; stats.textContent='Not enough data for this range.'; return; }
+  const first=c[0], last=c[n-1], hi=Math.max(...c), lo=Math.min(...c), chg=(last/first-1)*100, up=chg>=0;
+  const col=up?'var(--green)':'var(--red)', W=800, H=140, padY=10, span=(hi-lo)||hi*0.01||1, yMin=lo-span*.06, yMax=hi+span*.06;
+  const X=i=>n===1?0:(i/(n-1))*W, Y=v=>padY+(1-(v-yMin)/(yMax-yMin))*(H-2*padY);
+  const pts=c.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+  svg.innerHTML='<defs><linearGradient id="sg-main" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+col+'" stop-opacity=".28"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></linearGradient></defs>'+
+    '<line x1="0" x2="'+W+'" y1="'+Y(first).toFixed(1)+'" y2="'+Y(first).toFixed(1)+'" stroke="var(--border2)" stroke-width="1" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>'+
+    '<polygon points="0,'+H+' '+pts+' '+W+','+H+'" fill="url(#sg-main)"/>'+
+    '<polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
+  const f=v=>'$'+v.toFixed(2);
+  stats.innerHTML='<span style="color:'+col+'"><b>'+(up?'+':'')+chg.toFixed(2)+'%</b> over period</span><span>High <b>'+f(hi)+'</b></span><span>Low <b>'+f(lo)+'</b></span><span>Last <b>'+f(last)+'</b></span>';
+  document.getElementById('chart-x0').textContent=t?axFmtDate(t[0],true):'';
+  document.getElementById('chart-x1').textContent=t?axFmtDate(t[n-1],true):'';
+  if(box) box.setAttribute('aria-label',(q.ticker||'')+' '+(AX_RANGE_LABEL[days]||'')+' price chart: '+(up?'up ':'down ')+Math.abs(chg).toFixed(1)+'%, low '+f(lo)+', high '+f(hi));
+  // hover / touch readout
+  const xh=document.getElementById('chart-xh'), dot=document.getElementById('chart-dot'), tip=document.getElementById('chart-tip');
+  const hide=()=>{ xh.style.display=dot.style.display=tip.style.display='none'; };
+  box.onpointerleave=function(e){ if(e.pointerType==='mouse') hide(); }; box.onpointercancel=hide;   // touch readout stays after lift
+  box.onpointermove=box.onpointerdown=function(e){
+    const r=box.getBoundingClientRect(); if(!r.width) return;
+    const fx=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)), i=Math.round(fx*(n-1)), px=(i/(n-1))*r.width, py=(Y(c[i])/H)*r.height;
+    xh.style.left=px+'px'; xh.style.display='block';
+    dot.style.left=px+'px'; dot.style.top=py+'px'; dot.style.background=col; dot.style.display='block';
+    tip.textContent=(t?axFmtDate(t[i],true)+' · ':'')+f(c[i]); tip.style.display='block';
+    const tw=tip.offsetWidth; tip.style.left=Math.max(0,Math.min(r.width-tw,px-tw/2))+'px';
+  };
 }
 
 // ── PORTFOLIOS ──
@@ -3724,14 +3793,15 @@ function updateMarketStatus(){
 }
 
 async function loadMarketTickers(){
+  // Real index levels (^GSPC etc.); if Yahoo can't serve an index we fall back to its ETF and say so.
   const indices = [
-    {sym:'SPY', name:'S&P 500'},
-    {sym:'QQQ', name:'NASDAQ 100'},
-    {sym:'DIA', name:'Dow Jones'},
-    {sym:'IWM', name:'Russell 2000'},
-    {sym:'^VIX', lbl:'VIX', name:'Volatility'},
-    {sym:'GLD', name:'Gold'},
-    {sym:'TLT', name:'20Y Bonds'},
+    {sym:'^GSPC', etf:'SPY', lbl:'S&P 500', name:'S&P 500 index'},
+    {sym:'^NDX',  etf:'QQQ', lbl:'NASDAQ 100', name:'NASDAQ-100 index'},
+    {sym:'^DJI',  etf:'DIA', lbl:'DOW', name:'Dow Jones index'},
+    {sym:'^RUT',  etf:'IWM', lbl:'RUSSELL 2000', name:'Russell 2000 index'},
+    {sym:'^VIX', lbl:'VIX', name:'Volatility index'},
+    {sym:'GLD', name:'Gold (GLD ETF)'},
+    {sym:'TLT', name:'20Y Bonds (TLT ETF)'},
     {sym:'BTC-USD', name:'Bitcoin'},
   ];
   const container = document.getElementById('market-tickers');
@@ -3748,23 +3818,27 @@ async function loadMarketTickers(){
     </div>`).join('');
 
   // Fetch all 8 in 2 batches of 4 — instead of 8 sequential with delays
-  await fetchBatch(indices, async(idx)=>fetchQuote(idx.sym), 4, (idx,q,i)=>{
+  await fetchBatch(indices, async(idx)=>{
+    try{ return await fetchQuote(idx.sym); }
+    catch(e){ if(!idx.etf) throw e; const eq=await fetchQuote(idx.etf); return Object.assign({},eq,{viaEtf:idx.etf}); }
+  }, 4, (idx,q,i)=>{
     const cell=document.getElementById('mkt-'+i);
     if(!cell) return;
     if(q){
       const isPos=q.changePct>=0;
       cell.innerHTML=`
         <div class="mkt-ticker-sym">${idx.lbl||idx.sym}</div>
-        <div class="mkt-ticker-name">${q.longName||idx.name}</div>
-        <div class="mkt-ticker-price" style="color:var(--text)">${idx.sym[0]==='^'?'':'$'}${q.price.toFixed(2)}</div>
+        <div class="mkt-ticker-name">${q.viaEtf?esc(q.viaEtf)+' ETF (index unavailable)':idx.name}</div>
+        <div class="mkt-ticker-price" style="color:var(--text)">${idx.sym[0]==='^'&&!q.viaEtf?'':'$'}${q.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
         <div class="mkt-ticker-chg ${isPos?'pos':'neg'}">${isPos?'▲':'▼'} ${Math.abs(q.changePct).toFixed(2)}%</div>`;
-      cell.onclick=()=>{quickSearch(idx.sym);switchView('analyze');};
+      cell.onclick=()=>{quickSearch(idx.etf||idx.sym);switchView('analyze');};   // analyse the tradable ETF for index tiles
       cell.style.cursor='pointer';
     } else {
       cell.querySelector('.mkt-ticker-chg').textContent='Error';
     }
   });
 
+  try{ await fetchQuote('SPY'); }catch(e){}   // the sentiment gauge reads SPY
   if(updated) updated.textContent='Updated '+new Date().toLocaleTimeString()+axPriceAsOfNote();
   updateFearGreed();
 }
@@ -5222,7 +5296,7 @@ function buildPortfolioChart(portfolio, width=600, height=120){
 
   const pts = vals.map((v,i)=>`${pad.l + (i/(vals.length-1))*W},${pad.t + (1-(v-minV)/range)*H}`);
   const pathD = 'M '+pts.join(' L ');
-  const fillD = `M ${pad.l},${pad.t+H} L ${pts.join(' L ')} L ${pad.l+(vals.length-1)/(vals.length-1)*W+pad.l},${pad.t+H} Z`;
+  const fillD = `M ${pad.l},${pad.t+H} L ${pts.join(' L ')} L ${pad.l+W},${pad.t+H} Z`;
 
   // Y-axis labels
   const fmt = v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v.toFixed(0);
@@ -5459,9 +5533,25 @@ if(ST.groqKey||ST.setupDone)bootApp();
 })();
 </script>
 <script>
-// Service Worker registration for PWA install
+// Version stamp (single source: AX_VERSION, mirrored by the service-worker cache name).
+document.querySelectorAll('.ax-ver').forEach(function(el){ el.textContent='v'+AX_VERSION; });
+// Service worker + "new version ready" prompt.
+function axShowUpdate(){
+  if(document.getElementById('ax-update')) return;
+  var d=document.createElement('div'); d.id='ax-update'; d.setAttribute('role','status');
+  d.style.cssText='position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--cyan);color:var(--text);padding:10px 14px;border-radius:12px;font-size:13px;box-shadow:0 8px 28px rgba(0,0,0,.35)';
+  d.innerHTML='<span>A new version of AXIOM is ready.</span><button type="button" style="background:var(--cyan);color:#06121c;border:0;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer;font-family:inherit">Reload</button>';
+  d.querySelector('button').onclick=function(){ location.reload(); };
+  document.body.appendChild(d);
+}
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.register('sw.js').then(function(reg){
+    reg.addEventListener('updatefound', function(){
+      var nw=reg.installing; if(!nw) return;
+      nw.addEventListener('statechange', function(){ if(nw.state==='installed' && navigator.serviceWorker.controller) axShowUpdate(); });
+    });
+    document.addEventListener('visibilitychange', function(){ if(!document.hidden) reg.update().catch(function(){}); });
+  }).catch(function(){});
 }
 </script>
 <!-- © LAZLAB Creations -->

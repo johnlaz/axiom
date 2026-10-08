@@ -1,7 +1,7 @@
 // AXIOM App Service Worker — path-agnostic: works wherever the app is hosted
 // (any repo name, subfolder, or custom domain). Nothing here hardcodes a path.
-const VERSION = 'axiom-app-v3.0';
-const SHELL = ['./', './index.html', './manifest.json', './favicon.ico', './icons/icon-192.png', './icons/icon-512.png'];
+const VERSION = 'axiom-app-v3.1';   // keep in sync with AX_VERSION in index.html
+const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
 // Install: cache the shell one file at a time, so a single missing file can never abort the whole install.
@@ -57,7 +57,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Static files (icons, manifest): stale-while-revalidate
+  // Static files (icons, manifest, screenshots): stale-while-revalidate
   event.respondWith(caches.open(VERSION).then(async cache => {
     const hit = await cache.match(req);
     const net = fetch(req).then(res => { if (res && res.ok) cache.put(req, res.clone()); return res; }).catch(() => hit);
