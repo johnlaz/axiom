@@ -9,9 +9,9 @@
 <meta property="og:title" content="AXIOM: stock analysis that shows its work">
 <meta property="og:description" content="Live prices, analyst targets and real headlines go in. A 1–10 score, a bull case and a bear case come out.">
 <meta property="og:type" content="website">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" href="app/icon-192.png">
+<link rel="apple-touch-icon" href="app/icon-192.png">
+<meta property="og:image" content="app/shot-wide.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -252,11 +252,6 @@ footer a{color:var(--glacier-d)}
 footer .legal{max-width:36em}
 
 /* install banner */
-#install-banner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:14px;background:#fff;border:1px solid var(--line2);box-shadow:0 18px 44px -12px rgba(15,25,35,.35);border-radius:16px;padding:12px 14px 12px 18px;width:min(560px,calc(100% - 28px))}
-#install-banner.hidden{display:none!important}
-#install-banner strong{display:block;color:var(--ink);font-size:15.5px}
-#install-banner span{font-size:13.5px;color:var(--mist)}
-#install-banner .grow{flex:1}
 .x{background:none;border:0;font-size:20px;color:var(--mist);cursor:pointer;padding:6px 10px;border-radius:8px}
 
 /* ───────── responsive ───────── */
@@ -554,23 +549,16 @@ footer .legal{max-width:36em}
   <div class="wrap">
     <div>
       <strong style="color:var(--ink);font-family:var(--display);font-size:18px">AXIOM</strong><br>
-      &copy; <span id="yr">2026</span> LAZLAB Creations. All rights reserved.
+      &copy; 2026 LAZLAB Creations. All Rights Reserved.
     </div>
     <div class="legal">AXIOM is for research and paper trading only. It is not financial advice.</div>
     <div>Questions or feedback: <a href="mailto:lazlab.io@gmail.com">lazlab.io@gmail.com</a></div>
   </div>
 </footer>
 
-<div id="install-banner" class="hidden" role="dialog" aria-label="Install AXIOM">
-  <div class="grow"><strong>Add AXIOM to your home screen</strong><span>Opens like an app, with no browser bars.</span></div>
-  <button class="btn btn-primary btn-sm" id="install-btn" type="button">Install</button>
-  <button class="x" id="banner-close" type="button" aria-label="Dismiss">&#10005;</button>
-</div>
-
 <script>
 (function(){
   'use strict';
-  document.getElementById('yr').textContent = new Date().getFullYear();
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── sample data (fictional companies) ── */
@@ -670,13 +658,6 @@ footer .legal{max-width:36em}
   render(SAMPLES[0]); animateIn(SAMPLES[0]);          // never empty, even if the replay is interrupted
   if(!reduce) setTimeout(function(){ run(0); }, 700);   // the one orchestrated moment: replay the real loading steps once
 
-  /* ── PWA install prompt ── */
-  var deferred, banner=document.getElementById('install-banner');
-  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred=e; banner.classList.remove('hidden'); banner.style.display='flex'; });
-  document.getElementById('install-btn').addEventListener('click', async function(){ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch(e){} deferred=null; banner.classList.add('hidden'); });
-  document.getElementById('banner-close').addEventListener('click', function(){ banner.classList.add('hidden'); });
-
-  if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
 })();
 </script>
 </body>
