@@ -1353,6 +1353,11 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
       <div class="setup-lbl-row" style="margin-bottom:7px"><span class="modal-label" style="margin-bottom:0">FMP API Key</span><a class="setup-link" href="https://financialmodelingprep.com/register" target="_blank">financialmodelingprep.com ↗</a></div>
       <input class="setup-input" id="settings-fmp" type="password" placeholder="Optional — analyst data">
     </div>
+    <div class="modal-group">
+      <div class="setup-lbl-row" style="margin-bottom:7px"><span class="modal-label" style="margin-bottom:0">Data proxy URL</span></div>
+      <input class="setup-input" id="settings-proxy" type="url" placeholder="Optional — https://your-worker.workers.dev">
+      <div style="font-size:10px;color:var(--text3);line-height:1.6;margin-top:6px">Only needed if some tickers time out. Your own free Cloudflare Worker is tried first, before the shared public proxies. Setup steps are in the README.</div>
+    </div>
     <hr class="modal-divider">
     <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Preferences</div>
     <div class="modal-group"><span class="modal-label" style="display:block;margin-bottom:7px">Risk Profile</span>
@@ -1488,7 +1493,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
 //  STATE
 // ══════════════════════════════════════════
 const DEFAULT_STATE={
-  groqKey:'',fmpKey:'',setupDone:false,risk:'Moderate',
+  groqKey:'',fmpKey:'',proxyUrl:'',setupDone:false,risk:'Moderate',
   capital:100000,startCapital:100000,currency:'USD',theme:'arctic',themeChosen:false,
   portfolios:[],  // array of portfolio objects
   activePortId:null,
@@ -1597,7 +1602,7 @@ const RISK_COLORS={Conservative:'#10b981',Moderate:'#22d3ee',Aggressive:'#f59e0b
 //  that is the UTC date, which flips to tomorrow around 8 PM Eastern.
 // ══════════════════════════════════════════
 const AX_MARKET_TZ = 'America/New_York';
-const AX_VERSION   = '3.1';                   // keep in sync with VERSION in sw.js (axiom-app-v3.1)
+const AX_VERSION   = '3.2';                   // keep in sync with VERSION in sw.js (axiom-app-v3.2)
 const AX_BUILD_ISO = '2026-10-02';            // floor for the device-clock sanity check
 const AX_BUILD_MS  = new Date(AX_BUILD_ISO + 'T00:00:00').getTime();
 
@@ -2025,6 +2030,7 @@ function bootApp(){
   renderGroqModelPicker();
   document.getElementById('settings-groq').value=ST.groqKey;
   document.getElementById('settings-fmp').value=ST.fmpKey;
+  { const pe=document.getElementById('settings-proxy'); if(pe) pe.value=ST.proxyUrl||''; }
   document.getElementById('settings-capital').value=ST.capital;
   document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
   document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===ST.risk));
@@ -2086,6 +2092,7 @@ document.addEventListener('keydown', function(e){
 function showSettings(){
   document.getElementById('settings-groq').value=ST.groqKey;
   document.getElementById('settings-fmp').value=ST.fmpKey;
+  { const pe=document.getElementById('settings-proxy'); if(pe) pe.value=ST.proxyUrl||''; }
   document.getElementById('settings-capital').value=ST.capital;
   document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
   document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===ST.risk));
@@ -2096,6 +2103,7 @@ function closeSettings(){document.getElementById('settings-modal').classList.rem
 function saveSettings(){
   const gk=document.getElementById('settings-groq').value.trim();
   ST.groqKey=gk;ST.fmpKey=document.getElementById('settings-fmp').value.trim();ST.risk=selectedRisk;ST.setupDone=true;
+  ST.proxyUrl=axCleanProxyUrl(document.getElementById('settings-proxy').value);
   if(gk) refreshGroqModels(); else clearGroqModelState();
   const nc=parseFloat(document.getElementById('settings-capital').value);
   if(nc>0){ST.capital=nc;ST.startCapital=nc;}
@@ -2259,12 +2267,21 @@ function axRace(attempts,opts){
   });
 }
 // urls = equivalent mirrors of one resource (e.g. query1/query2); tries best proxies first.
+// Optional personal proxy (e.g. a free Cloudflare Worker): https only, used first when set.
+function axCleanProxyUrl(v){
+  v=String(v||'').trim(); if(!v) return '';
+  try{ const u=new URL(v); return u.protocol==='https:'?(u.origin+u.pathname.replace(/\/+$/,'')+u.search):''; }catch(e){ return ''; }
+}
 function axProxyGet(urls,parse,opts){
   const order=AX_PROXIES.slice().sort((a,b)=>axProxyScore(b.id)-axProxyScore(a.id));
+  const mk=(id,mkUrl,u)=>({id:id,timeout:(opts&&opts.timeout)||9000,
+    run:async signal=>{ const r=await fetch(mkUrl(u),{signal}); return parse(r); }});
   const attempts=[];
-  urls.forEach(u=>order.forEach(p=>attempts.push({id:p.id,timeout:(opts&&opts.timeout)||9000,
-    run:async signal=>{ const r=await fetch(p.url(u),{signal}); return parse(r); }})));
-  return axRace(attempts.slice(0,(opts&&opts.max)||6),opts);
+  const custom=axCleanProxyUrl(ST&&ST.proxyUrl);
+  if(custom) urls.forEach(u=>attempts.push(mk('custom',x=>custom+(custom.indexOf('?')>=0?'&':'?')+'url='+encodeURIComponent(x),u)));
+  attempts.push(mk('direct',x=>x,urls[0]));   // fails instantly if the source sends no CORS headers; costs nothing
+  urls.forEach(u=>order.forEach(p=>attempts.push(mk(p.id,p.url,u))));
+  return axRace(attempts.slice(0,((opts&&opts.max)||6)+(custom?urls.length:0)+1),opts);
 }
 // Cap simultaneous races so a busy dashboard can't hammer the free proxies into 429s.
 const AX_MAX_RACES=6; let _axActive=0; const _axWait=[];
@@ -2897,14 +2914,25 @@ async function analyzeStock(){
   }catch(err){
     loading.classList.remove('show');
     result.innerHTML=`<div class="card" style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">Analysis Failed</div><div style="font-size:13px;color:var(--text3);margin-bottom:14px">${err.message}</div><div style="font-size:11px;color:var(--text3);line-height:2;text-align:left;max-width:380px;margin:0 auto">
-      ${err.message.includes('403')||err.message.includes('rate')?
-        '🔄 <strong>Rate limited</strong> — Yahoo Finance blocked the request. Wait 15-30 seconds and try again.<br>💡 Try searching a different ticker first, then come back to this one.':
-        '• Check ticker spelling (e.g. NVDA, AAPL, TSLA)<br>• CORS proxy may be temporarily down — wait 30s and retry<br>• Verify your Groq API key is valid in Settings ⚙️'}
+      ${axFailHelp(err,ticker)}
     </div>
     <button onclick="analyzeStock()" style="margin-top:16px;padding:10px 24px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--cyan2),var(--violet));border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer">↺ Retry</button>
     </div>`;
     result.classList.add('show');if(tip)tip.style.display='block';
   }
+}
+
+// Say what actually went wrong. "No data for that ticker" is a real answer from Yahoo; timeouts are the free proxies failing.
+function axFailHelp(err,ticker){
+  const m=String((err&&err.message)||'');
+  if(/No data for that ticker|Insufficient data/i.test(m))
+    return '• Check the spelling of <b>'+esc(ticker)+'</b> (e.g. NVDA, BRK-B, SHOP.TO, BTC-USD)<br>• Very new listings may not have enough price history yet';
+  if(/Groq|401|model/i.test(m)&&!/proxies|Timed out/i.test(m))
+    return '• Verify your Groq API key and model in Settings ⚙️';
+  return '🌐 <b>Market data did not load for '+esc(ticker)+'.</b> Your ticker is probably fine: the shared free data proxies are slow or blocked for symbols they have not cached.<br>'+
+    '• Tap Retry (a different proxy may answer)<br>'+
+    (ST.fmpKey?'• The FMP fallback also had no data for this symbol<br>':'• Add a free FMP key in Settings ⚙️ to enable a fallback data source<br>')+
+    (ST.proxyUrl?'• Check that your proxy URL in Settings is working':'• For a lasting fix, add your own free proxy URL in Settings ⚙️ (steps in the README)');
 }
 
 function getSectorAlts(ticker){

@@ -1,6 +1,6 @@
 // AXIOM App Service Worker — path-agnostic: works wherever the app is hosted
 // (any repo name, subfolder, or custom domain). Nothing here hardcodes a path.
-const VERSION = 'axiom-app-v3.1';   // keep in sync with AX_VERSION in index.html
+const VERSION = 'axiom-app-v3.2';   // keep in sync with AX_VERSION in index.html
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
