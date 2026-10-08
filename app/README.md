@@ -1,2 +1,0 @@
-# axiom
-Ai Stock Analyzer 
