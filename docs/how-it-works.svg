@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="t d">
+  <title id="t">How AXIOM works</title><desc id="d">Four steps: you enter a ticker, AXIOM fetches prices, analyst targets and headlines, a rule-based score is computed, then an AI explains it as a score with a bull and bear case.</desc>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="360" rx="18" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <g font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">
+    <text x="600" y="48" font-size="24" font-weight="700" fill="#0f172a">How AXIOM works</text>
+    <g>
+      <rect x="40" y="90" width="240" height="190" rx="14" fill="#ffffff" stroke="#94a3b8"/>
+      <circle cx="70" cy="118" r="14" fill="#0369a1"/><text x="70" y="124" font-size="16" font-weight="700" fill="#fff">1</text>
+      <text x="160" y="160" font-size="20" font-weight="700" fill="#0f172a">Type a ticker</text>
+      <text x="160" y="192" font-size="15" fill="#334155">AAPL, BRK-B, SHOP.TO,</text><text x="160" y="214" font-size="15" fill="#334155">BTC-USD, ^VIX</text>
+    </g>
+    <path d="M284 185H316" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <g>
+      <rect x="320" y="90" width="240" height="190" rx="14" fill="#ffffff" stroke="#94a3b8"/>
+      <circle cx="350" cy="118" r="14" fill="#0369a1"/><text x="350" y="124" font-size="16" font-weight="700" fill="#fff">2</text>
+      <text x="440" y="160" font-size="20" font-weight="700" fill="#0f172a">Fetch real data</text>
+      <text x="440" y="192" font-size="15" fill="#334155">Prices and daily closes (Yahoo)</text><text x="440" y="214" font-size="15" fill="#334155">Analyst targets (FMP, optional)</text><text x="440" y="236" font-size="15" fill="#334155">Live headlines (RSS)</text>
+    </g>
+    <path d="M564 185H596" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <g>
+      <rect x="600" y="90" width="240" height="190" rx="14" fill="#ffffff" stroke="#94a3b8"/>
+      <circle cx="630" cy="118" r="14" fill="#0369a1"/><text x="630" y="124" font-size="16" font-weight="700" fill="#fff">3</text>
+      <text x="720" y="160" font-size="20" font-weight="700" fill="#0f172a">Score the data</text>
+      <text x="720" y="192" font-size="15" fill="#334155">RSI (14), 200-day average,</text><text x="720" y="214" font-size="15" fill="#334155">analyst upside and ratings</text><text x="720" y="236" font-size="15" fill="#334155">give a 1–10 base score</text>
+    </g>
+    <path d="M844 185H876" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <g>
+      <rect x="880" y="90" width="280" height="190" rx="14" fill="#ffffff" stroke="#94a3b8"/>
+      <circle cx="910" cy="118" r="14" fill="#0369a1"/><text x="910" y="124" font-size="16" font-weight="700" fill="#fff">4</text>
+      <text x="1020" y="160" font-size="20" font-weight="700" fill="#0f172a">AI explains it</text>
+      <text x="1020" y="192" font-size="15" fill="#334155">Your own Groq key writes the</text><text x="1020" y="214" font-size="15" fill="#334155">bull case, bear case and verdict.</text><text x="1020" y="236" font-size="15" fill="#334155">No key? Rule-based fallback.</text>
+    </g>
+    <text x="600" y="326" font-size="15" fill="#475569">Nothing is invented: missing data is shown as unavailable, never guessed.</text>
+  </g>
+</svg>

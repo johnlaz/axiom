@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="t d">
+  <title id="t">AXIOM architecture</title><desc id="d">The app runs entirely in the browser. Market data from Yahoo goes through public CORS proxies. FMP and Groq are called directly with the user's own keys. Settings and portfolios stay in local storage.</desc>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="420" rx="18" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <g font-family="Segoe UI,Helvetica,Arial,sans-serif">
+    <text x="600" y="44" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Architecture: everything runs in your browser</text>
+    <rect x="40" y="80" width="470" height="300" rx="16" fill="#ffffff" stroke="#0369a1" stroke-width="2"/>
+    <text x="64" y="112" font-size="18" font-weight="700" fill="#0369a1">Your device (installable PWA)</text>
+    <rect x="64" y="130" width="420" height="52" rx="10" fill="#e0f2fe" stroke="#7dd3fc"/><text x="82" y="152" font-size="16" font-weight="700" fill="#0f172a">app/index.html</text><text x="82" y="171" font-size="14" fill="#334155">UI, scoring, charts, scanner, paper trading</text>
+    <rect x="64" y="194" width="420" height="52" rx="10" fill="#e0f2fe" stroke="#7dd3fc"/><text x="82" y="216" font-size="16" font-weight="700" fill="#0f172a">app/sw.js</text><text x="82" y="235" font-size="14" fill="#334155">Offline shell, network-first pages, update prompt</text>
+    <rect x="64" y="258" width="420" height="52" rx="10" fill="#e0f2fe" stroke="#7dd3fc"/><text x="82" y="280" font-size="16" font-weight="700" fill="#0f172a">localStorage</text><text x="82" y="299" font-size="14" fill="#334155">Your keys, portfolios, settings. Never uploaded.</text>
+    <text x="64" y="346" font-size="14" fill="#475569">No AXIOM server, no account, no database.</text>
+    <path d="M514 160H700" stroke="#64748b" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ar)"/>
+    <path d="M514 230H700" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <path d="M514 300H700" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <text x="607" y="150" text-anchor="middle" font-size="13" fill="#475569">via CORS proxies</text>
+    <text x="607" y="220" text-anchor="middle" font-size="13" fill="#475569">direct, your key</text>
+    <text x="607" y="290" text-anchor="middle" font-size="13" fill="#475569">direct, your key</text>
+    <rect x="704" y="120" width="456" height="72" rx="12" fill="#ffffff" stroke="#94a3b8"/><text x="724" y="148" font-size="17" font-weight="700" fill="#0f172a">Yahoo Finance + news feeds</text><text x="724" y="172" font-size="14" fill="#334155">Quotes, daily closes, headlines (FMP fallback for prices)</text>
+    <rect x="704" y="204" width="456" height="72" rx="12" fill="#ffffff" stroke="#94a3b8"/><text x="724" y="232" font-size="17" font-weight="700" fill="#0f172a">Financial Modeling Prep (optional)</text><text x="724" y="256" font-size="14" fill="#334155">Analyst price targets and ratings</text>
+    <rect x="704" y="288" width="456" height="72" rx="12" fill="#ffffff" stroke="#94a3b8"/><text x="724" y="316" font-size="17" font-weight="700" fill="#0f172a">Groq (optional, bring your own key)</text><text x="724" y="340" font-size="14" fill="#334155">AI explanation; model list fetched from your key</text>
+  </g>
+</svg>
