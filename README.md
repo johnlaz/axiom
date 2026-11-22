@@ -2,9 +2,9 @@
 
 # AXIOM
 
-AI stock analysis that shows its work. Type a ticker and AXIOM pulls prices, analyst targets and current headlines, scores the stock 1–10 from the numbers, and has an AI explain the bull case and the bear case. It also includes a market scanner, watchlists, side-by-side comparison, earnings, and paper-trading portfolios. Free, no account, runs entirely in your browser.
+AI stock analysis that shows its work. Type a ticker and AXIOM pulls prices, analyst targets and current headlines, scores the stock 1–10 from the numbers, and has an AI explain the bull case and the bear case. It also includes a market scanner, watchlists, side-by-side comparison, earnings, and a portfolio review tool that loads your real holdings. Free, no account, runs entirely in your browser.
 
-AXIOM is for research and paper trading only. It is not financial advice.
+AXIOM is for research only. It is not financial advice.
 
 ## Live
 

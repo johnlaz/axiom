@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AXIOM: stock analysis that shows its work</title>
-<meta name="description" content="Live prices, analyst targets and real headlines go in. A 1–10 score, a bull case and a bear case come out. Free stock analysis, market scanner and paper trading in your browser.">
+<meta name="description" content="Live prices, analyst targets and real headlines go in. A 1–10 score, a bull case and a bear case come out. Free stock analysis, market scanner and portfolio review in your browser.">
 <meta name="theme-color" content="#edf2f7">
 <meta property="og:title" content="AXIOM: stock analysis that shows its work">
 <meta property="og:description" content="Live prices, analyst targets and real headlines go in. A 1–10 score, a bull case and a bear case come out.">
@@ -419,15 +419,15 @@ footer .legal{max-width:36em}
 
       <!-- Portfolios -->
       <article class="tool s5">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg>Portfolios</h3>
-        <p>Practice with paper money. Create named portfolios, tag each trade with a strategy, and watch live profit and loss and a performance chart build day by day. Import or export CSV.</p>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg>Portfolio Review</h3>
+        <p>Load your real holdings from a brokerage CSV or add them by hand. AXIOM prices them live, shows weights and gain or loss against the cost you give it, flags concentration and trend risk, and has Groq assess the whole portfolio.</p>
         <div class="viz">
           <svg viewBox="0 0 400 110" role="img" aria-label="Sample portfolio value rising over time" style="width:100%;height:auto;border-radius:12px;background:var(--ice)">
             <defs><linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0369a1" stop-opacity=".25"/><stop offset="1" stop-color="#0369a1" stop-opacity="0"/></linearGradient></defs>
             <path d="M0 92 C30 90 40 84 62 80 S96 86 118 70 S160 74 182 58 S226 62 250 44 S300 50 326 30 S372 24 400 14 V110 H0Z" fill="url(#pf)"/>
             <path d="M0 92 C30 90 40 84 62 80 S96 86 118 70 S160 74 182 58 S226 62 250 44 S300 50 326 30 S372 24 400 14" fill="none" stroke="#0369a1" stroke-width="2.4" stroke-linecap="round"/>
           </svg>
-          <div class="pstats"><div class="m"><small>Value</small><strong>$104,324</strong></div><div class="m"><small>Total P&amp;L</small><strong class="up">+$6,330</strong></div><div class="m"><small>Positions</small><strong>3</strong></div></div>
+          <div class="pstats"><div class="m"><small>Value</small><strong>$104,324</strong></div><div class="m"><small>Gain vs cost</small><strong class="up">+$6,330</strong></div><div class="m"><small>Holdings</small><strong>3</strong></div></div>
           <p class="cap">Sample data for illustration.</p>
         </div>
       </article>
@@ -485,7 +485,7 @@ footer .legal{max-width:36em}
       <!-- Strategies -->
       <article class="tool s12">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.5 9.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg>Strategies</h3>
-        <p>Four playbooks, each pulling picks from live market data. AXIOM also tracks how your own trades tagged with each strategy are performing.</p>
+        <p>Four playbooks, each pulling picks from live market data. Groq names the best fits and cites the real numbers it was given.</p>
         <div class="plays viz">
           <div class="play"><b>Buy &amp; Hold</b><span>Long-term holds with strong fundamentals.</span></div>
           <div class="play"><b>RSI Reversal</b><span>Oversold dips (RSI under 30) that may rebound.</span></div>
@@ -523,9 +523,9 @@ footer .legal{max-width:36em}
     <div class="faq-head"><h2>Questions people ask</h2><p class="sub">Something missing? Write to <a href="mailto:lazlab.io@gmail.com">lazlab.io@gmail.com</a>.</p></div>
     <div class="faq">
       <details><summary>Does it cost anything?</summary><p>AXIOM is free. Groq offers a free API key, and Financial Modeling Prep has a free tier of 250 calls a day. The FMP key is optional.</p></details>
-      <details><summary>Do I need an API key to try it?</summary><p>No. Without keys you can explore live quotes, the market scanner, portfolios and watchlists. A Groq key unlocks the AI features, including Analyze and Ask AXIOM. An FMP key adds analyst targets, ratings and confirmed earnings dates.</p></details>
+      <details><summary>Do I need an API key to try it?</summary><p>No. Without keys you can explore live quotes, data-only stock scores, the market scanner, portfolio review and watchlists. A Groq key unlocks the AI commentary, picks, the portfolio assessment and Ask AXIOM. An FMP key adds analyst targets, ratings and confirmed earnings dates.</p></details>
       <details><summary>Where does the data come from?</summary><p>Prices, charts and the major indices come from Yahoo Finance. Headlines come from Yahoo Finance, MarketWatch and CNBC feeds. Analyst targets and ratings come from Financial Modeling Prep. Free quotes can be delayed, so check your broker before you trade.</p></details>
-      <details><summary>Is this financial advice?</summary><p>No. AXIOM is for research and paper trading. Scores and AI commentary are not recommendations, and the AI can be wrong. Check the numbers and decide for yourself.</p></details>
+      <details><summary>Is this financial advice?</summary><p>No. AXIOM is for research only. Scores and AI commentary are not recommendations, and the AI can be wrong. Check the numbers and decide for yourself.</p></details>
       <details><summary>Does it work offline?</summary><p>The app itself opens offline after your first visit. Prices, headlines and the AI need a connection.</p></details>
       <details><summary>How do I install it?</summary><p>Open the app, then use your browser's install option: Add to Home Screen on iPhone and Android, or the install icon in the address bar on desktop.</p></details>
     </div>
@@ -551,7 +551,7 @@ footer .legal{max-width:36em}
       <strong style="color:var(--ink);font-family:var(--display);font-size:18px">AXIOM</strong><br>
       &copy; 2026 LAZLAB Creations. All Rights Reserved.
     </div>
-    <div class="legal">AXIOM is for research and paper trading only. It is not financial advice.</div>
+    <div class="legal">AXIOM is for research only. It is not financial advice.</div>
     <div>Questions or feedback: <a href="mailto:lazlab.io@gmail.com">lazlab.io@gmail.com</a></div>
   </div>
 </footer>

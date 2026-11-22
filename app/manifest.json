@@ -2,7 +2,7 @@
   "id": "./",
   "name": "AXIOM — AI Stock Intelligence",
   "short_name": "AXIOM",
-  "description": "AI-powered stock analysis and portfolio intelligence",
+  "description": "AI-powered stock analysis and portfolio review",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -21,7 +21,7 @@
   ],
   "shortcuts": [
     { "name": "Analyze Stock", "short_name": "Analyze", "url": "./index.html#analyze", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
-    { "name": "Portfolio", "short_name": "Portfolio", "url": "./index.html#portfolio", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Portfolio Review", "short_name": "Portfolio", "url": "./index.html#portfolio", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
     { "name": "Scanner", "short_name": "Scanner", "url": "./index.html#scanner", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
   ]
 }

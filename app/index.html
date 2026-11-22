@@ -227,9 +227,6 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .groq-title{font-size:13px;font-weight:700}
 .groq-model{font-size:9px;color:var(--text3)}
 .groq-body{font-size:13px;line-height:1.8;color:var(--text2)}
-.strategy-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.strategy-chip{padding:6px 13px;border-radius:20px;border:1px solid var(--border2);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2);background:var(--bg3);font-family:'Outfit',sans-serif}
-.strategy-chip:hover,.strategy-chip.selected{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
 .alts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
 .alt-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:all .2s}
 .alt-card:hover{border-color:var(--border2);transform:translateY(-2px)}
@@ -269,6 +266,22 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .port-action-btn.danger:hover{background:color-mix(in srgb,var(--red) 10%,transparent)}
 .port-action-btn.groq-btn{border-color:var(--violet2);color:var(--violet2);background:color-mix(in srgb,var(--violet2) 8%,transparent);font-weight:700}
 .port-action-btn.groq-btn:hover{background:color-mix(in srgb,var(--violet2) 16%,transparent)}
+.port-panels{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;margin-bottom:14px}
+@media(max-width:760px){.port-panels{grid-template-columns:1fr}.port-hero{grid-template-columns:1fr 1fr}}
+.port-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;min-width:0}
+.port-panel-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.alloc-bar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--bg4);gap:2px}
+.alloc-bar>div{min-width:2px}
+.alloc-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:11px;color:var(--text2)}
+.alloc-legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.pc-row{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.55;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border)}
+.pc-row:last-child{border-bottom:none}
+.pc-ico{flex-shrink:0;width:18px;text-align:center}
+.wbar{height:3px;border-radius:2px;background:var(--bg4);margin-top:4px;width:60px}
+.wbar>div{height:100%;border-radius:2px}
+.pos-table th[data-sort]{cursor:pointer}
+.pos-table th[data-sort]:hover,.pos-table th.sorted{color:var(--cyan)}
+.held-banner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:9px 14px;border-radius:var(--radius-sm);border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 7%,transparent);font-size:12px;color:var(--text2)}
 
 /* Portfolio Cards */
 .port-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
@@ -297,15 +310,8 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .groq-port-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
 .groq-port-title{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
 .groq-port-body{font-size:13px;line-height:1.8;color:var(--text2);margin-bottom:14px}
-.realloc-chips{display:flex;gap:8px;flex-wrap:wrap}
-.realloc-chip{padding:7px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--text2)}
-.realloc-chip:hover{border-color:var(--violet2);color:var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent)}
-.realloc-chip.action{border-color:var(--cyan);color:var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent)}
 
 /* Positions table */
-.strat-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.strat-tab{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2)}
-.strat-tab.active{border-color:var(--violet2);color:var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent)}
 .pos-table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto;margin-bottom:12px;width:100%}
 .pos-table{width:100%;border-collapse:collapse;min-width:560px}
 .pos-table th{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
@@ -314,7 +320,6 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 .pos-table tr:hover td{background:var(--bg3)}
 .pos-sym{font-size:14px;font-weight:800;letter-spacing:-.5px}
 .pos-date{font-size:9px;color:var(--text3)}
-.pos-strategy{padding:3px 8px;border-radius:8px;font-size:9px;font-weight:700;display:inline-block}
 .pos-actions{display:flex;gap:5px}
 .pos-btn{padding:4px 9px;border-radius:6px;border:1px solid var(--border2);background:none;font-size:10px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2);font-family:'Outfit',sans-serif;white-space:nowrap}
 .pos-btn:hover{background:var(--bg4)}
@@ -677,7 +682,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
   <div class="setup-box">
     <button class="setup-close" type="button" aria-label="Close setup and look around" title="Skip — just look around" onclick="skipSetup()">×</button>
     <div class="setup-logo">AXIOM</div>
-    <div class="setup-tagline">AI Stock Intelligence · Paper Trading · Portfolio Analytics</div>
+    <div class="setup-tagline">AI Stock Intelligence · Live Data · Portfolio Review</div>
     <div class="setup-group">
       <div class="setup-lbl-row">
         <span class="setup-label">Groq API Key <span style="color:var(--text3);font-size:9px">OPTIONAL — POWERS AI FEATURES</span></span>
@@ -693,16 +698,6 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
       </div>
       <input class="setup-input" id="fmp-key-input" type="password" placeholder="Analyst targets & ratings">
       <div class="setup-hint">Needed for analyst targets &amp; ratings · 250 free calls/day — <a href="https://financialmodelingprep.com" target="_blank" style="color:var(--cyan);text-decoration:none">financialmodelingprep.com</a></div>
-    </div>
-    <div class="setup-group">
-      <span class="setup-label" style="margin-bottom:7px;display:block">Paper Trade Capital</span>
-      <div class="setup-row">
-        <input class="setup-input" id="capital-input" type="number" value="100000" style="flex:2">
-        <select class="setup-input" id="currency-input" style="flex:1">
-          <option value="USD">USD</option><option value="CAD">CAD</option>
-          <option value="GBP">GBP</option><option value="EUR">EUR</option>
-        </select>
-      </div>
     </div>
     <div class="setup-group">
       <span class="setup-label" style="margin-bottom:7px;display:block">Risk Profile</span>
@@ -778,7 +773,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
     <div class="nav-tab" id="tab-dashboard" onclick="switchView('dashboard')">🏠 Dashboard</div>
     <div class="nav-tab active" id="tab-analyze" onclick="switchView('analyze')">🔍 Analyze</div>
     <div class="nav-tab" id="tab-compare" onclick="switchView('compare')">⚖️ Compare</div>
-    <div class="nav-tab" id="tab-portfolio" onclick="switchView('portfolio')">📊 Portfolios <span class="badge" id="pos-count">0</span></div>
+    <div class="nav-tab" id="tab-portfolio" onclick="switchView('portfolio')">📊 Portfolio <span class="badge" id="pos-count">0</span></div>
     <div class="nav-tab" id="tab-watchlist" onclick="switchView('watchlist')">👁 Watchlist</div>
     <div class="nav-tab" id="tab-scanner" onclick="switchView('scanner')">⚡ Scanner</div>
     <div class="nav-tab" id="tab-strategies" onclick="switchView('strategies')">🧪 Strategies</div>
@@ -827,18 +822,18 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
             <button class="dash-refresh-btn" onclick="loadBriefing()">↺ Refresh</button>
           </div>
           <div class="briefing-body" id="briefing-body">
-            <span style="color:var(--text3)">Click ↺ to load today's AI-powered market briefing — market conditions, portfolio health, and top opportunities tailored to your risk profile.</span>
+            <span style="color:var(--text3)">Click ↺ to load today's AI-powered market briefing — market conditions from live index data, a read on your loaded portfolio, and ideas to watch, tailored to your risk profile.</span>
           </div>
         </div>
 
         <!-- Portfolio Summary — span 6 -->
         <div class="dash-card span-6">
           <div class="dash-card-title">
-            <span>📊 My Portfolios</span>
+            <span>📊 Portfolio Review</span>
             <button class="dash-refresh-btn" onclick="switchView('portfolio')">View All →</button>
           </div>
           <div id="dash-port-summary">
-            <div style="font-size:12px;color:var(--text3)">No portfolios yet. <span style="color:var(--cyan);cursor:pointer" onclick="switchView('portfolio')">Create one →</span></div>
+            <div style="font-size:12px;color:var(--text3)">No portfolio loaded. <span style="color:var(--cyan);cursor:pointer" onclick="switchView('portfolio')">Load your holdings →</span></div>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px" id="dash-port-totals"></div>
         </div>
@@ -930,9 +925,9 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
 
         <!-- Recent Activity — span 6 -->
         <div class="dash-card span-6">
-          <div class="dash-card-title"><span>🕐 Recent Activity</span></div>
+          <div class="dash-card-title"><span>🕐 Recently Analyzed</span></div>
           <div id="dash-activity">
-            <div style="font-size:12px;color:var(--text3)">Your recent analyses and trades will appear here.</div>
+            <div style="font-size:12px;color:var(--text3)">Tickers you analyze will appear here.</div>
           </div>
         </div>
 
@@ -942,15 +937,15 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">📈 Price & Technicals</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://finance.yahoo.com" target="_blank" style="color:var(--cyan);text-decoration:none">Yahoo Finance v8 Chart API</a><br>Real-time price · RSI · 200/50 day MA · 52W range · Volume<br><span style="color:var(--green);font-weight:600">✓ Free · No key required · Delayed ~15min</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://finance.yahoo.com" target="_blank" style="color:var(--cyan);text-decoration:none">Yahoo Finance v8 Chart API</a><br>Delayed price · RSI · 200/50 day MA · 52W range · Volume<br><span style="color:var(--green);font-weight:600">✓ Free · No key required · Delayed ~15min</span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">🎯 Analyst Targets</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://financialmodelingprep.com" target="_blank" style="color:var(--cyan);text-decoration:none">Financial Modeling Prep (FMP)</a> · Primary<br><a href="https://finance.yahoo.com" target="_blank" style="color:var(--cyan);text-decoration:none">Yahoo Finance quoteSummary</a> · Fallback<br><span style="color:${ST.fmpKey?'var(--green)':'var(--amber)'};font-weight:600">${ST.fmpKey?'✓ FMP active — highest accuracy':'⚠ FMP key not set — using Yahoo fallback'}</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://financialmodelingprep.com" target="_blank" style="color:var(--cyan);text-decoration:none">Financial Modeling Prep (FMP)</a> · Primary<br>Needs a free FMP key — without one, analyst data is shown as unavailable (never estimated)<br><span id="ds-fmp-status" style="font-weight:600"></span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">🧠 AI Analysis</div>
-              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · ${groqModelLabel()}</a><br>Key Score · Bull/Bear · Strategy · Picks<br><span style="color:${ST.groqKey?'var(--green)':'var(--red)'};font-weight:600">${ST.groqKey?'✓ Groq connected':'✗ Groq key not set'}</span></div>
+              <div style="font-size:11px;color:var(--text3);line-height:1.6"><a href="https://groq.com" target="_blank" style="color:var(--cyan);text-decoration:none">Groq · <span class="groq-model-name">model</span></a><br>Score commentary · Bull/Bear · Picks · Portfolio assessment<br><span id="ds-groq-status" style="font-weight:600"></span></div>
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--text)">⚠️ Important Notes</div>
@@ -974,7 +969,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
         <div class="tip-grid">
           <div class="tip-item"><div class="tip-icon">🔍</div><div class="tip-text"><strong>1 — Analyze</strong><span>Enter any US ticker. AXIOM pulls live price, RSI, 200MA, and runs Groq AI for a full investment thesis + Key Action Score.</span></div></div>
           <div class="tip-item"><div class="tip-icon">📊</div><div class="tip-text"><strong>2 — Score</strong><span>Key Action Score 1–10: 7–10 Strong Buy, 4–6 Monitor, 1–3 Avoid. Includes bull/bear breakdown, analyst targets, and AI insight.</span></div></div>
-          <div class="tip-item"><div class="tip-icon">💼</div><div class="tip-text"><strong>3 — Portfolio</strong><span>Create named paper trade portfolios. Track each independently. Groq analyses your portfolio and suggests reallocation.</span></div></div>
+          <div class="tip-item"><div class="tip-icon">💼</div><div class="tip-text"><strong>3 — Portfolio</strong><span>Load your real holdings from a brokerage CSV. AXIOM prices them live, flags concentration and trend risk, and Groq assesses the whole portfolio.</span></div></div>
           <div class="tip-item"><div class="tip-icon">⚡</div><div class="tip-text"><strong>4 — Scanner</strong><span>Scan 40+ S&P 500 stocks for oversold RSI, 200MA breakouts, or analyst upside gaps. One click to deep-dive any result.</span></div></div>
         </div>
         <div style="margin-top:12px;font-size:10px;color:var(--text3);font-weight:600">QUICK SEARCH →</div>
@@ -995,87 +990,79 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
       <div id="analysis-result"></div>
     </div>
 
-    <!-- ── PORTFOLIO ── -->
+    <!-- ── PORTFOLIO REVIEW ── -->
     <div class="view" id="view-portfolio">
-      <!-- Portfolio Cards -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <div id="port-top-actions" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
         <div>
-          <div style="font-size:18px;font-weight:800">My Portfolios</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:2px">Create named portfolios · Track independently · Groq AI reallocation analysis</div>
+          <div style="font-size:18px;font-weight:800">Portfolio Review</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">Load your real holdings · live prices · concentration &amp; trend checks · Groq assessment</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="port-action-btn" onclick="exportAllPortfolios()">⬇ Export All</button>
-          <button class="port-action-btn" onclick="document.getElementById('import-all-file').click()">⬆ Import JSON</button>
-          <button class="port-action-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="document.getElementById('brokerage-csv-file').click()">&#x1F4E5; Import Brokerage CSV</button>
-          <input type="file" id="brokerage-csv-file" accept=".csv,.txt" style="display:none" onchange="importBrokerageCSV(event)">
-          <input type="file" id="import-all-file" accept=".json" style="display:none" onchange="importAllPortfolios(event)">
+          <button class="port-action-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="csvTargetPortId=null;document.getElementById('brokerage-csv-file').click()">&#x1F4E5; Load Brokerage CSV</button>
+          <button class="port-action-btn" onclick="openNewPortModal()">＋ New Portfolio</button>
+          <button class="port-action-btn" onclick="exportAllPortfolios()" title="Portfolios and watchlist only — no API keys">⬇ Backup</button>
+          <button class="port-action-btn" onclick="document.getElementById('import-all-file').click()">⬆ Restore</button>
         </div>
       </div>
+      <input type="file" id="brokerage-csv-file" accept=".csv,.txt" style="display:none" onchange="importBrokerageCSV(event)">
+      <input type="file" id="import-all-file" accept=".json" style="display:none" onchange="importAllPortfolios(event)">
 
       <div class="port-cards-grid" id="port-cards-grid"></div>
 
       <!-- Active Portfolio Detail -->
       <div id="active-port-detail" style="display:none">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-          <button onclick="closePortDetail()" style="padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:none;color:var(--text2);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer">← Back</button>
+          <button onclick="closePortDetail()" style="padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:none;color:var(--text2);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer">← All Portfolios</button>
           <div style="font-size:17px;font-weight:800" id="active-port-name">Portfolio</div>
           <div style="font-size:11px;color:var(--text3)" id="active-port-meta"></div>
         </div>
 
-        <!-- Stats row -->
         <div class="port-hero" id="port-hero-stats">
-          <div class="port-stat"><div class="port-stat-lbl">Portfolio Value</div><div class="port-stat-val mono" id="port-total-val">$0</div><div class="port-stat-sub" id="port-total-sub"></div></div>
-          <div class="port-stat"><div class="port-stat-lbl">Unrealized P&L</div><div class="port-stat-val mono" id="port-pnl">$0</div><div class="port-stat-sub" id="port-pnl-pct"></div></div>
-          <div class="port-stat"><div class="port-stat-lbl">Cash Remaining</div><div class="port-stat-val mono" id="port-cash">$0</div><div class="port-stat-sub" id="port-cash-pct"></div></div>
-          <div class="port-stat"><div class="port-stat-lbl">Days Tracked</div><div class="port-stat-val" id="port-days" style="font-size:20px;font-weight:800">0</div><div class="port-stat-sub" id="port-since"></div></div>
-        </div>
-
-        <!-- Performance Chart -->
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)">📈 Portfolio Value Over Time</span>
-            <span style="font-size:10px;color:var(--text3)">Snapshots taken daily on app open</span>
-          </div>
-          <div id="port-perf-chart"><!-- populated by openPortDetail --></div>
+          <div class="port-stat"><div class="port-stat-lbl">Market Value</div><div class="port-stat-val mono" id="port-total-val">—</div><div class="port-stat-sub" id="port-total-sub"></div></div>
+          <div class="port-stat"><div class="port-stat-lbl">Gain / Loss vs Cost</div><div class="port-stat-val mono" id="port-pnl">—</div><div class="port-stat-sub" id="port-pnl-pct"></div></div>
+          <div class="port-stat"><div class="port-stat-lbl">Day Change</div><div class="port-stat-val mono" id="port-day">—</div><div class="port-stat-sub" id="port-day-pct"></div></div>
+          <div class="port-stat"><div class="port-stat-lbl">Largest Holding</div><div class="port-stat-val mono" id="port-top" style="font-size:16px">—</div><div class="port-stat-sub" id="port-top-sub"></div></div>
         </div>
 
         <div class="port-actions">
-          <button class="port-action-btn primary" onclick="openTradeModal()">＋ Add Position</button>
-          <button class="port-action-btn" onclick="refreshPrices()">🔄 Refresh Prices</button>
-          <button class="port-action-btn groq-btn" onclick="groqPortfolioAnalysis()">🧠 Groq Analyze Portfolio</button>
+          <button class="port-action-btn primary" onclick="openHoldingModal()">＋ Add Holding</button>
+          <button class="port-action-btn" id="btn-refresh-port" onclick="refreshHoldings()">🔄 Refresh Prices</button>
+          <button class="port-action-btn groq-btn" onclick="groqPortfolioAnalysis()">🧠 Assess with Groq</button>
+          <button class="port-action-btn" onclick="csvTargetPortId=ST.activePortId;document.getElementById('brokerage-csv-file').click()">📥 Load CSV into this portfolio</button>
           <button class="port-action-btn" onclick="exportPortfolio()">⬇ Export CSV</button>
-          <button class="port-action-btn" onclick="document.getElementById('import-file').click()">⬆ Import CSV</button>
-          <input type="file" id="import-file" accept=".csv" style="display:none" onchange="importPortfolio(event)">
         </div>
 
-        <!-- Groq Portfolio Analysis Output -->
         <div class="groq-port-section" id="groq-port-section" style="display:none">
           <div class="groq-port-header">
-            <div class="groq-port-title">🧠 Portfolio Analysis & Reallocation Suggestions</div>
-            <button onclick="document.getElementById('groq-port-section').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px">×</button>
+            <div class="groq-port-title">🧠 Portfolio Assessment</div>
+            <button onclick="document.getElementById('groq-port-section').style.display='none'" aria-label="Close assessment" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px">×</button>
           </div>
           <div class="groq-port-body" id="groq-port-body"></div>
-          <div class="realloc-chips" id="realloc-chips"></div>
         </div>
 
-        <div class="strat-tabs">
-          <div class="strat-tab active" onclick="filterPortfolio('all',this)">All Positions</div>
-          <div class="strat-tab" onclick="filterPortfolio('Buy & Hold',this)">📈 Buy & Hold</div>
-          <div class="strat-tab" onclick="filterPortfolio('RSI Reversal',this)">🔄 RSI Reversal</div>
-          <div class="strat-tab" onclick="filterPortfolio('Momentum',this)">🚀 Momentum</div>
-          <div class="strat-tab" onclick="filterPortfolio('Value Gap',this)">💎 Value Gap</div>
+        <div class="port-panels">
+          <div class="port-panel">
+            <div class="port-panel-title">Allocation</div>
+            <div id="port-alloc"></div>
+          </div>
+          <div class="port-panel">
+            <div class="port-panel-title">Portfolio Check <span style="text-transform:none;letter-spacing:0;font-weight:400">· rule-based, from the numbers below</span></div>
+            <div id="port-checks"></div>
+          </div>
         </div>
 
         <div class="pos-table-wrap">
           <table class="pos-table">
             <thead><tr>
-              <th>Symbol</th><th>Strategy</th><th>Shares</th>
-              <th>Entry</th><th>Current</th><th>P&L</th><th>Return %</th><th>Actions</th>
+              <th data-sort="ticker" onclick="setPortSort('ticker')">Symbol</th><th>Shares</th><th>Avg Cost</th><th>Price</th>
+              <th data-sort="value" onclick="setPortSort('value')">Value</th><th>Weight</th>
+              <th data-sort="gain" onclick="setPortSort('gain')">Gain / Loss</th><th data-sort="rsi" onclick="setPortSort('rsi')">RSI</th><th>vs 200MA</th><th></th>
             </tr></thead>
             <tbody id="positions-tbody"></tbody>
           </table>
         </div>
-        <button class="add-pos-btn" onclick="openTradeModal()">＋ Add Position Manually</button>
+        <div style="font-size:10px;color:var(--text3);margin:-4px 0 12px;line-height:1.6">Prices and RSI come from Yahoo Finance daily data. Gain/loss uses only the average cost you provided. Non-USD tickers are not currency-converted. Informational only — not financial advice.</div>
+        <button class="add-pos-btn" onclick="openHoldingModal()">＋ Add Holding Manually</button>
       </div>
     </div>
 
@@ -1224,20 +1211,19 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
     <!-- ── STRATEGIES ── -->
     <div class="view" id="view-strategies">
       <div class="how-it-works" style="margin-bottom:14px">
-        <div class="how-title">Strategy Performance Ranking</div>
+        <div class="how-title">Strategy Picks</div>
         <div class="how-steps">
-          <div class="how-step"><div class="how-step-num">1</div><div class="how-step-text"><strong>Strategies are ranked by avg return</strong><span>As you open and close positions, each strategy tracks wins, losses, and average return. The leaderboard updates automatically.</span></div></div>
-          <div class="how-step"><div class="how-step-num">2</div><div class="how-step-text"><strong>Ask Groq for specific picks</strong><span>Click any strategy button to get 5 specific stock picks, entry criteria, and risk rules tailored to your profile.</span></div></div>
-          <div class="how-step"><div class="how-step-num">3</div><div class="how-step-text"><strong>"Best for me" button</strong><span>Groq compares all 4 strategies against current market conditions and your profile, then recommends the best 2.</span></div></div>
+          <div class="how-step"><div class="how-step-num">1</div><div class="how-step-text"><strong>Choose a universe</strong><span>Top volume, S&amp;P 500, NASDAQ 100, growth, dividend, ETFs, crypto or international.</span></div></div>
+          <div class="how-step"><div class="how-step-num">2</div><div class="how-step-text"><strong>Pick a playbook</strong><span>AXIOM scans the live data for that style and Groq names the best fits, citing the real numbers it was given.</span></div></div>
+          <div class="how-step"><div class="how-step-num">3</div><div class="how-step-text"><strong>"Best for me" button</strong><span>Groq compares all 4 playbooks against current conditions and your risk profile, then recommends the best 2.</span></div></div>
         </div>
       </div>
-      <div class="strat-hero" id="strategy-perf-grid"></div>
       <div class="advice-card">
         <div class="advice-header">
           <div class="groq-icon">🧠</div>
           <div><div class="groq-title" style="font-size:13px;font-weight:700">Groq Strategy Advisor</div><div class="groq-model" style="font-size:9px;color:var(--text3)"><span class="groq-model-name">Groq</span> · Risk: <span id="advice-risk">Moderate</span></div></div>
         </div>
-        <div class="advice-body" id="strategy-advice">Select a strategy below for specific stock picks, entry criteria, and risk rules tailored to your profile.</div>
+        <div class="advice-body" id="strategy-advice">Select a playbook below for picks from live market data, entry criteria, and risk rules tailored to your profile.</div>
         <div class="market-filter-row" style="margin-top:12px">
           <div class="strategy-market-filter active" onclick="setStrategyMarket('volume',this)">🔥 Top Volume</div>
           <div class="strategy-market-filter" onclick="setStrategyMarket('sp500',this)">🇺🇸 S&P 500</div>
@@ -1261,35 +1247,21 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
   </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- ══ ADD TRADE MODAL ══ -->
+<!-- ══ ADD / EDIT HOLDING MODAL ══ -->
 <div class="modal-overlay" id="trade-modal">
   <div class="modal">
-    <div class="modal-title">Add Paper Trade</div>
-    <div class="modal-group">
-      <span class="modal-label">Portfolio *</span>
-      <select class="modal-select" id="modal-portfolio" onchange="updateModalPortfolio()"></select>
-    </div>
-    <div id="modal-port-info" style="font-size:11px;color:var(--text3);margin-top:-8px;margin-bottom:10px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);display:none"></div>
+    <div class="modal-title" id="holding-title">Add Holding</div>
+    <div style="font-size:11px;color:var(--text3);margin:-8px 0 14px">Portfolio: <strong id="holding-port-name" style="color:var(--text2)"></strong></div>
     <div class="modal-row" style="margin-bottom:13px">
-      <div class="modal-group"><span class="modal-label">Ticker *</span><input class="modal-input" id="modal-ticker" placeholder="NVDA" oninput="this.value=this.value.toUpperCase()"></div>
-      <div class="modal-group"><span class="modal-label">Shares *</span><input class="modal-input" id="modal-shares" type="number" placeholder="10" min="0.01" step="any"></div>
+      <div class="modal-group"><span class="modal-label">Ticker *</span><input class="modal-input" id="modal-ticker" placeholder="NVDA" autocapitalize="characters" oninput="this.value=this.value.toUpperCase()"></div>
+      <div class="modal-group"><span class="modal-label">Shares *</span><input class="modal-input" id="modal-shares" type="number" placeholder="10" min="0" step="any"></div>
     </div>
-    <div class="modal-row" style="margin-bottom:13px">
-      <div class="modal-group"><span class="modal-label">Entry Price ($) *</span><input class="modal-input" id="modal-price" type="number" placeholder="214.50" step="0.01" min="0.01"></div>
-      <div class="modal-group"><span class="modal-label">Strategy</span>
-        <select class="modal-select" id="modal-strategy">
-          <option value="Buy &amp; Hold">Buy & Hold</option>
-          <option value="RSI Reversal">RSI Reversal</option>
-          <option value="Momentum">Momentum</option>
-          <option value="Value Gap">Value Gap</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-group"><span class="modal-label">Note (optional)</span><input class="modal-input" id="modal-note" placeholder="Reason for this trade..."></div>
-    <div id="modal-cost-preview" style="font-size:12px;color:var(--text2);margin-top:4px;padding:10px 12px;background:var(--bg3);border-radius:var(--radius-sm);display:none"></div>
+    <div class="modal-group"><span class="modal-label">Average cost per share ($) — optional</span><input class="modal-input" id="modal-price" type="number" placeholder="Leave blank if unknown" step="any" min="0"></div>
+    <div style="font-size:10px;color:var(--text3);margin:-6px 0 12px;line-height:1.5">Used only for gain/loss. Left blank, AXIOM shows "—" instead of guessing. Current price is fetched live.</div>
+    <div class="modal-group"><span class="modal-label">Note (optional)</span><input class="modal-input" id="modal-note" placeholder="e.g. Roth IRA, tax lot, thesis…"></div>
     <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeTradeModal()">Cancel</button>
-      <button class="modal-confirm" id="modal-confirm-btn" onclick="confirmTrade()">Add to Portfolio →</button>
+      <button class="modal-cancel" onclick="closeHoldingModal()">Cancel</button>
+      <button class="modal-confirm" id="modal-confirm-btn" onclick="confirmHolding()">Add Holding →</button>
     </div>
   </div>
 </div>
@@ -1297,33 +1269,12 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
 <!-- ══ NEW PORTFOLIO MODAL ══ -->
 <div class="modal-overlay" id="new-port-modal">
   <div class="modal">
-    <div class="modal-title">Create New Portfolio</div>
-    <div class="modal-group"><span class="modal-label">Portfolio Name *</span><input class="modal-input" id="new-port-name" placeholder="e.g. Growth 2025, Dividend Picks..."></div>
-    <div class="modal-group"><span class="modal-label">Description (optional)</span><input class="modal-input" id="new-port-desc" placeholder="Investment thesis or notes"></div>
-    <div class="modal-row" style="margin-bottom:13px">
-      <div class="modal-group"><span class="modal-label">Starting Capital ($)</span><input class="modal-input" id="new-port-capital" type="number" placeholder="100000"></div>
-      <div class="modal-group"><span class="modal-label">Strategy Focus</span>
-        <select class="modal-select" id="new-port-strategy">
-          <option value="Mixed">Mixed</option>
-          <option value="Buy & Hold">Buy & Hold</option>
-          <option value="RSI Reversal">RSI Reversal</option>
-          <option value="Momentum">Momentum</option>
-          <option value="Value Gap">Value Gap</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-group">
-      <span class="modal-label">Risk Profile</span>
-      <div class="risk-chips" id="new-port-risk-chips">
-        <div class="risk-chip" onclick="selectNewPortRisk(this,'Conservative')">Conservative</div>
-        <div class="risk-chip active" onclick="selectNewPortRisk(this,'Moderate')">Moderate</div>
-        <div class="risk-chip" onclick="selectNewPortRisk(this,'Aggressive')">Aggressive</div>
-        <div class="risk-chip" onclick="selectNewPortRisk(this,'Speculative')">Speculative</div>
-      </div>
-    </div>
+    <div class="modal-title">New Portfolio</div>
+    <div class="modal-group"><span class="modal-label">Name *</span><input class="modal-input" id="new-port-name" placeholder="e.g. Roth IRA, Brokerage, 401(k)"></div>
+    <div class="modal-group"><span class="modal-label">Description (optional)</span><input class="modal-input" id="new-port-desc" placeholder="Account or purpose"></div>
     <div class="modal-btns">
       <button class="modal-cancel" onclick="closeNewPortModal()">Cancel</button>
-      <button class="modal-confirm" onclick="createPortfolio()">Create Portfolio →</button>
+      <button class="modal-confirm" onclick="createPortfolio()">Create →</button>
     </div>
   </div>
 </div>
@@ -1375,10 +1326,6 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
         <div class="risk-chip scan-depth-btn" data-depth="deep" onclick="setScanDepth('deep')">🔬 Deep (full list)</div>
       </div>
     </div>
-    <div class="modal-group">
-      <div class="setup-lbl-row" style="margin-bottom:7px"><span class="modal-label" style="margin-bottom:0">Default Capital</span><span style="font-size:11px;color:var(--text3)">Current: <span id="settings-capital-display" style="color:var(--cyan)">$100,000</span></span></div>
-      <input class="setup-input" id="settings-capital" type="number" placeholder="100000">
-    </div>
     <hr class="modal-divider">
     <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Import / Export Settings</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -1386,7 +1333,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
       <button class="port-action-btn" onclick="document.getElementById('import-settings-file').click()" style="justify-content:center">⬆ Import Settings</button>
       <input type="file" id="import-settings-file" accept=".json" style="display:none" onchange="importSettings(event)">
     </div>
-    <div style="font-size:10px;color:var(--text3);line-height:1.6;padding:9px 12px;background:var(--bg3);border-radius:var(--radius-sm)">Export saves API keys, risk profile, theme, and capital as a JSON file for backup or device transfer. Keys stay local only.</div>
+    <div style="font-size:10px;color:var(--text3);line-height:1.6;padding:9px 12px;background:var(--bg3);border-radius:var(--radius-sm)">Export saves API keys, risk profile, theme, portfolios and watchlist as a JSON file for backup or device transfer. Keys stay local only.</div>
     <hr class="modal-divider">
     <button class="port-action-btn danger" onclick="resetAllData()" style="width:100%;justify-content:center">🗑 Reset All Data</button>
     <div class="modal-btns"><button class="modal-cancel" onclick="closeSettings()">Cancel</button><button class="modal-confirm" onclick="saveSettings()">Save Settings</button></div>
@@ -1407,7 +1354,6 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
     </div>
     <div class="action-card-btns">
       <button class="action-card-btn primary" id="ac-analyze-btn" onclick="closeActionCard()">🔍 Full Analysis</button>
-      <button class="action-card-btn" id="ac-portfolio-btn" onclick="closeActionCard()">＋ Add to Portfolio</button>
       <button class="action-card-btn" id="ac-watchlist-btn" onclick="closeActionCard()">👁 Add to Watchlist</button>
       <button class="action-card-btn" id="ac-compare-btn" onclick="closeActionCard()">⚖️ Compare</button>
     </div>
@@ -1422,24 +1368,17 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
       <button onclick="closeCSVImport()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1">&times;</button>
     </div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:14px;line-height:1.6">
-      Detected <strong id="csv-row-count" style="color:var(--cyan)">0</strong> positions from
+      Detected <strong id="csv-row-count" style="color:var(--cyan)">0</strong> holdings from
       <span id="csv-filename" style="color:var(--text2)">--</span>.
       Mapped: <span id="csv-cols-found" style="color:var(--text2)">--</span>.
       <span id="csv-missing-note" style="color:var(--amber)"></span>
     </div>
     <div class="modal-group">
-      <span class="modal-label">Add to Portfolio</span>
-      <select class="modal-select" id="csv-portfolio-select"></select>
+      <span class="modal-label">Load into</span>
+      <select class="modal-select" id="csv-portfolio-select" onchange="csvTargetChanged()"></select>
     </div>
-    <div class="modal-group">
-      <span class="modal-label">Default Strategy</span>
-      <select class="modal-select" id="csv-strategy-select">
-        <option value="Buy &amp; Hold">Buy &amp; Hold</option>
-        <option value="RSI Reversal">RSI Reversal</option>
-        <option value="Momentum">Momentum</option>
-        <option value="Value Gap">Value Gap</option>
-      </select>
-    </div>
+    <div class="modal-group" id="csv-new-wrap"><span class="modal-label">New portfolio name</span><input class="modal-input" id="csv-new-name" placeholder="e.g. Fidelity Brokerage"></div>
+    <label id="csv-replace-wrap" style="display:none;align-items:center;gap:8px;font-size:12px;color:var(--text2);margin:-4px 0 12px;cursor:pointer"><input type="checkbox" id="csv-replace" checked> Replace the current holdings with this file (uncheck to add to them)</label>
     <div style="max-height:260px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:14px">
       <table style="width:100%;border-collapse:collapse;font-size:11px">
         <thead><tr style="background:var(--bg3);position:sticky;top:0">
@@ -1456,32 +1395,7 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
     <div id="csv-warning" style="display:none;padding:8px 12px;background:#f59e0b18;border:1px solid #f59e0b44;border-radius:var(--radius-sm);font-size:11px;color:var(--amber);margin-bottom:12px"></div>
     <div class="modal-btns">
       <button class="modal-cancel" onclick="closeCSVImport()">Cancel</button>
-      <button class="modal-confirm" onclick="confirmCSVImport()">Import Positions</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ ADD RECOMMENDED STOCKS MODAL ══ -->
-<div class="modal-overlay" id="add-recs-modal">
-  <div class="modal" style="max-width:520px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-      <div class="modal-title" style="margin-bottom:0">Add Groq Recommendations</div>
-      <button onclick="closeAddRecsModal()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer">×</button>
-    </div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:16px">Select stocks to add and configure each position. All prices are live — adjust as needed.</div>
-
-    <div style="margin-bottom:14px">
-      <span class="modal-label">Add to Portfolio</span>
-      <select class="modal-select" id="recs-portfolio-select"></select>
-    </div>
-
-    <div id="recs-stock-list" style="display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;padding-right:4px"></div>
-
-    <div style="margin-top:16px;padding:10px 12px;background:var(--bg3);border-radius:var(--radius-sm);font-size:11px;color:var(--text3)" id="recs-total-cost">Select stocks above to see total cost</div>
-
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeAddRecsModal()">Cancel</button>
-      <button class="modal-confirm" onclick="confirmAddRecs()">Add Selected →</button>
+      <button class="modal-confirm" onclick="confirmCSVImport()">Load Holdings</button>
     </div>
   </div>
 </div>
@@ -1494,17 +1408,11 @@ try{var _s=JSON.parse(localStorage.getItem('axiom_v5')||'{}'),_t=_s.themeChosen|
 // ══════════════════════════════════════════
 const DEFAULT_STATE={
   groqKey:'',fmpKey:'',proxyUrl:'',setupDone:false,risk:'Moderate',
-  capital:100000,startCapital:100000,currency:'USD',theme:'arctic',themeChosen:false,
-  portfolios:[],  // array of portfolio objects
+  theme:'arctic',themeChosen:false,
+  portfolios:[],  // loaded portfolios: {id,name,desc,positions:[{ticker,shares,entryPrice(0=unknown),currentPrice,…}]}
   activePortId:null,
   watchlist:[],   // array of {ticker, addedAt, lastPrice, lastScore}
   recentTickers:[],
-  strategies:{
-    'Buy & Hold':{trades:0,wins:0,totalReturn:0,closed:[]},
-    'RSI Reversal':{trades:0,wins:0,totalReturn:0,closed:[]},
-    'Momentum':{trades:0,wins:0,totalReturn:0,closed:[]},
-    'Value Gap':{trades:0,wins:0,totalReturn:0,closed:[]}
-  }
 };
 let ST=Object.assign({},DEFAULT_STATE);
 // Arctic is the default. A saved theme is kept only if the user deliberately picked one
@@ -1528,10 +1436,7 @@ try{
         ST.portfolios=[{
           id:'migrated_'+Date.now(),name:'Imported Portfolio',
           desc:'Migrated from previous version',
-          strategy:'Mixed',risk:p.risk||'Moderate',
-          capital:p.capital||100000,startCapital:p.startCapital||100000,
-          positions:p.positions,createdAt:new Date().toISOString(),
-          snapshots:[]
+          positions:p.positions,createdAt:new Date().toISOString()
         }];
       }
     }
@@ -1539,7 +1444,8 @@ try{
 }catch(e){}
 if(!ST.portfolios)ST.portfolios=[];
 if(!ST.watchlist)ST.watchlist=[];
-if(!ST.strategies)ST.strategies=DEFAULT_STATE.strategies;
+['capital','startCapital','currency','strategies'].forEach(k=>{ delete ST[k]; });   // paper-trading fields from older versions
+axMigratePortfolios();
 
 var _axSaveT=null,_axNoSave=false;
 function saveNow(){ clearTimeout(_axSaveT); _axSaveT=null; if(_axNoSave) return; try{localStorage.setItem('axiom_v5',JSON.stringify(ST));}catch(e){} }
@@ -1550,7 +1456,6 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveNow()
 // ── GLOBAL VARS — all declared here to prevent temporal dead zone errors ──
 let navHistory   = [];
 let currentView  = 'dashboard';
-let portFilter   = 'all';
 let scanResults  = [];
 let scanSort     = 'upside';
 let watcherPeriod= 'short';
@@ -1558,7 +1463,6 @@ let watcherMarket= 'volume';
 let strategyMarket= 'volume';
 let dashLoaded   = false;
 let toastT       = null;
-let pendingRecs  = [];
 
 // ── PRICE CACHE — skip re-fetching same ticker within 5 min ──
 const priceCache = {};
@@ -1602,7 +1506,7 @@ const RISK_COLORS={Conservative:'#10b981',Moderate:'#22d3ee',Aggressive:'#f59e0b
 //  that is the UTC date, which flips to tomorrow around 8 PM Eastern.
 // ══════════════════════════════════════════
 const AX_MARKET_TZ = 'America/New_York';
-const AX_VERSION   = '3.2';                   // keep in sync with VERSION in sw.js (axiom-app-v3.2)
+const AX_VERSION   = '3.3';                   // keep in sync with VERSION in sw.js (axiom-app-v3.3)
 const AX_BUILD_ISO = '2026-10-02';            // floor for the device-clock sanity check
 const AX_BUILD_MS  = new Date(AX_BUILD_ISO + 'T00:00:00').getTime();
 
@@ -1929,19 +1833,14 @@ document.addEventListener('click',closeAllDropdowns);
 
 // ── SETUP ──
 let selectedRisk=ST.risk||'Moderate';
-let newPortRisk='Moderate';
 function selectRisk(el,val){document.querySelectorAll('#setup-risk-chips .risk-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');selectedRisk=val;}
 function selectRisk2(el,val){document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');selectedRisk=val;}
-function selectNewPortRisk(el,val){document.querySelectorAll('#new-port-risk-chips .risk-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');newPortRisk=val;}
 
 function launchApp(){
   const gk=document.getElementById('groq-key-input').value.trim();
   ST.groqKey=gk; // optional — user can explore with live Yahoo data and add a key later for AI features
   ST.setupDone=true;
   ST.fmpKey=document.getElementById('fmp-key-input').value.trim();
-  const cap=parseFloat(document.getElementById('capital-input').value)||100000;
-  ST.capital=cap; ST.startCapital=cap;
-  ST.currency=document.getElementById('currency-input').value;
   ST.risk=selectedRisk;
   if(!ST.theme) ST.theme='arctic'; // preserve imported theme
   saveNow(); bootApp();
@@ -1980,23 +1879,15 @@ function importSettingsFromSetup(e){
     if(d.groqKey)      ST.groqKey=d.groqKey;
     if(d.fmpKey)       ST.fmpKey=d.fmpKey;
     if(d.risk)         { ST.risk=d.risk; selectedRisk=d.risk; }
-    if(d.capital)      ST.capital=parseFloat(d.capital)||100000;
-    if(d.startCapital) ST.startCapital=parseFloat(d.startCapital)||ST.capital;
-    if(d.currency)     ST.currency=d.currency;
     if(d.theme)        { ST.theme=d.theme; ST.themeChosen=(d.themeChosen!==undefined)?!!d.themeChosen:d.theme!=='neon'; axResolveTheme(ST); }
-    if(d.portfolios&&d.portfolios.length) ST.portfolios=d.portfolios;
+    if(d.portfolios&&d.portfolios.length){ ST.portfolios=d.portfolios; axMigratePortfolios(); }
     if(d.watchlist&&d.watchlist.length)   ST.watchlist=d.watchlist;
-    if(d.strategies)   ST.strategies=d.strategies;
     save();
     // Populate form fields
     var gkEl=document.getElementById('groq-key-input');
     var fkEl=document.getElementById('fmp-key-input');
-    var capEl=document.getElementById('capital-input');
-    var curEl=document.getElementById('currency-input');
     if(gkEl){ gkEl.value=d.groqKey||''; gkEl.type='text'; }
     if(fkEl){ fkEl.value=d.fmpKey||''; fkEl.type='text'; }
-    if(capEl&&d.capital) capEl.value=d.capital;
-    if(curEl&&d.currency) curEl.value=d.currency;
     if(d.risk){
       document.querySelectorAll('#setup-risk-chips .risk-chip').forEach(function(c){
         c.classList.toggle('active', c.textContent.trim()===d.risk);
@@ -2031,12 +1922,8 @@ function bootApp(){
   document.getElementById('settings-groq').value=ST.groqKey;
   document.getElementById('settings-fmp').value=ST.fmpKey;
   { const pe=document.getElementById('settings-proxy'); if(pe) pe.value=ST.proxyUrl||''; }
-  document.getElementById('settings-capital').value=ST.capital;
-  document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
   document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===ST.risk));
-  updateRecentChips(); renderPortfolioCards(); renderWatchlist(); renderStrategyPerf(); updatePosCount();
-  // Snapshot today's portfolio values for performance chart
-  takePortfolioSnapshot();
+  updateRecentChips(); renderPortfolioCards(); renderWatchlist(); updatePosCount();
   // Default to dashboard
   switchView('dashboard');
 }
@@ -2054,7 +1941,7 @@ function switchView(v, addToHistory=true){
   document.getElementById('tab-'+v)?.classList.add('active');
   if(v==='dashboard'){ initDashboard(); }
   if(v==='portfolio') renderPortfolioCards();
-  if(v==='strategies') renderStrategyPerf();
+  if(v==='strategies'){ const ar=document.getElementById('advice-risk'); if(ar) ar.textContent=ST.risk; }
   if(v==='watchlist') renderWatchlist();
   if(v==='earnings') loadEarnings();
   if(v==='ask'){
@@ -2093,8 +1980,6 @@ function showSettings(){
   document.getElementById('settings-groq').value=ST.groqKey;
   document.getElementById('settings-fmp').value=ST.fmpKey;
   { const pe=document.getElementById('settings-proxy'); if(pe) pe.value=ST.proxyUrl||''; }
-  document.getElementById('settings-capital').value=ST.capital;
-  document.getElementById('settings-capital-display').textContent='$'+ST.capital.toLocaleString();
   document.querySelectorAll('#settings-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===ST.risk));
   renderGroqModelPicker();
   document.getElementById('settings-modal').classList.add('show');
@@ -2105,18 +1990,16 @@ function saveSettings(){
   ST.groqKey=gk;ST.fmpKey=document.getElementById('settings-fmp').value.trim();ST.risk=selectedRisk;ST.setupDone=true;
   ST.proxyUrl=axCleanProxyUrl(document.getElementById('settings-proxy').value);
   if(gk) refreshGroqModels(); else clearGroqModelState();
-  const nc=parseFloat(document.getElementById('settings-capital').value);
-  if(nc>0){ST.capital=nc;ST.startCapital=nc;}
-  applyRiskBadge(ST.risk);saveNow();closeSettings();showToast('✅','Settings saved');
+  applyRiskBadge(ST.risk);saveNow();closeSettings();updateDataSourceCard();showToast('✅','Settings saved');
 }
 function exportSettings(){
-  // Full backup — saves everything including portfolios, watchlist, settings
+  // Full backup — settings (INCLUDING API keys), portfolios and watchlist
   const d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
   a.download='axiom-full-backup-'+axLocalISODate()+'.json';
   a.click();
-  showToast('⬇','Full backup exported (settings + portfolios + watchlist)');
+  showToast('⬇','Full backup exported — contains your API keys, keep it private');
 }
 function importSettings(e){
   const f=e.target.files[0];if(!f)return;
@@ -2138,9 +2021,6 @@ function applyImportedData(jsonText, source){
   if(d.groqKey)      { ST.groqKey=d.groqKey;       applied.push('Groq key'); }
   if(d.fmpKey)       { ST.fmpKey=d.fmpKey;          applied.push('FMP key'); }
   if(d.risk)         { ST.risk=d.risk;               applied.push('risk'); }
-  if(d.capital)      { ST.capital=parseFloat(d.capital)||ST.capital; applied.push('capital'); }
-  if(d.startCapital) { ST.startCapital=parseFloat(d.startCapital)||ST.startCapital; }
-  if(d.currency)     { ST.currency=d.currency; }
   if(d.theme)        { ST.theme=d.theme; ST.themeChosen=(d.themeChosen!==undefined)?!!d.themeChosen:d.theme!=='neon'; axResolveTheme(ST); }
   if(d.portfolios&&d.portfolios.length){
     // Merge: add portfolios not already present (by id)
@@ -2151,6 +2031,7 @@ function applyImportedData(jsonText, source){
       }
     });
     if(added) applied.push(added+' portfolio(s)');
+    axMigratePortfolios();
   }
   if(d.watchlist&&d.watchlist.length){
     d.watchlist.forEach(function(nw){
@@ -2160,7 +2041,6 @@ function applyImportedData(jsonText, source){
     });
     applied.push('watchlist');
   }
-  if(d.strategies) { Object.assign(ST.strategies, d.strategies); }
   if(!applied.length){
     showToast('⚠️','No recognisable AXIOM data found in file');
     return false;
@@ -2174,13 +2054,9 @@ function applyImportedData(jsonText, source){
     selectedRisk=ST.risk||'Moderate';
     var gkEl=document.getElementById('settings-groq');
     var fkEl=document.getElementById('settings-fmp');
-    var capEl=document.getElementById('settings-capital');
-    var capDisp=document.getElementById('settings-capital-display');
     if(gkEl) gkEl.value=ST.groqKey||'';
     if(fkEl) fkEl.value=ST.fmpKey||'';
-    if(capEl) capEl.value=ST.capital||100000;
-    if(capDisp) capDisp.textContent='$'+(ST.capital||100000).toLocaleString();
-    renderPortfolioCards(); renderWatchlist(); updatePosCount();
+    renderPortfolioCards(); renderWatchlist(); updatePosCount(); renderDashPortfolios();
   }catch(e){}
   showToast('✅','Imported: '+applied.join(', '));
   return true;
@@ -2425,6 +2301,7 @@ function axNormTicker(raw){
 
 // ── Scoring (single copy; used by watchlist, compare, and the no-AI fallback) ──
 const AX_STRATS=['Buy & Hold','RSI Reversal','Momentum','Value Gap'];
+const AX_STRAT_TIPS={'Buy & Hold':'Long-term hold: steadier setup, little signal to trade around.','RSI Reversal':'Oversold (RSI under 30) — a mean-reversion setup.','Momentum':'Trading above its 200-day average with positive momentum.','Value Gap':'Price well below the analyst consensus target.'};
 function axClamp(sc){ return Math.max(1,Math.min(10,Math.round(sc*10)/10)); }
 function axUpside(q,a){ return (a&&a.available&&a.targetMean>0&&q&&q.price>0)?((a.targetMean-q.price)/q.price)*100:null; }
 function axTechScore(q){ let sc=5; if(q.rsi<30)sc+=2; else if(q.rsi>70)sc-=2; if(q.priceVs200>0)sc+=1; return axClamp(sc); }
@@ -2889,7 +2766,6 @@ async function groqPost(messages,maxTokens=600,temp=.2,_retried){
 async function analyzeStock(){
   const ticker=axNormTicker(document.getElementById('ticker-input').value);
   if(!ticker){showToast('⚠️','Enter a ticker');return;}
-  if(!ST.groqKey){showToast('⚠️','Add Groq API key in Settings ⚙️');return;}
 
   // Clear cache for this ticker so explicit analyze always gets fresh data
   if(axMarketStatus().state==='open') delete priceCache[ticker];
@@ -2953,6 +2829,7 @@ function getSectorAlts(ticker){
 
 async function groqAnalyze(ticker,q,a,news){
   a=a||axNone(''); news=news||[];
+  if(!ST.groqKey) return axRuleBased(ticker,q,a,'No Groq key — this is a data-only score; add a key in Settings for AI commentary');
   const up=axUpside(q,a);
   const analystTxt=a.available
     ? 'Analyst target $'+a.targetMean.toFixed(2)+(up!=null?' ('+(up>=0?'+':'')+up.toFixed(1)+'% upside)':'')+(a.hasRange?', range $'+a.targetLow.toFixed(2)+'-$'+a.targetHigh.toFixed(2):'')+'.'+(a.hasRatings?' Ratings: '+a.buyPct+'% Buy, '+a.holdPct+'% Hold, '+a.sellPct+'% Sell.':'')
@@ -2970,6 +2847,18 @@ async function groqAnalyze(ticker,q,a,news){
   }catch(e){
     return axRuleBased(ticker,q,a,'Groq unavailable: '+e.message);
   }
+}
+
+// If you've loaded this ticker into a portfolio, say so on its analysis page.
+function axHeldBanner(ticker){
+  const hits=[]; ST.portfolios.forEach(p=>{ const pos=p.positions.find(x=>x.ticker===ticker); if(pos){ const tot=axPortStats(p).value; hits.push({p,pos,tot}); } });
+  if(!hits.length) return '';
+  const parts=hits.map(h=>{
+    const v=(h.pos.currentPrice||0)*h.pos.shares, w=h.tot>0?v/h.tot*100:null;
+    const g=(h.pos.entryPrice>0&&h.pos.currentPrice>0)?(h.pos.currentPrice-h.pos.entryPrice)/h.pos.entryPrice*100:null;
+    return `<span><strong>${esc(h.p.name)}</strong>: ${h.pos.shares%1===0?h.pos.shares:h.pos.shares.toFixed(3)} sh${v>0?' · '+axMoney(v,0):''}${w!=null?' · '+w.toFixed(1)+'% of portfolio':''}${g!=null?' · <span style="color:'+(g>=0?'var(--green)':'var(--red)')+'">'+axPct(g)+' vs your cost</span>':''}</span>`;
+  });
+  return `<div class="held-banner"><span>📌 You hold this</span>${parts.join('<span style="color:var(--text3)">|</span>')}</div>`;
 }
 
 // ── RENDER ANALYSIS ──
@@ -2993,19 +2882,17 @@ function renderAnalysis(ticker,q,a,g,news){
         <span class="meta-chip">52W L: $${q.low52.toFixed(2)}</span>
         <span class="meta-chip">52W H: $${q.high52.toFixed(2)}</span>
         ${q.marketCap?`<span class="meta-chip">MCap: ${q.marketCap>=1e12?(q.marketCap/1e12).toFixed(2)+'T':q.marketCap>=1e9?(q.marketCap/1e9).toFixed(1)+'B':'—'}</span>`:''}
-        <span class="meta-chip">${esc(g.sectorPosition)}</span>
-        <span class="meta-chip" style="background:${sclr.bg};border-color:${sclr.b};color:${sclr.c}">${g.strategy}</span>
+        ${g.sectorPosition&&g.sectorPosition!=='—'?`<span class="meta-chip">${esc(g.sectorPosition)}</span>`:''}
         <span class="meta-chip" style="color:var(--text3)">Data: ${q.source||'Yahoo'}${a.available&&q.source!=='FMP'?' + FMP':''}</span>
       </div>
     </div>
     <div class="add-btns">
-      <button class="add-trade-btn" onclick="quickAdd('${ticker}',${q.price},'${g.strategy}')">＋ Add to Portfolio</button>
-      <button class="add-trade-btn violet" onclick="openTradeModalWith('${ticker}',${q.price})">⚙️ Custom Trade</button>
       <button class="add-trade-btn" onclick="addToWatchlistDirect('${ticker}')" style="border-color:var(--violet2);color:var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent)">👁 Watchlist</button>
       <button class="pdf-export-btn" onclick="exportAnalysisPDF('${ticker}')">📄 Export PDF</button>
     </div>
   </div>
 
+  ${axHeldBanner(ticker)}
   <div class="sparkline-wrap">
     <div class="sparkline-header">
       <span class="sparkline-title" id="chart-title">1-Month Price Chart</span>
@@ -3036,7 +2923,8 @@ function renderAnalysis(ticker,q,a,g,news){
       <div class="score-label">Key Action Score</div>
       <div class="score-verdict" style="color:${vc}">${g.verdict}</div>
       <div style="font-size:10px;color:var(--text2);margin-top:3px">${esc(g.scoreBreakdown)}</div>
-      <span class="score-pill" style="background:${axTint(sc,12)};color:${sc};border:1px solid ${axTint(sc,30)}">Strategy: ${g.strategy}</span>
+      <span class="score-pill" style="background:${axTint(sc,12)};color:${sc};border:1px solid ${axTint(sc,30)}">Best-fit style: ${g.strategy}</span>
+      <div style="font-size:10px;color:var(--text3);margin-top:5px">${AX_STRAT_TIPS[g.strategy]||''}</div>
     </div>
   </div>
 
@@ -3080,23 +2968,6 @@ function renderAnalysis(ticker,q,a,g,news){
   <div class="groq-section">
     <div class="groq-header"><div class="groq-icon">🧠</div><div><div class="groq-title">AXIOM AI Insight</div><div class="groq-model">Groq · ${groqModelLabel()} · ${ST.risk} Profile</div></div></div>
     <div class="groq-body">${enhanceInsight(g.insight)}</div>
-    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-      <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1px;margin-bottom:4px">ADD TO PORTFOLIO WITH STRATEGY</div>
-      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Groq recommends <strong style="color:var(--cyan)">${g.strategy}</strong> for this stock. Choose a strategy below — clicking opens the trade entry form.</div>
-      <div class="strategy-chips">
-        ${[
-          {key:'Buy & Hold', icon:'📈', tip:'Long-term hold. Best for strong fundamentals, minimal trading.'},
-          {key:'RSI Reversal', icon:'🔄', tip:'Buy oversold dips (RSI<30) expecting mean reversion.'},
-          {key:'Momentum', icon:'🚀', tip:'Ride breakouts above 200MA with analyst support.'},
-          {key:'Value Gap', icon:'💎', tip:'Buy when price is far below analyst consensus target.'}
-        ].map(s=>`<button class="strategy-chip ${s.key===g.strategy?'selected':''}"
-          onclick="openTradeModalWith('${ticker}',${q.price},'${s.key}')"
-          title="${s.tip}">
-          ${s.key===g.strategy?'⭐ ':''}${s.icon} ${s.key}
-        </button>`).join('')}
-      </div>
-      <div style="font-size:10px;color:var(--text3);margin-top:8px">⭐ = Groq's recommended strategy for ${ticker} · Hover any button to see strategy description</div>
-    </div>
   </div>
 
   <div class="section-hdr">People also analyzed</div>
@@ -3158,357 +3029,402 @@ function axDrawChart(days){
 }
 
 // ── PORTFOLIOS ──
+// ══════════════════════════════════════════
+//  PORTFOLIO REVIEW — load real holdings, price them live, check them honestly.
+//  No cash, no trades, no "strategy" tags: a position is shares + (optional) average cost.
+//  Cost basis is only used when the user supplied it — never guessed.
+// ══════════════════════════════════════════
+let portSort='value';
+let csvTargetPortId=null;
+let editPosId=null;
+let _portRefreshing=false;
+const AX_MAX_POS_WEIGHT=25;      // single-holding flag (% of portfolio) — a rule of thumb, shown as such in the UI
+const AX_TOP3_WEIGHT=60;         // top-3 flag (% of portfolio)
+const AX_ALLOC_COLORS=['#22d3ee','#a78bfa','#10b981','#f59e0b','#f43f5e','#60a5fa','#f472b6','#84cc16'];
+
+function axMoney(n,d){ d=(d==null)?2:d; return (n<0?'−':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function axSignedMoney(n,d){ return (n>=0?'+':'')+axMoney(n,d); }
+function axPct(n,d){ return (n>=0?'+':'')+n.toFixed(d==null?1:d)+'%'; }
+
+function axApplyQuoteToPos(pos,q){
+  pos.currentPrice=q.price; pos.name=q.longName||pos.name||pos.ticker;
+  pos.rsi=q.rsi; pos.priceVs200=q.priceVs200; pos.changePct=q.changePct; pos.change=q.change;
+  pos.currency=q.currency||'USD'; pos.quotedAt=Date.now();
+}
+// Clean up anything saved by older (paper-trading) versions.
+function axMigratePortfolios(){
+  if(!Array.isArray(ST.portfolios)) ST.portfolios=[];
+  ST.portfolios=ST.portfolios.filter(p=>p&&typeof p==='object');
+  ST.portfolios.forEach(p=>{
+    ['capital','startCapital','strategy','risk','snapshots','pricedAt'].forEach(k=>{ delete p[k]; });
+    if(!p.id) p.id='port_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+    if(!p.name) p.name='Portfolio';
+    if(!p.createdAt) p.createdAt=new Date().toISOString();
+    p.positions=(Array.isArray(p.positions)?p.positions:[]).map(pos=>{
+      pos=pos||{}; delete pos.strategy;
+      pos.ticker=String(pos.ticker||'').toUpperCase();
+      pos.shares=+pos.shares||0; pos.entryPrice=+pos.entryPrice>0?+pos.entryPrice:0; pos.currentPrice=+pos.currentPrice>0?+pos.currentPrice:0;
+      if(!pos.id) pos.id=Date.now()+'_'+Math.random().toString(36).slice(2,5);
+      return pos;
+    }).filter(pos=>pos.ticker&&pos.shares>0);
+  });
+  if(ST.activePortId&&!ST.portfolios.find(p=>p.id===ST.activePortId)) ST.activePortId=null;
+}
+
+function getActivePort(){ return ST.portfolios.find(p=>p.id===ST.activePortId); }
+
+// ── numbers (everything derives from these two helpers) ──
+function axPortRows(p){
+  const total=p.positions.reduce((s,pos)=>s+(pos.currentPrice||0)*pos.shares,0);
+  return p.positions.map(pos=>{
+    const px=pos.currentPrice||0, value=px*pos.shares, hasCost=pos.entryPrice>0;
+    const cost=hasCost?pos.entryPrice*pos.shares:null;
+    const gain=(hasCost&&px>0)?value-cost:null;
+    return {pos,value,weight:total>0?value/total*100:0,cost,gain,gainPct:gain!=null?gain/cost*100:null};
+  });
+}
+function axPortStats(p){
+  const rows=axPortRows(p);
+  const value=rows.reduce((s,r)=>s+r.value,0);
+  const withCost=rows.filter(r=>r.gain!=null);
+  const cost=withCost.reduce((s,r)=>s+r.cost,0), gain=withCost.reduce((s,r)=>s+r.gain,0);
+  const withDay=rows.filter(r=>r.pos.change!=null&&isFinite(r.pos.change)&&r.value>0);
+  const day=withDay.reduce((s,r)=>s+r.pos.change*r.pos.shares,0);
+  const dayBase=withDay.reduce((s,r)=>s+(r.pos.currentPrice-r.pos.change)*r.pos.shares,0);
+  return {rows,n:rows.length,value,cost,gain,gainPct:cost>0?gain/cost*100:null,withCost:withCost.length,
+    day,dayPct:dayBase>0?day/dayBase*100:null,hasDay:withDay.length>0,unpriced:rows.filter(r=>!(r.pos.currentPrice>0)).length};
+}
+function axPortAge(p){   // age of the OLDEST price in the portfolio (ms), or null if never priced
+  if(!p.positions.length) return null;
+  let oldest=Infinity; for(const pos of p.positions){ if(!pos.quotedAt) return null; oldest=Math.min(oldest,pos.quotedAt); }
+  return Date.now()-oldest;
+}
+function axPortStale(p){ const a=axPortAge(p); return a==null||a>axQuoteTTL(); }
+
+// ── honest, rule-based checks (no AI, no invented numbers) ──
+function axPortChecks(p){
+  const st=axPortStats(p), rows=st.rows.filter(r=>r.value>0).sort((a,b)=>b.value-a.value), out=[];
+  if(!rows.length) return [{lvl:'info',icon:'ℹ️',text:'Prices have not loaded yet — press Refresh Prices.'}];
+  const top=rows[0], top3=rows.slice(0,3).reduce((s,r)=>s+r.weight,0);
+  if(top.weight>=40) out.push({lvl:'bad',icon:'🔴',text:`${top.pos.ticker} is ${top.weight.toFixed(1)}% of the portfolio — a single holding this large dominates your results.`});
+  else if(top.weight>AX_MAX_POS_WEIGHT) out.push({lvl:'warn',icon:'🟠',text:`${top.pos.ticker} is ${top.weight.toFixed(1)}% of the portfolio (above the ${AX_MAX_POS_WEIGHT}% single-holding rule of thumb).`});
+  const others=rows.slice(1).filter(r=>r.weight>AX_MAX_POS_WEIGHT);
+  others.forEach(r=>out.push({lvl:'warn',icon:'🟠',text:`${r.pos.ticker} is ${r.weight.toFixed(1)}% of the portfolio.`}));
+  if(rows.length>=3&&top3>AX_TOP3_WEIGHT) out.push({lvl:'warn',icon:'🟠',text:`Top 3 holdings (${rows.slice(0,3).map(r=>r.pos.ticker).join(', ')}) make up ${top3.toFixed(0)}% of the portfolio.`});
+  if(rows.length<5) out.push({lvl:'warn',icon:'🟠',text:`Only ${rows.length} holding${rows.length===1?'':'s'} — results will swing with each one. (ETFs hold many stocks; this check counts line items only.)`});
+  const hot=rows.filter(r=>r.pos.rsi>70), cold=rows.filter(r=>r.pos.rsi<30), below=rows.filter(r=>r.pos.priceVs200<0);
+  const wsum=a=>a.reduce((s,r)=>s+r.weight,0);
+  if(hot.length) out.push({lvl:'info',icon:'🔥',text:`Overbought (RSI > 70): ${hot.map(r=>r.pos.ticker).join(', ')} — ${wsum(hot).toFixed(0)}% of the portfolio.`});
+  if(cold.length) out.push({lvl:'info',icon:'🧊',text:`Oversold (RSI < 30): ${cold.map(r=>r.pos.ticker).join(', ')} — ${wsum(cold).toFixed(0)}% of the portfolio.`});
+  if(below.length) out.push({lvl:below.length/rows.length>.5?'warn':'info',icon:'📉',text:`${below.length} of ${rows.length} holdings trade below their 200-day average (${wsum(below).toFixed(0)}% of the portfolio by value).`});
+  const big=st.rows.filter(r=>r.gainPct!=null&&r.gainPct<=-20).sort((a,b)=>a.gainPct-b.gainPct);
+  if(big.length) out.push({lvl:'warn',icon:'🔻',text:`Down 20% or more vs your cost: ${big.slice(0,5).map(r=>r.pos.ticker+' '+axPct(r.gainPct,0)).join(', ')}.`});
+  const up=st.rows.filter(r=>r.gainPct!=null&&r.gainPct>=100).sort((a,b)=>b.gainPct-a.gainPct);
+  if(up.length) out.push({lvl:'info',icon:'🔺',text:`Up 100% or more vs your cost: ${up.slice(0,5).map(r=>r.pos.ticker+' '+axPct(r.gainPct,0)).join(', ')}.`});
+  const fx=p.positions.filter(x=>x.currency&&x.currency!=='USD');
+  if(fx.length) out.push({lvl:'warn',icon:'💱',text:`${fx.map(x=>x.ticker+' ('+x.currency+')').join(', ')} priced in a non-USD currency — shown as "$" but NOT converted, so totals are approximate.`});
+  const nocost=st.n-st.withCost;
+  if(nocost) out.push({lvl:'info',icon:'❔',text:`${nocost} holding${nocost===1?' has':'s have'} no cost basis, so gain/loss excludes ${nocost===1?'it':'them'}. Edit a holding to add its average cost.`});
+  if(st.unpriced) out.push({lvl:'warn',icon:'⚠️',text:`${st.unpriced} holding${st.unpriced===1?'':'s'} could not be priced and ${st.unpriced===1?'is':'are'} excluded from value and weights.`});
+  if(!out.length) out.push({lvl:'ok',icon:'✅',text:'No concentration or technical red flags from these rule-based checks. That is not a clean bill of health — it only covers what these numbers can see.'});
+  return out;
+}
+
+// One-line holdings summary shared by the AI briefing and Ask AXIOM (aggregated across portfolios).
+function axHoldingsContext(maxN){
+  const by={};
+  ST.portfolios.forEach(p=>p.positions.forEach(pos=>{
+    const v=(pos.currentPrice||0)*pos.shares; const e=by[pos.ticker]||(by[pos.ticker]={t:pos.ticker,v:0,cost:0,cv:0});
+    e.v+=v; if(pos.entryPrice>0&&pos.currentPrice>0){ e.cost+=pos.entryPrice*pos.shares; e.cv+=v; }
+  }));
+  const list=Object.values(by).sort((a,b)=>b.v-a.v), total=list.reduce((s,e)=>s+e.v,0);
+  if(!list.length) return {n:0,total:0,text:'no portfolio loaded'};
+  const cost=list.reduce((s,e)=>s+e.cost,0), cv=list.reduce((s,e)=>s+e.cv,0);
+  const text=list.slice(0,maxN||10).map(e=>e.t+' '+(total>0?(e.v/total*100).toFixed(1)+'%':'?')+(e.cost>0?' ('+axPct((e.cv-e.cost)/e.cost*100)+' vs cost)':'')).join(', ')+(list.length>(maxN||10)?', +'+(list.length-(maxN||10))+' more':'');
+  return {n:list.length,total,gain:cost>0?cv-cost:null,gainPct:cost>0?(cv-cost)/cost*100:null,text};
+}
+
+// ── live prices ──
+async function refreshHoldings(portId,opts){
+  opts=opts||{};
+  const p=ST.portfolios.find(x=>x.id===(portId||ST.activePortId)); if(!p||!p.positions.length) return 0;
+  if(_portRefreshing) return 0; _portRefreshing=true;
+  const btn=document.getElementById('btn-refresh-port'); if(btn){ btn.disabled=true; btn.textContent='⏳ Pricing…'; }
+  if(!opts.quiet) showToast('🔄','Fetching live prices...');
+  let ok=0; const failed=[];
+  try{
+    if(axMarketStatus().state==='open') p.positions.forEach(pos=>delete priceCache[pos.ticker]);
+    await fetchBatch(p.positions, async pos=>fetchQuote(pos.ticker), 5, (pos,q)=>{ if(q){ axApplyQuoteToPos(pos,q); ok++; } else failed.push(pos.ticker); }, 40);
+  }finally{ _portRefreshing=false; if(btn){ btn.disabled=false; btn.textContent='🔄 Refresh Prices'; } }
+  save();
+  if(ST.activePortId===p.id) renderPortDetail();
+  renderPortfolioCards(); renderDashPortfolios();
+  if(!opts.quiet) showToast(failed.length?'⚠️':'✅', failed.length?`Priced ${ok}/${p.positions.length} — couldn't price: ${failed.slice(0,4).join(', ')}${failed.length>4?'…':''}`:`Priced ${ok} holding${ok===1?'':'s'}`);
+  return ok;
+}
+// Quietly keep every portfolio's prices current (called from the dashboard refresh cycle).
+async function axRefreshAllHoldingsQuiet(){
+  const stale=ST.portfolios.filter(p=>p.positions.length&&axPortStale(p));
+  for(const p of stale){ await refreshHoldings(p.id,{quiet:true}); }
+}
+
+// ── portfolio list ──
 function renderPortfolioCards(){
-  const grid=document.getElementById('port-cards-grid');
-  const rankColors=['#f59e0b','#9090b8','#b45309'];
-
-  // Rank portfolios by total return
-  const ranked=[...ST.portfolios].map(p=>{
-    const totCost=p.positions.reduce((s,pos)=>s+pos.entryPrice*pos.shares,0);
-    const totVal=p.positions.reduce((s,pos)=>s+pos.currentPrice*pos.shares,0);
-    const ret=totCost>0?(totVal-totCost)/totCost*100:0;
-    return{...p,ret,totVal,totCost,pnl:totVal-totCost};
-  }).sort((a,b)=>b.ret-a.ret);
-
-  grid.innerHTML=ranked.map((p,i)=>{
-    const rankLabel=i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`;
-    const rankBg=i<3?rankColors[i]+'20':'var(--bg4)';
-    const rankColor=i<3?rankColors[i]:'var(--text3)';
-    const days=Math.floor((Date.now()-new Date(p.createdAt).getTime())/86400000);
-    return`<div class="port-card" onclick="openPortDetail('${p.id}')">
-      <div class="port-card-rank" style="background:${rankBg};color:${rankColor}">${rankLabel}</div>
-      <div class="port-card-name">${p.name}</div>
-      <div class="port-card-meta">${p.strategy} · ${p.risk} · ${days}d tracked</div>
+  const grid=document.getElementById('port-cards-grid'); if(!grid) return;
+  const cards=ST.portfolios.map(p=>{
+    const st=axPortStats(p), age=axPortAge(p);
+    return `<div class="port-card" onclick="openPortDetail('${p.id}')">
+      <div class="port-card-name">${esc(p.name)}</div>
+      <div class="port-card-meta">${st.n} holding${st.n===1?'':'s'} · ${age==null?'not priced yet':'priced '+axAgeLabel(Date.now()-age)}</div>
       <div class="port-card-stats">
-        <div><div class="port-card-stat-lbl">Value</div><div class="port-card-stat-val">$${((p.capital||0)+p.totVal).toLocaleString('en-US',{maximumFractionDigits:0})}</div></div>
-        <div><div class="port-card-stat-lbl">Return</div><div class="port-card-stat-val" style="color:${p.ret>=0?'var(--green)':'var(--red)'}">${p.ret>=0?'+':''}${p.ret.toFixed(1)}%</div></div>
-        <div><div class="port-card-stat-lbl">Positions</div><div class="port-card-stat-val">${p.positions.length}</div></div>
+        <div><div class="port-card-stat-lbl">Value</div><div class="port-card-stat-val">${st.value>0?axMoney(st.value,0):'—'}</div></div>
+        <div><div class="port-card-stat-lbl">Gain / Loss</div><div class="port-card-stat-val" style="color:${st.gainPct==null?'var(--text3)':st.gainPct>=0?'var(--green)':'var(--red)'}">${st.gainPct==null?'—':axPct(st.gainPct)}</div></div>
+        <div><div class="port-card-stat-lbl">Holdings</div><div class="port-card-stat-val">${st.n}</div></div>
       </div>
-      ${p.desc?`<div style="font-size:10px;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">${p.desc}</div>`:''}
+      ${p.desc?`<div style="font-size:10px;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">${esc(p.desc)}</div>`:''}
       <div class="port-card-actions" onclick="event.stopPropagation()">
-        <div class="port-card-btn" onclick="openPortDetail('${p.id}')">Open</div>
-        <div class="port-card-btn" onclick="duplicatePortfolio('${p.id}')">Clone</div>
+        <div class="port-card-btn" onclick="openPortDetail('${p.id}')">Review</div>
         <div class="port-card-btn danger" onclick="deletePortfolio('${p.id}')">Delete</div>
       </div>
     </div>`;
-  }).join('')+`<div class="new-port-card" onclick="openNewPortModal()"><div class="new-port-card-icon">＋</div><div class="new-port-card-label">Create New Portfolio</div></div>`;
-
+  }).join('');
+  const empty=!ST.portfolios.length?`<div class="empty-state" style="grid-column:1/-1;border:1px dashed var(--border2);border-radius:var(--radius)">
+      <div class="empty-icon">📥</div><div class="empty-title">Load a portfolio to review</div>
+      <div class="empty-sub">Export your holdings as CSV from your brokerage (Fidelity, Schwab, Vanguard, Robinhood, etc.) and load it here — or start a portfolio and add holdings by hand. AXIOM prices everything live and checks concentration, trend and risk.</div>
+      <div style="margin-top:16px"><button class="port-action-btn primary" onclick="csvTargetPortId=null;document.getElementById('brokerage-csv-file').click()">📥 Load Brokerage CSV</button></div></div>`:'';
+  grid.innerHTML=cards+empty+(ST.portfolios.length?`<div class="new-port-card" onclick="openNewPortModal()"><div class="new-port-card-icon">＋</div><div class="new-port-card-label">New Portfolio</div></div>`:'');
   updatePosCount();
 }
 
 function openPortDetail(id){
-  const p=ST.portfolios.find(x=>x.id===id);if(!p)return;
-  ST.activePortId=id;save();
+  const p=ST.portfolios.find(x=>x.id===id); if(!p) return;
+  ST.activePortId=id; save();
   document.getElementById('port-cards-grid').style.display='none';
+  document.getElementById('port-top-actions').style.display='none';
   document.getElementById('active-port-detail').style.display='block';
-  document.getElementById('active-port-name').textContent=p.name;
-  const days=Math.floor((Date.now()-new Date(p.createdAt).getTime())/86400000);
-  document.getElementById('active-port-meta').textContent=`${p.strategy} strategy · ${p.risk} risk · Created ${new Date(p.createdAt).toLocaleDateString()}`;
-  document.getElementById('port-days').textContent=days;
-  document.getElementById('port-since').textContent='Since '+new Date(p.createdAt).toLocaleDateString();
-  // Render performance chart
-  const chartEl=document.getElementById('port-perf-chart');
-  if(chartEl) chartEl.innerHTML=buildPortfolioChart(p);
   document.getElementById('groq-port-section').style.display='none';
-  updateActivePortStats();renderPositions();
+  renderPortDetail();
+  if(p.positions.length&&axPortStale(p)) refreshHoldings(id,{quiet:true});
 }
 function closePortDetail(){
-  ST.activePortId=null;save();
+  ST.activePortId=null; save();
   document.getElementById('port-cards-grid').style.display='';
+  document.getElementById('port-top-actions').style.display='flex';
   document.getElementById('active-port-detail').style.display='none';
   renderPortfolioCards();
 }
 
-function getActivePort(){return ST.portfolios.find(p=>p.id===ST.activePortId);}
-
-function updateActivePortStats(){
-  const p=getActivePort();if(!p)return;
-  const totCost=p.positions.reduce((s,pos)=>s+pos.entryPrice*pos.shares,0);
-  const totVal=p.positions.reduce((s,pos)=>s+pos.currentPrice*pos.shares,0);
-  const pnl=totVal-totCost;const pnlPct=totCost>0?(pnl/totCost)*100:0;
-  const totalPort=(p.capital||0)+totVal;
-  const startPct=((totalPort-p.startCapital)/p.startCapital)*100;
-  const fmt=(n,d=2)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-  document.getElementById('port-total-val').textContent='$'+fmt(totalPort);
-  document.getElementById('port-total-sub').textContent=`${startPct>=0?'+':''}${startPct.toFixed(1)}% from start`;
-  document.getElementById('port-total-sub').style.color=startPct>=0?'var(--green)':'var(--red)';
-  document.getElementById('port-pnl').textContent=`${pnl>=0?'+':'−'}$${fmt(Math.abs(pnl))}`;
-  document.getElementById('port-pnl').style.color=pnl>=0?'var(--green)':'var(--red)';
-  document.getElementById('port-pnl-pct').textContent=`${pnlPct>=0?'+':''}${pnlPct.toFixed(2)}% unrealized`;
-  document.getElementById('port-pnl-pct').style.color=pnl>=0?'var(--green)':'var(--red)';
-  document.getElementById('port-cash').textContent='$'+fmt(p.capital||0);
-  document.getElementById('port-cash-pct').textContent=`${((p.capital||0)/p.startCapital*100).toFixed(0)}% liquid`;
+function renderPortDetail(){
+  const p=getActivePort(); if(!p) return;
+  const st=axPortStats(p), age=axPortAge(p);
+  document.getElementById('active-port-name').textContent=p.name;
+  document.getElementById('active-port-meta').textContent=`${st.n} holding${st.n===1?'':'s'} · ${age==null?'prices not loaded':'prices '+axAgeLabel(Date.now()-age)}${axMarketStatus().state==='open'?'':' · market closed'}`;
+  const set=(id,txt,color)=>{ const el=document.getElementById(id); if(!el) return; el.textContent=txt; el.style.color=color||''; };
+  set('port-total-val',st.value>0?axMoney(st.value):'—');
+  set('port-total-sub',st.unpriced?`${st.unpriced} unpriced`:'at last quote','var(--text3)');
+  set('port-pnl',st.withCost?axSignedMoney(st.gain):'—',st.withCost?(st.gain>=0?'var(--green)':'var(--red)'):'var(--text3)');
+  set('port-pnl-pct',st.withCost?`${axPct(st.gainPct,2)} · cost known for ${st.withCost}/${st.n}`:'add average cost to see gain/loss',st.withCost?(st.gain>=0?'var(--green)':'var(--red)'):'var(--text3)');
+  set('port-day',st.hasDay?axSignedMoney(st.day):'—',st.hasDay?(st.day>=0?'var(--green)':'var(--red)'):'var(--text3)');
+  set('port-day-pct',st.hasDay&&st.dayPct!=null?axPct(st.dayPct,2)+' vs prior close':'—',st.hasDay?(st.day>=0?'var(--green)':'var(--red)'):'var(--text3)');
+  const top=[...st.rows].sort((a,b)=>b.value-a.value)[0];
+  set('port-top',top&&top.value>0?top.pos.ticker+' '+top.weight.toFixed(1)+'%':'—');
+  set('port-top-sub',top&&top.value>0?'largest holding':'','var(--text3)');
+  renderAllocation(p,st);
+  const checks=axPortChecks(p), box=document.getElementById('port-checks');
+  if(box) box.innerHTML=p.positions.length?checks.map(c=>`<div class="pc-row ${c.lvl}"><span class="pc-ico">${c.icon}</span><span>${esc(c.text)}</span></div>`).join(''):'<div style="font-size:12px;color:var(--text3)">Add holdings to see checks.</div>';
+  renderPositions();
 }
 
-function filterPortfolio(f,el){portFilter=f;document.querySelectorAll('.strat-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderPositions();}
+function renderAllocation(p,st){
+  const el=document.getElementById('port-alloc'); if(!el) return;
+  const rows=[...st.rows].filter(r=>r.value>0).sort((a,b)=>b.value-a.value);
+  if(!rows.length){ el.innerHTML='<div style="font-size:12px;color:var(--text3)">No priced holdings yet.</div>'; return; }
+  const head=rows.slice(0,8), rest=rows.slice(8), restW=rest.reduce((s,r)=>s+r.weight,0);
+  const segs=head.map((r,i)=>({label:r.pos.ticker,w:r.weight,c:AX_ALLOC_COLORS[i%AX_ALLOC_COLORS.length]}));
+  if(rest.length) segs.push({label:'Other ('+rest.length+')',w:restW,c:'var(--text3)'});
+  el.innerHTML=`<div class="alloc-bar">${segs.map(s=>`<div title="${esc(s.label)} ${s.w.toFixed(1)}%" style="width:${s.w}%;background:${s.c}"></div>`).join('')}</div>
+    <div class="alloc-legend">${segs.map(s=>`<span><i style="background:${s.c}"></i>${esc(s.label)} <b>${s.w.toFixed(1)}%</b></span>`).join('')}</div>`;
+}
 
+function setPortSort(k){ portSort=k; renderPositions(); }
 function renderPositions(){
-  const p=getActivePort();const tbody=document.getElementById('positions-tbody');if(!p){tbody.innerHTML='';return;}
-  const list=portFilter==='all'?p.positions:p.positions.filter(pos=>pos.strategy===portFilter);
-  if(!list.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text3)">No positions for this strategy.</td></tr>`;return;}
-  tbody.innerHTML=list.map(pos=>{
-    const pnl=(pos.currentPrice-pos.entryPrice)*pos.shares;
-    const ret=((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100;
-    const sc=SC[pos.strategy]||SC['Buy & Hold'];
-    return`<tr>
-      <td><div class="pos-sym">${pos.ticker}</div><div class="pos-date">${new Date(pos.addedAt).toLocaleDateString()}</div></td>
-      <td><span class="pos-strategy" style="background:${sc.bg};color:${sc.c};border:1px solid ${sc.b}">${pos.strategy}</span>${pos.note?`<div class="pos-date" title="${pos.note}" style="margin-top:3px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">💬 ${pos.note}</div>`:''}</td>
-      <td class="mono">${pos.shares}</td>
-      <td class="mono">$${pos.entryPrice.toFixed(2)}</td>
-      <td class="mono">$${pos.currentPrice.toFixed(2)}</td>
-      <td class="mono ${pnl>=0?'pos':'neg'}">${pnl>=0?'+':'−'}$${Math.abs(pnl).toFixed(2)}</td>
-      <td class="mono ${ret>=0?'pos':'neg'}">${ret>=0?'+':''}${ret.toFixed(1)}%</td>
+  const p=getActivePort(); const tbody=document.getElementById('positions-tbody'); if(!p||!tbody){ if(tbody) tbody.innerHTML=''; return; }
+  const rows=axPortStats(p).rows;
+  const keyf={value:r=>-r.value,gain:r=>-(r.gainPct==null?-1e9:r.gainPct),rsi:r=>-(r.pos.rsi==null?-1e9:r.pos.rsi),ticker:r=>r.pos.ticker}[portSort]||(r=>-r.value);
+  rows.sort((a,b)=>{ const x=keyf(a),y=keyf(b); return x<y?-1:x>y?1:0; });
+  document.querySelectorAll('.pos-table th[data-sort]').forEach(th=>th.classList.toggle('sorted',th.dataset.sort===portSort));
+  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="10" style="text-align:center;padding:28px;color:var(--text3)">No holdings yet — load a brokerage CSV or add one manually.</td></tr>`; return; }
+  tbody.innerHTML=rows.map(r=>{
+    const pos=r.pos, px=pos.currentPrice||0;
+    const rsiC=pos.rsi>70?'var(--red)':pos.rsi<30?'var(--green)':'var(--text2)';
+    const gc=r.gain==null?'var(--text3)':r.gain>=0?'var(--green)':'var(--red)';
+    return `<tr>
+      <td><div class="pos-sym">${esc(pos.ticker)}</div><div class="pos-date" title="${esc(pos.name||'')}" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(pos.name||'')}</div></td>
+      <td class="mono">${pos.shares%1===0?pos.shares:pos.shares.toFixed(4).replace(/0+$/,'')}</td>
+      <td class="mono">${pos.entryPrice>0?'$'+pos.entryPrice.toFixed(2):'<span style="color:var(--text3)">—</span>'}</td>
+      <td class="mono">${px>0?'$'+px.toFixed(2):'<span style="color:var(--amber)">n/a</span>'}${pos.changePct!=null&&px>0?`<div class="pos-date" style="color:${pos.changePct>=0?'var(--green)':'var(--red)'}">${axPct(pos.changePct,2)}</div>`:''}</td>
+      <td class="mono">${px>0?axMoney(r.value,0):'—'}</td>
+      <td class="mono">${px>0?r.weight.toFixed(1)+'%':'—'}${px>0?`<div class="wbar"><div style="width:${Math.min(100,r.weight)}%;background:${r.weight>AX_MAX_POS_WEIGHT?'var(--amber)':'var(--cyan)'}"></div></div>`:''}</td>
+      <td class="mono" style="color:${gc}">${r.gain==null?'—':axSignedMoney(r.gain,0)+'<div class="pos-date" style="color:'+gc+'">'+axPct(r.gainPct)+'</div>'}</td>
+      <td class="mono" style="color:${rsiC}">${pos.rsi!=null?pos.rsi.toFixed(0):'—'}</td>
+      <td class="mono" style="color:${pos.priceVs200==null?'var(--text3)':pos.priceVs200>=0?'var(--green)':'var(--red)'}">${pos.priceVs200!=null?axPct(pos.priceVs200):'—'}</td>
       <td><div class="pos-actions">
-        <button class="pos-btn analyze-btn" onclick="quickSearch('${pos.ticker}');switchView('analyze')">Analyze</button>
-        <button class="pos-btn close-btn" onclick="closePos('${pos.id}')">Close</button>
+        <button class="pos-btn analyze-btn" onclick="quickSearch('${esc(pos.ticker)}');switchView('analyze')">Analyze</button>
+        <button class="pos-btn" onclick="openHoldingModal('${pos.id}')">Edit</button>
+        <button class="pos-btn close-btn" onclick="removePos('${pos.id}')">✕</button>
       </div></td>
     </tr>`;
   }).join('');
 }
 
 function updatePosCount(){
-  const total=ST.portfolios.reduce((s,p)=>s+p.positions.length,0);
-  document.getElementById('pos-count').textContent=total;
+  const el=document.getElementById('pos-count'); if(el) el.textContent=ST.portfolios.reduce((s,p)=>s+p.positions.length,0);
 }
 
-// ── NEW PORTFOLIO ──
-function openNewPortModal(){document.getElementById('new-port-modal').classList.add('show');document.getElementById('new-port-name').value='';document.getElementById('new-port-desc').value='';document.getElementById('new-port-capital').value=ST.capital;newPortRisk='Moderate';document.querySelectorAll('#new-port-risk-chips .risk-chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()==='Moderate'));}
-function closeNewPortModal(){document.getElementById('new-port-modal').classList.remove('show');}
+// ── create / delete ──
+function openNewPortModal(){
+  document.getElementById('new-port-modal').classList.add('show');
+  document.getElementById('new-port-name').value=''; document.getElementById('new-port-desc').value='';
+  document.getElementById('new-port-name').classList.remove('error');
+}
+function closeNewPortModal(){ document.getElementById('new-port-modal').classList.remove('show'); }
 function createPortfolio(){
-  const name=document.getElementById('new-port-name').value.trim();
-  if(!name){document.getElementById('new-port-name').classList.add('error');showToast('⚠️','Portfolio name required');return;}
-  const cap=parseFloat(document.getElementById('new-port-capital').value)||ST.capital;
-  const p={id:'port_'+Date.now(),name,desc:document.getElementById('new-port-desc').value.trim(),strategy:document.getElementById('new-port-strategy').value,risk:newPortRisk,capital:cap,startCapital:cap,positions:[],createdAt:new Date().toISOString(),snapshots:[]};
-  ST.portfolios.push(p);save();closeNewPortModal();renderPortfolioCards();
-  showToast('✅','Portfolio "'+name+'" created');
-  openPortDetail(p.id);
+  const nameEl=document.getElementById('new-port-name'), name=nameEl.value.trim();
+  if(!name){ nameEl.classList.add('error'); showToast('⚠️','Portfolio name required'); return; }
+  const p={id:'port_'+Date.now(),name,desc:document.getElementById('new-port-desc').value.trim(),positions:[],createdAt:new Date().toISOString()};
+  ST.portfolios.push(p); save(); closeNewPortModal(); renderPortfolioCards();
+  showToast('✅','Portfolio "'+name+'" created'); openPortDetail(p.id);
 }
 function deletePortfolio(id){
-  const p=ST.portfolios.find(x=>x.id===id);if(!p)return;
-  if(!confirm(`Delete "${p.name}"? This cannot be undone.`))return;
+  const p=ST.portfolios.find(x=>x.id===id); if(!p) return;
+  if(!confirm(`Delete "${p.name}" and its ${p.positions.length} holding(s)? This cannot be undone.`)) return;
   ST.portfolios=ST.portfolios.filter(x=>x.id!==id);
-  if(ST.activePortId===id)ST.activePortId=null;
-  save();closePortDetail();renderPortfolioCards();showToast('🗑','Portfolio deleted');
-}
-function duplicatePortfolio(id){
-  const p=ST.portfolios.find(x=>x.id===id);if(!p)return;
-  const clone={...JSON.parse(JSON.stringify(p)),id:'port_'+Date.now(),name:p.name+' (Copy)',createdAt:new Date().toISOString(),snapshots:[]};
-  ST.portfolios.push(clone);save();renderPortfolioCards();showToast('✅','Portfolio cloned');
+  if(ST.activePortId===id) ST.activePortId=null;
+  save(); closePortDetail(); renderDashPortfolios(); showToast('🗑','Portfolio deleted');
 }
 
-// ── TRADES ──
-function populateModalPortfolioSelect(preferredId){
-  const sel=document.getElementById('modal-portfolio');
-  if(!sel) return;
-  if(!ST.portfolios.length){
-    sel.innerHTML='<option value="">No portfolios — create one first</option>';
+// ── add / edit / remove a holding ──
+function openHoldingModal(posId){
+  const p=getActivePort(); if(!p){ if(!ST.portfolios.length){ openNewPortModal(); showToast('ℹ️','Create a portfolio first'); } return; }
+  editPosId=(typeof posId==='string'&&posId)?posId:null;
+  const pos=editPosId?p.positions.find(x=>x.id===editPosId):null;
+  document.getElementById('holding-title').textContent=pos?'Edit Holding':'Add Holding';
+  document.getElementById('modal-ticker').value=pos?pos.ticker:'';
+  document.getElementById('modal-ticker').disabled=!!pos;
+  document.getElementById('modal-shares').value=pos?pos.shares:'';
+  document.getElementById('modal-price').value=pos&&pos.entryPrice>0?pos.entryPrice:'';
+  document.getElementById('modal-note').value=pos?(pos.note||''):'';
+  ['modal-ticker','modal-shares'].forEach(id=>document.getElementById(id).classList.remove('error'));
+  document.getElementById('modal-confirm-btn').textContent=pos?'Save Changes':'Add Holding →';
+  document.getElementById('holding-port-name').textContent=p.name;
+  document.getElementById('trade-modal').classList.add('show');
+}
+function closeHoldingModal(){ document.getElementById('trade-modal').classList.remove('show'); editPosId=null; }
+function axMergePos(p,h){   // add a holding, or fold it into an existing line for the same ticker
+  const t=h.ticker, ex=p.positions.find(x=>x.ticker===t);
+  if(!ex){
+    p.positions.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,6),ticker:t,shares:h.shares,entryPrice:h.entryPrice>0?h.entryPrice:0,
+      currentPrice:h.currentPrice>0?h.currentPrice:0,name:h.name||'',note:h.note||'',addedAt:new Date().toISOString()});
     return;
   }
-  sel.innerHTML=ST.portfolios.map(p=>`<option value="${p.id}">${p.name} ($${(p.capital||0).toLocaleString('en-US',{maximumFractionDigits:0})} available)</option>`).join('');
-  // Prefer: explicitly passed id > activePortId > first portfolio
-  const best = preferredId||ST.activePortId||ST.portfolios[0].id;
-  if(best) sel.value=best;
-  updateModalPortfolio();
+  // average cost only when BOTH lots have a known cost; otherwise it becomes unknown (never guessed)
+  ex.entryPrice=(ex.entryPrice>0&&h.entryPrice>0)?((ex.entryPrice*ex.shares+h.entryPrice*h.shares)/(ex.shares+h.shares)):0;
+  ex.shares+=h.shares; if(!ex.name&&h.name) ex.name=h.name;
 }
-
-function updateModalPortfolio(){
-  const sel=document.getElementById('modal-portfolio');
-  const info=document.getElementById('modal-port-info');
-  const confirmBtn=document.getElementById('modal-confirm-btn');
-  if(!sel||!info) return;
-  const p=ST.portfolios.find(x=>x.id===sel.value);
-  if(p){
-    info.style.display='block';
-    info.innerHTML=`📂 <strong>${p.name}</strong> &nbsp;·&nbsp; ${p.strategy} strategy &nbsp;·&nbsp; ${p.risk} risk &nbsp;·&nbsp; <strong style="color:var(--green)">$${(p.capital||0).toLocaleString('en-US',{maximumFractionDigits:0})} cash available</strong>`;
-    if(confirmBtn) confirmBtn.textContent=`Add to "${p.name}" →`;
-  } else {
-    info.style.display='none';
-    if(confirmBtn) confirmBtn.textContent='Add to Portfolio →';
-  }
-  // Recalculate cost preview
-  const shares=parseFloat(document.getElementById('modal-shares')?.value)||0;
-  const price=parseFloat(document.getElementById('modal-price')?.value)||0;
-  const prev=document.getElementById('modal-cost-preview');
-  if(prev&&shares>0&&price>0&&p){
-    const cost=shares*price;const after=(p.capital||0)-cost;
-    prev.style.display='block';
-    prev.innerHTML=`Cost: <strong class="mono">$${cost.toFixed(2)}</strong> &nbsp;·&nbsp; Cash after: <strong class="mono ${after<0?'neg':'pos'}">$${after.toFixed(2)}</strong>`;
-  }
-}
-
-function openTradeModal(){
-  if(!ST.portfolios.length){openNewPortModal();showToast('ℹ️','Create a portfolio first');return;}
-  ['modal-ticker','modal-shares','modal-price','modal-note'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('modal-cost-preview').style.display='none';
-  populateModalPortfolioSelect(ST.activePortId);
-  document.getElementById('trade-modal').classList.add('show');
-  setupCostPreview();
-}
-
-function openTradeModalWith(ticker,price,strategy){
-  if(!ST.portfolios.length){openNewPortModal();showToast('ℹ️','Create a portfolio first');return;}
-  document.getElementById('modal-ticker').value=ticker||'';
-  document.getElementById('modal-price').value=price?price.toFixed(2):'';
-  document.getElementById('modal-shares').value='';
-  document.getElementById('modal-note').value='';
-  if(strategy) document.getElementById('modal-strategy').value=strategy;
-  document.getElementById('modal-cost-preview').style.display='none';
-  populateModalPortfolioSelect(ST.activePortId);
-  document.getElementById('trade-modal').classList.add('show');
-  setupCostPreview();
-}
-
-function closeTradeModal(){document.getElementById('trade-modal').classList.remove('show');}
-
-function setupCostPreview(){
-  const calc=()=>{
-    const sh=parseFloat(document.getElementById('modal-shares').value)||0;
-    const pr=parseFloat(document.getElementById('modal-price').value)||0;
-    const prev=document.getElementById('modal-cost-preview');
-    const sel=document.getElementById('modal-portfolio');
-    const p=ST.portfolios.find(x=>x.id===sel?.value);
-    const avail=p?p.capital:0;
-    if(sh>0&&pr>0){
-      const cost=sh*pr;const after=avail-cost;
-      prev.style.display='block';
-      prev.innerHTML=`Cost: <strong class="mono">$${cost.toFixed(2)}</strong> &nbsp;·&nbsp; Cash after: <strong class="mono ${after<0?'neg':'pos'}">$${after.toFixed(2)}</strong>`;
-    } else prev.style.display='none';
-  };
-  document.getElementById('modal-shares').oninput=calc;
-  document.getElementById('modal-price').oninput=calc;
-}
-
-function confirmTrade(){
-  const ticker=(document.getElementById('modal-ticker').value||'').trim().toUpperCase();
-  const sharesRaw=document.getElementById('modal-shares').value;
-  const priceRaw=document.getElementById('modal-price').value;
-  const strategy=document.getElementById('modal-strategy').value;
-  const note=document.getElementById('modal-note').value||'';
-  const portId=document.getElementById('modal-portfolio').value;
-  ['modal-ticker','modal-shares','modal-price'].forEach(id=>document.getElementById(id).classList.remove('error'));
+async function confirmHolding(){
+  const p=getActivePort(); if(!p) return;
+  const tEl=document.getElementById('modal-ticker'), sEl=document.getElementById('modal-shares');
+  const ticker=axNormTicker(tEl.value), shares=parseFloat(sEl.value), cost=parseFloat(document.getElementById('modal-price').value)||0;
+  const note=document.getElementById('modal-note').value.trim();
   let ok=true;
-  if(!ticker){document.getElementById('modal-ticker').classList.add('error');ok=false;}
-  const shares=parseFloat(sharesRaw);if(!sharesRaw||isNaN(shares)||shares<=0){document.getElementById('modal-shares').classList.add('error');ok=false;}
-  const price=parseFloat(priceRaw);if(!priceRaw||isNaN(price)||price<=0){document.getElementById('modal-price').classList.add('error');ok=false;}
-  if(!portId){showToast('⚠️','Select a portfolio');return;}
-  if(!ok){showToast('⚠️','Fill in highlighted fields');return;}
-  ST.activePortId=portId;
-  addPos({ticker,shares,entryPrice:price,strategy,note});
-  closeTradeModal();
+  tEl.classList.toggle('error',!ticker); if(!ticker) ok=false;
+  sEl.classList.toggle('error',!(shares>0)); if(!(shares>0)) ok=false;
+  if(!ok){ showToast('⚠️','Enter a valid ticker and number of shares'); return; }
+  const btn=document.getElementById('modal-confirm-btn'); const old=btn.textContent; btn.disabled=true; btn.textContent='Checking price…';
+  try{
+    const q=await fetchQuote(ticker);
+    if(editPosId){
+      const pos=p.positions.find(x=>x.id===editPosId); if(pos){ pos.shares=shares; pos.entryPrice=cost>0?cost:0; pos.note=note; axApplyQuoteToPos(pos,q); }
+    }else{
+      axMergePos(p,{ticker,shares,entryPrice:cost,currentPrice:q.price,name:q.longName,note});
+      const pos=p.positions.find(x=>x.ticker===ticker); if(pos) axApplyQuoteToPos(pos,q);
+    }
+    save(); closeHoldingModal(); renderPortDetail(); renderPortfolioCards(); renderDashPortfolios(); updatePosCount();
+    showToast('✅',`${ticker} ${editPosId?'updated':'added'} — ${axMoney(q.price)} live`);
+  }catch(e){ showToast('⚠️',`Couldn't find live data for ${ticker} — check the symbol`); }
+  finally{ btn.disabled=false; btn.textContent=old; }
 }
-
-function quickAdd(ticker,price,strategy){
-  if(!ST.portfolios.length){openNewPortModal();showToast('ℹ️','Create a portfolio first');return;}
-  // Always open the modal so user sees and confirms the destination portfolio
-  openTradeModalWith(ticker,price,strategy);
-}
-
-function addPos(pos){
-  const p=getActivePort();if(!p){showToast('⚠️','Open a portfolio first');return;}
-  const cost=pos.shares*pos.entryPrice;
-  if(cost>p.capital+.01){showToast('⚠️',`Need $${cost.toFixed(2)}, have $${p.capital.toFixed(2)}`);return;}
-  p.capital-=cost;
-  p.positions.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,5),ticker:pos.ticker,shares:pos.shares,entryPrice:pos.entryPrice,currentPrice:pos.entryPrice,strategy:pos.strategy,note:pos.note||'',addedAt:new Date().toISOString()});
-  ST.strategies[pos.strategy]=(ST.strategies[pos.strategy]||{trades:0,wins:0,totalReturn:0,closed:[]});
-  ST.strategies[pos.strategy].trades++;
-  save();updatePosCount();updateActivePortStats();renderPositions();renderStrategyPerf();
-  // Clear confirmation includes portfolio name
-  showToast('✅',`${pos.ticker} added to "${p.name}" — ${pos.shares}sh @ $${pos.entryPrice.toFixed(2)}`);
-}
-function closePos(id){
-  const p=getActivePort();if(!p)return;
-  const pos=p.positions.find(x=>x.id===id);if(!pos)return;
-  const ret=((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100;
-  const pnl=(pos.currentPrice-pos.entryPrice)*pos.shares;
-  p.capital+=pos.currentPrice*pos.shares;
-  const s=ST.strategies[pos.strategy];
-  if(s){s.totalReturn=(s.totalReturn||0)+ret;if(ret>0)s.wins=(s.wins||0)+1;(s.closed=s.closed||[]).push({ticker:pos.ticker,ret,pnl,date:new Date().toISOString()});}
+function removePos(id){
+  const p=getActivePort(); if(!p) return;
+  const pos=p.positions.find(x=>x.id===id); if(!pos) return;
+  if(!confirm(`Remove ${pos.ticker} from "${p.name}"?`)) return;
   p.positions=p.positions.filter(x=>x.id!==id);
-  save();updatePosCount();updateActivePortStats();renderPositions();renderStrategyPerf();
-  showToast(pnl>=0?'✅':'📉',`Closed ${pos.ticker} — ${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)} (${ret>=0?'+':''}${ret.toFixed(1)}%)`);
+  save(); renderPortDetail(); renderPortfolioCards(); renderDashPortfolios(); updatePosCount();
+  showToast('🗑',pos.ticker+' removed');
 }
-async function refreshPrices(){
-  const p=getActivePort();if(!p||!p.positions.length){showToast('ℹ️','No positions');return;}
-  showToast('🔄','Refreshing prices...');let updated=0;
-  if(axMarketStatus().state==='open') p.positions.forEach(pos=>delete priceCache[pos.ticker]);   // explicit refresh = fresh while trading
-  await fetchBatch(p.positions, async pos=>({pos,q:await fetchQuote(pos.ticker)}), 5, (item,res)=>{ if(res){ res.pos.currentPrice=res.q.price; updated++; } }, 40);
-  save();updateActivePortStats();renderPositions();showToast('✅',`Updated ${updated}/${p.positions.length}`);
-}
+
+// ── export / backup ──
 function exportPortfolio(){
-  const p=getActivePort();if(!p||!p.positions.length){showToast('ℹ️','No positions');return;}
-  const rows=['Symbol,Strategy,Shares,Entry Price,Current Price,P&L,Return %,Note,Date'];
-  p.positions.forEach(pos=>{
-    const pnl=((pos.currentPrice-pos.entryPrice)*pos.shares).toFixed(2);
-    const ret=(((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100).toFixed(2);
-    rows.push(`${pos.ticker},${pos.strategy},${pos.shares},${pos.entryPrice},${pos.currentPrice},${pnl},${ret},"${pos.note}",${pos.addedAt}`);
+  const p=getActivePort(); if(!p||!p.positions.length){ showToast('ℹ️','No holdings to export'); return; }
+  const q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+  const rows=['Symbol,Name,Shares,Avg Cost,Price,Value,Weight %,Gain/Loss,Gain %,RSI,vs 200MA %,Priced At'];
+  axPortStats(p).rows.sort((a,b)=>b.value-a.value).forEach(r=>{
+    const x=r.pos;
+    rows.push([x.ticker,q(x.name),x.shares,x.entryPrice>0?x.entryPrice:'',x.currentPrice>0?x.currentPrice.toFixed(2):'',r.value>0?r.value.toFixed(2):'',r.value>0?r.weight.toFixed(2):'',
+      r.gain!=null?r.gain.toFixed(2):'',r.gainPct!=null?r.gainPct.toFixed(2):'',x.rsi!=null?x.rsi.toFixed(1):'',x.priceVs200!=null?x.priceVs200.toFixed(2):'',x.quotedAt?new Date(x.quotedAt).toISOString():''].join(','));
   });
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download=`axiom-${p.name.replace(/\s+/g,'-')}-${axLocalISODate()}.csv`;a.click();showToast('⬇','Portfolio exported');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));
+  a.download=`axiom-${p.name.replace(/[^A-Za-z0-9]+/g,'-')}-${axLocalISODate()}.csv`; a.click(); showToast('⬇','Portfolio exported');
 }
-function importPortfolio(e){
-  const p=getActivePort();if(!p)return;
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=ev=>{
-    try{
-      const lines=ev.target.result.split('\n').filter(Boolean);let imported=0;
-      lines.slice(1).forEach(line=>{
-        const cols=line.split(',');if(cols.length<5)return;
-        const ticker=cols[0].trim(),strategy=cols[1].trim(),shares=parseFloat(cols[2]),entry=parseFloat(cols[3]),current=parseFloat(cols[4])||parseFloat(cols[3]);
-        const note=(cols[7]||'').replace(/"/g,'');
-        if(!ticker||isNaN(shares)||isNaN(entry))return;
-        p.positions.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,5),ticker,shares,entryPrice:entry,currentPrice:current,strategy:strategy||'Buy & Hold',note,addedAt:new Date().toISOString()});
-        imported++;
-      });
-      save();updatePosCount();updateActivePortStats();renderPositions();showToast('✅',`Imported ${imported} positions`);
-    }catch(err){showToast('⚠️','Import failed');}
-  };r.readAsText(f);e.target.value='';
-}
-function exportAllPortfolios(){
-  // Full backup from portfolio tab
-  var d=Object.assign({},ST,{exportedAt:new Date().toISOString(),version:'axiom-v5'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
-  a.download='axiom-full-backup-'+axLocalISODate()+'.json';
-  a.click();
-  showToast('⬇','Full backup exported');
+function exportAllPortfolios(){   // portfolios + watchlist only — no API keys (Settings → Export has those)
+  const d={portfolios:ST.portfolios,watchlist:ST.watchlist,exportedAt:new Date().toISOString(),version:'axiom-v5'};
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
+  a.download='axiom-portfolios-'+axLocalISODate()+'.json'; a.click(); showToast('⬇','Portfolios & watchlist backed up (no API keys)');
 }
 function importAllPortfolios(e){
-  var f=e.target.files[0];if(!f)return;
-  var reader=new FileReader();
-  reader.onload=function(ev){ applyImportedData(ev.target.result,'portfolio-tab'); };
-  reader.readAsText(f);e.target.value='';
+  const f=e.target.files[0]; if(!f) return;
+  const reader=new FileReader(); reader.onload=function(ev){ applyImportedData(ev.target.result,'portfolio-tab'); };
+  reader.readAsText(f); e.target.value='';
 }
 
-// ── GROQ PORTFOLIO ANALYSIS ──
+// ── Groq assessment — grounded entirely in the numbers computed above ──
 async function groqPortfolioAnalysis(){
-  const p=getActivePort();if(!p){showToast('⚠️','Open a portfolio first');return;}
-  if(!ST.groqKey){showToast('⚠️','Groq key required');return;}
-  if(!p.positions.length){showToast('ℹ️','Add positions first');return;}
-  const section=document.getElementById('groq-port-section');
-  const body=document.getElementById('groq-port-body');
-  const chips=document.getElementById('realloc-chips');
+  const p=getActivePort(); if(!p){ showToast('⚠️','Open a portfolio first'); return; }
+  if(!ST.groqKey){ showToast('🔑','Add a Groq API key in Settings to unlock the AI assessment'); return; }
+  if(!p.positions.length){ showToast('ℹ️','Add holdings first'); return; }
+  const section=document.getElementById('groq-port-section'), body=document.getElementById('groq-port-body');
   section.style.display='block';
-  body.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Groq is analyzing your portfolio...</div>';
-  chips.innerHTML='';
-  const totCost=p.positions.reduce((s,pos)=>s+pos.entryPrice*pos.shares,0);
-  const totVal=p.positions.reduce((s,pos)=>s+pos.currentPrice*pos.shares,0);
-  const pnl=totVal-totCost;const ret=totCost>0?(pnl/totCost)*100:0;
-  const posData=p.positions.map(pos=>{
-    const r2=((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100;
-    return`${pos.ticker} (${pos.strategy}, ${pos.shares}sh @ $${pos.entryPrice.toFixed(2)}, now $${pos.currentPrice.toFixed(2)}, ${r2>=0?'+':''}${r2.toFixed(1)}%)`;
-  }).join('; ');
-  const prompt=`You are AXIOM, an elite portfolio advisor. Analyze this portfolio for a ${p.risk} risk investor:\n\nPortfolio: "${p.name}" · Strategy focus: ${p.strategy}\nTotal invested: $${totCost.toFixed(0)} · Current value: $${totVal.toFixed(0)} · P&L: ${ret>=0?'+':''}${ret.toFixed(1)}%\nPositions: ${posData}\nCash remaining: $${(p.capital||0).toFixed(0)}\n\nProvide: 1) Overall portfolio health assessment (2-3 sentences), 2) Which positions to consider closing and why, 3) Which positions to add to, 4) 3-5 specific NEW tickers outside this portfolio worth considering for reallocation based on ${p.risk} risk and ${p.strategy} strategy. Be specific about WHY each recommendation makes sense. Plain text, no markdown.`;
+  body.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0"></div> Pricing holdings and assessing…</div>';
   try{
-    const d=await groqPost([{role:'user',content:prompt}],700,.4);
-    const text=d.choices?.[0]?.message?.content||'';
-    body.innerHTML=axAiHtml(text);
-    // Parse tickers from response
-    const tickers=[...new Set((text.match(/\b[A-Z]{2,5}\b/g)||[]).filter(t=>t.length>=2&&t.length<=5&&!['THE','FOR','AND','NOT','BUT','RSI','MA','ETF','IPO','CEO','AI','OR','IN','AT','TO','AXIOM','GROQ','USD','FED','SEC','GDP','YTD','TTM','EPS','PE'].includes(t)&&!p.positions.find(pos=>pos.ticker===t)).slice(0,6))];
-    if(tickers.length){
-      chips.innerHTML=`<div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:1.5px;width:100%;margin-bottom:8px">GROQ SUGGESTED TICKERS</div>`
-        +tickers.map(t=>`<button onclick="openActionCard('${t}',null,'${t}')" class="realloc-chip">${t} ▾</button>`).join('')
-        +`<button onclick="openAddRecsModal(${JSON.stringify(tickers)})" class="realloc-chip action" style="margin-left:auto">＋ Add Selected to Portfolio</button>`;
+    if(axPortStale(p)) await refreshHoldings(p.id,{quiet:true});
+    const st=axPortStats(p), rows=[...st.rows].sort((a,b)=>b.value-a.value);
+    if(!(st.value>0)){ body.innerHTML='<span style="color:var(--amber)">⚠️ No holdings could be priced, so there is nothing to assess yet.</span>'; return; }
+    const up={};
+    if(ST.fmpKey){   // analyst targets for the biggest holdings (1 cached FMP call each)
+      await fetchBatch(rows.slice(0,10), async r=>{ const a=await fetchAnalyst(r.pos.ticker,null,{ratings:false}); return {t:r.pos.ticker,u:axUpside({price:r.pos.currentPrice},a)}; }, 3, (r,res)=>{ if(res&&res.u!=null) up[res.t]=res.u; }, 60);
     }
-  }catch(e){body.innerHTML=`<span style="color:var(--amber)">⚠️ ${e.message}</span>`;}
+    const line=r=>{ const x=r.pos; return `${x.ticker} (${x.name||'n/a'}): ${r.weight.toFixed(1)}% of portfolio, ${x.shares} sh @ $${x.currentPrice.toFixed(2)}, `
+      +(r.gainPct!=null?`${axPct(r.gainPct)} vs your cost`:'cost basis not provided')+`, RSI ${x.rsi!=null?x.rsi.toFixed(0):'n/a'}, ${x.priceVs200!=null?axPct(x.priceVs200)+' vs 200-day MA':'200MA n/a'}`
+      +(up[x.ticker]!=null?`, analyst-target upside ${axPct(up[x.ticker],0)}`:'')+(x.currency&&x.currency!=='USD'?`, priced in ${x.currency} (not converted)`:''); };
+    const prompt=`You are AXIOM, a careful portfolio analyst. Today is ${axTodayLong()}. Review this REAL portfolio the user loaded, for a ${ST.risk} risk investor.
+
+Portfolio "${p.name}": ${st.n} holdings, total market value $${st.value.toFixed(0)}${st.withCost?`, unrealized gain ${axSignedMoney(st.gain,0)} (${axPct(st.gainPct)}) on the ${st.withCost} holdings with a known cost`:' (no cost basis provided)'}.
+Rule-based checks already found: ${axPortChecks(p).map(c=>c.text).join(' | ')}
+
+Holdings (largest first), prices fetched ${new Date(Math.min(...p.positions.map(x=>x.quotedAt||Date.now()))).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}:
+${rows.map(line).join('\n')}
+
+Use ONLY the data above. Do not invent prices, news, earnings, dates, holdings or numbers. If you mention a sector or asset type, say it comes from general knowledge, not from this data. Write four short labelled paragraphs:
+OVERALL: one paragraph on the portfolio's health and character.
+CONCENTRATION & RISK: how weights, trend and RSI line up against a ${ST.risk} profile.
+NEEDS ATTENTION: specific holdings, citing the numbers above, and why.
+CONSIDERATIONS: rebalancing ideas by weight or category (e.g. trimming a position toward a target weight). Do NOT recommend new specific tickers and do not predict prices.
+Plain text, no markdown, no bullet symbols.`;
+    const d=await groqPost([{role:'user',content:prompt}],900,.3);
+    const text=d.choices?.[0]?.message?.content||'';
+    if(!text.trim()) throw new Error('Groq returned an empty response');
+    body.innerHTML=axAiHtml(text)+`<div style="margin-top:12px;font-size:10px;color:var(--text3)">Generated by ${esc(groqModelLabel())} from the live numbers above. Commentary only — not financial advice, and the AI can be wrong.</div>`;
+  }catch(e){ body.innerHTML=`<span style="color:var(--amber)">⚠️ ${esc(e.message)}</span>`; }
 }
 
 // ── WATCHLIST ──
@@ -3654,46 +3570,12 @@ function renderScanTable(){
         <td style="white-space:nowrap">
           <button class="pos-btn analyze-btn" onclick="quickSearch('${r.ticker}');switchView('analyze')" style="margin-right:3px">Analyze</button>
           <button class="pos-btn" onclick="addToWatchlistDirect('${r.ticker}')" style="border-color:var(--violet2);color:var(--violet2);margin-right:3px">Watch</button>
-          <button class="pos-btn" onclick="openTradeModalWith('${r.ticker}',${r.price})" style="border-color:var(--cyan);color:var(--cyan)">+ Port</button>
         </td>
       </tr>`;
     }).join('')}</tbody></table></div>`;
 }
 
 // ── STRATEGIES ──
-function renderStrategyPerf(){
-  const grid=document.getElementById('strategy-perf-grid');
-  const defs=[
-    {key:'Buy & Hold',icon:'📈',desc:'AI-selected long-term holds. Best in bull markets with strong fundamentals.'},
-    {key:'RSI Reversal',icon:'🔄',desc:'Buy oversold (RSI<30) stocks for mean reversion plays.'},
-    {key:'Momentum',icon:'🚀',desc:'200-day MA breakouts + analyst backing. Trend-following.'},
-    {key:'Value Gap',icon:'💎',desc:'Large discount to analyst consensus target. Deep value plays.'}
-  ];
-  const ranked=[...defs].map(d=>{
-    const s=ST.strategies[d.key]||{trades:0,wins:0,totalReturn:0};
-    const avg=s.trades>0?s.totalReturn/s.trades:0;
-    return{...d,s,avg,wr:s.trades>0?(s.wins/s.trades)*100:0};
-  }).sort((a,b)=>b.avg-a.avg);
-
-  const rankLabels=['🥇','🥈','🥉','4th'];
-  grid.innerHTML=ranked.map((d,i)=>{
-    const bar=Math.min(100,Math.max(0,(d.avg+30)/60*100));
-    const sc=SC[d.key];
-    const rankBg=i<3?['#f59e0b','#9090b8','#b45309'][i]+'20':'var(--bg4)';
-    const rankColor=i<3?['#f59e0b','#9090b8','#b45309'][i]:'var(--text3)';
-    return`<div class="strat-card">
-      <span class="strat-rank-badge" style="background:${rankBg};color:${rankColor}">${rankLabels[i]}</span>
-      <div class="strat-card-name" style="color:${sc.c}">${d.icon} ${d.key}</div>
-      <div class="strat-card-desc">${d.desc}</div>
-      <div class="strat-return" style="color:${d.avg>=0?'var(--green)':'var(--red)'}">${d.avg>=0?'+':''}${d.avg.toFixed(1)}%</div>
-      <div class="strat-meta">${d.s.trades} trades closed · ${d.wr.toFixed(0)}% win rate</div>
-      <div class="strat-bar-track"><div class="strat-bar-fill" style="width:${bar}%;background:${sc.c}"></div></div>
-      <button class="strat-run-btn" onclick="getStrategyAdvice('${d.key}');switchView('strategies')">Ask Groq for ${d.key} picks →</button>
-    </div>`;
-  }).join('');
-  if(document.getElementById('advice-risk'))document.getElementById('advice-risk').textContent=ST.risk;
-}
-
 async function getStrategyAdvice(strategy){
   const el=document.getElementById('strategy-advice');
   if(!ST.groqKey){el.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>';showToast('🔑','Add a Groq API key in Settings to unlock AI picks');return;}
@@ -3756,10 +3638,6 @@ async function getStrategyAdvice(strategy){
                 style="padding:7px 16px;border-radius:20px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 10%,transparent);color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:5px">
                 ${t} <span style="font-size:10px;opacity:.7">▾</span>
               </button>`).join('')}
-            <button onclick="openAddRecsModal(${JSON.stringify(tickers2)})"
-              style="padding:7px 16px;border-radius:20px;border:1px solid var(--violet2);background:color-mix(in srgb,var(--violet2) 10%,transparent);color:var(--violet2);font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">
-              ＋ Add All to Portfolio
-            </button>
           </div>
         </div>`;
     }
@@ -3789,6 +3667,7 @@ function initDashboard(){
   renderDashPortfolios();
   renderDashWatchlist();
   renderDashActivity();
+  updateDataSourceCard();
 
   // Silently refresh any stale watchlist tickers in background
   const stale=ST.watchlist.filter(w=>!getCached(w.ticker));
@@ -3809,6 +3688,7 @@ function initDashboard(){
     loadMarketTickers();
     loadSentiment();
     loadRSSNews();
+    axRefreshAllHoldingsQuiet();
   }
 }
 
@@ -4014,40 +3894,31 @@ function renderDashPortfolios(){
   const el = document.getElementById('dash-port-summary');
   const totals = document.getElementById('dash-port-totals');
   if(!el) return;
-  if(!ST.portfolios.length){
-    el.innerHTML = '<div style="font-size:12px;color:var(--text3)">No portfolios. <span style="color:var(--cyan);cursor:pointer" onclick="switchView(\'portfolio\')">Create one →</span></div>';
+  const loaded = ST.portfolios.filter(p=>p.positions.length);
+  if(!loaded.length){
+    el.innerHTML = '<div style="font-size:12px;color:var(--text3)">No portfolio loaded. <span style="color:var(--cyan);cursor:pointer" onclick="switchView(\'portfolio\')">Load your holdings →</span></div>';
     if(totals) totals.innerHTML = '';
     return;
   }
-  const rows = ST.portfolios.slice(0,4).map(p=>{
-    const totCost = p.positions.reduce((s,pos)=>s+pos.entryPrice*pos.shares, 0);
-    const totVal = p.positions.reduce((s,pos)=>s+pos.currentPrice*pos.shares, 0);
-    const ret = totCost > 0 ? (totVal-totCost)/totCost*100 : 0;
-    const totalPort = (p.capital||0) + totVal;
-    return{p, ret, totalPort};
-  });
   const portRow = document.createElement('div');
   portRow.className = 'port-summary-row';
-  portRow.innerHTML = rows.map(({p, ret, totalPort})=>`
-    <div class="port-mini" onclick="switchView('portfolio');setTimeout(()=>openPortDetail('${p.id}'),100)">
-      <div class="port-mini-name">${p.name}</div>
-      <div class="port-mini-val">$${totalPort.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
-      <div class="port-mini-ret ${ret>=0?'pos':'neg'}">${ret>=0?'+':''}${ret.toFixed(1)}% return</div>
-    </div>`).join('');
+  portRow.innerHTML = loaded.slice(0,4).map(p=>{
+    const st = axPortStats(p), age = axPortAge(p);
+    return `<div class="port-mini" onclick="switchView('portfolio');openPortDetail('${p.id}')">
+      <div class="port-mini-name">${esc(p.name)}</div>
+      <div class="port-mini-val">${st.value>0?axMoney(st.value,0):'—'}</div>
+      <div class="port-mini-ret ${st.gainPct==null?'':st.gainPct>=0?'pos':'neg'}">${st.gainPct==null?'no cost basis':axPct(st.gainPct)+' vs cost'}</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:2px">${age==null?'not priced yet':'priced '+axAgeLabel(Date.now()-age)}</div>
+    </div>`;
+  }).join('');
   el.innerHTML = '';
   el.appendChild(portRow);
-
-  // Totals
-  const allPositions = ST.portfolios.flatMap(p=>p.positions);
-  const allCost = allPositions.reduce((s,p)=>s+p.entryPrice*p.shares,0);
-  const allVal = allPositions.reduce((s,p)=>s+p.currentPrice*p.shares,0);
-  const allCash = ST.portfolios.reduce((s,p)=>s+(p.capital||0),0);
-  const totalPnl = allVal - allCost;
-  const totalRet = allCost > 0 ? totalPnl/allCost*100 : 0;
-  if(totals) totals.innerHTML = `
-    <div style="text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Positions</div><div style="font-size:16px;font-weight:800;margin-top:3px">${allPositions.length}</div></div>
-    <div style="text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Total P&L</div><div style="font-size:16px;font-weight:800;margin-top:3px;color:${totalPnl>=0?'var(--green)':'var(--red)'}">${totalPnl>=0?'+':'−'}$${Math.abs(totalPnl).toLocaleString('en-US',{maximumFractionDigits:0})}</div></div>
-    <div style="text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Avg Return</div><div style="font-size:16px;font-weight:800;margin-top:3px;color:${totalRet>=0?'var(--green)':'var(--red)'}">${totalRet>=0?'+':''}${totalRet.toFixed(1)}%</div></div>`;
+  const ctx = axHoldingsContext(0), nHold = loaded.reduce((s,p)=>s+p.positions.length,0);
+  const cell=(l,v,c)=>`<div style="text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">${l}</div><div style="font-size:16px;font-weight:800;margin-top:3px${c?';color:'+c:''}">${v}</div></div>`;
+  if(totals) totals.innerHTML =
+    cell('Holdings',nHold)+
+    cell('Total Value',ctx.total>0?axMoney(ctx.total,0):'—')+
+    cell('Gain vs Cost',ctx.gainPct==null?'—':axPct(ctx.gainPct),ctx.gainPct==null?'var(--text3)':ctx.gain>=0?'var(--green)':'var(--red)');
 }
 
 function renderDashWatchlist(){
@@ -4067,9 +3938,12 @@ function renderDashWatchlist(){
 }
 
 function updateDataSourceCard(){
-  // Update FMP status text dynamically
-  const cards = document.querySelectorAll('#view-dashboard .dash-card');
-  // Re-render inline — handled via template literals in HTML above
+  const el=document.getElementById('ds-groq-status'); if(!el) return;
+  el.textContent=ST.groqKey?'✓ Groq connected':'✗ Groq key not set';
+  el.style.color=ST.groqKey?'var(--green)':'var(--red)';
+  const f=document.getElementById('ds-fmp-status');
+  if(f){ f.textContent=ST.fmpKey?'✓ FMP key set — analyst targets & ratings on':'⚠ FMP key not set — analyst data unavailable'; f.style.color=ST.fmpKey?'var(--green)':'var(--amber)'; }
+  updateGroqModelLabels();
 }
 
 function refreshDashboard(){
@@ -4078,114 +3952,6 @@ function refreshDashboard(){
   showToast('🔄', 'Dashboard refreshing...');
 }
 
-// ══════════════════════════════════════════
-//  ADD RECOMMENDED STOCKS MODAL
-// ══════════════════════════════════════════
-
-function openAddRecsModal(tickers){
-  if(!tickers||!tickers.length){ showToast('ℹ️','No tickers to add'); return; }
-
-  // Populate portfolio select
-  const sel = document.getElementById('recs-portfolio-select');
-  if(!ST.portfolios.length){ showToast('ℹ️','Create a portfolio first'); switchView('portfolio'); return; }
-  sel.innerHTML = ST.portfolios.map(p=>`<option value="${p.id}">${p.name} ($${(p.capital||0).toLocaleString('en-US',{maximumFractionDigits:0})} available)</option>`).join('');
-  if(ST.activePortId) sel.value = ST.activePortId;
-
-  // Build stock list
-  pendingRecs = tickers.map(t=>({ticker:t, price:0, shares:1, selected:true, loading:true}));
-  renderRecsModal();
-  document.getElementById('add-recs-modal').classList.add('show');
-
-  // Fetch live prices for each ticker
-  tickers.forEach((t,i)=>{
-    fetchQuote(t).then(q=>{
-      pendingRecs[i].price = q.price;
-      pendingRecs[i].name = q.longName;
-      pendingRecs[i].loading = false;
-      renderRecsModal();
-    }).catch(()=>{
-      pendingRecs[i].loading = false;
-      pendingRecs[i].price = 0;
-      renderRecsModal();
-    });
-  });
-}
-
-function renderRecsModal(){
-  const list = document.getElementById('recs-stock-list');
-  if(!list) return;
-  list.innerHTML = pendingRecs.map((rec,i)=>`
-    <div style="background:var(--bg3);border:1px solid ${rec.selected?'var(--cyan)':'var(--border)'};border-radius:var(--radius-sm);padding:14px;transition:border-color .2s">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:${rec.selected?'12px':'0'}">
-        <input type="checkbox" id="rec-check-${i}" ${rec.selected?'checked':''} onchange="toggleRec(${i})" style="width:16px;height:16px;cursor:pointer;accent-color:var(--cyan)">
-        <label for="rec-check-${i}" style="flex:1;cursor:pointer">
-          <div style="font-size:15px;font-weight:800">${rec.ticker} ${rec.name?`<span style="font-size:11px;font-weight:400;color:var(--text3)">${rec.name.slice(0,28)}</span>`:''}</div>
-          <div style="font-size:12px;color:var(--text3);margin-top:2px">${rec.loading?'Fetching price...':rec.price>0?`Live price: $${rec.price.toFixed(2)}`:'Price unavailable'}</div>
-        </label>
-        ${!rec.loading && rec.price > 0 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--cyan)">$${rec.price.toFixed(2)}</div>` : ''}
-      </div>
-      ${rec.selected && !rec.loading && rec.price > 0 ? `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div>
-          <span class="modal-label">Shares</span>
-          <input type="number" class="modal-input" value="${rec.shares}" min="0.01" step="any" oninput="updateRecShares(${i},this.value)" style="padding:8px 11px">
-        </div>
-        <div>
-          <span class="modal-label">Strategy</span>
-          <select class="modal-select" onchange="updateRecStrategy(${i},this.value)" style="padding:8px 11px">
-            <option value="Buy &amp; Hold" ${rec.strategy==='Buy & Hold'?'selected':''}>Buy & Hold</option>
-            <option value="RSI Reversal" ${rec.strategy==='RSI Reversal'?'selected':''}>RSI Reversal</option>
-            <option value="Momentum" ${rec.strategy==='Momentum'?'selected':''}>Momentum</option>
-            <option value="Value Gap" ${rec.strategy==='Value Gap'?'selected':''}>Value Gap</option>
-          </select>
-        </div>
-        <div style="grid-column:span 2;font-size:11px;color:var(--text3)">
-          Cost: <strong style="color:var(--text)">$${(rec.shares*rec.price).toFixed(2)}</strong>
-        </div>
-      </div>` : ''}
-    </div>`).join('');
-  updateRecsTotalCost();
-}
-
-function toggleRec(i){ pendingRecs[i].selected = !pendingRecs[i].selected; renderRecsModal(); }
-function updateRecShares(i, val){ pendingRecs[i].shares = parseFloat(val)||1; updateRecsTotalCost(); }
-function updateRecStrategy(i, val){ pendingRecs[i].strategy = val; }
-function updateRecsTotalCost(){
-  const sel = document.getElementById('recs-portfolio-select');
-  const portId = sel?.value;
-  const p = ST.portfolios.find(x=>x.id===portId);
-  const avail = p ? p.capital : 0;
-  const total = pendingRecs.filter(r=>r.selected&&r.price>0).reduce((s,r)=>s+r.shares*r.price,0);
-  const el = document.getElementById('recs-total-cost');
-  if(el) el.innerHTML = `<strong>${pendingRecs.filter(r=>r.selected).length} selected</strong> · Total cost: <strong style="color:${total>avail?'var(--red)':'var(--cyan)'}">$${total.toFixed(2)}</strong> · Available: <strong>$${avail.toFixed(2)}</strong>`;
-}
-function closeAddRecsModal(){ document.getElementById('add-recs-modal').classList.remove('show'); pendingRecs = []; }
-function confirmAddRecs(){
-  const sel = document.getElementById('recs-portfolio-select');
-  const portId = sel?.value;
-  if(!portId){ showToast('⚠️','Select a portfolio'); return; }
-  ST.activePortId = portId;
-  const toAdd = pendingRecs.filter(r=>r.selected && r.price > 0 && r.shares > 0);
-  if(!toAdd.length){ showToast('⚠️','Select at least one stock'); return; }
-  let added = 0;
-  for(const rec of toAdd){
-    const p = getActivePort();
-    const cost = rec.shares * rec.price;
-    if(cost > p.capital + .01){ showToast('⚠️',`Insufficient capital for ${rec.ticker}`); continue; }
-    p.capital -= cost;
-    p.positions.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,5),ticker:rec.ticker,shares:rec.shares,entryPrice:rec.price,currentPrice:rec.price,strategy:rec.strategy||'Buy & Hold',note:'Added from Groq recommendation',addedAt:new Date().toISOString()});
-    ST.strategies[rec.strategy||'Buy & Hold'].trades++;
-    added++;
-  }
-  save(); updatePosCount(); renderPortfolioCards();
-  closeAddRecsModal();
-  showToast('✅', `${added} position${added!==1?'s':''} added to portfolio`);
-  if(added > 0){ switchView('portfolio'); setTimeout(()=>openPortDetail(portId),200); }
-}
-
-// ══════════════════════════════════════════
-//  AI DAILY BRIEFING
-// ══════════════════════════════════════════
 let briefingLoaded = false;
 
 async function loadBriefing(){
@@ -4195,21 +3961,17 @@ async function loadBriefing(){
   if(!ST.groqKey){ body.innerHTML='<span style="color:var(--amber)">⚠️ Add Groq key in Settings ⚙️</span>'; showToast('🔑','Add a Groq API key in Settings to unlock the AI briefing'); return; }
   body.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div> Generating your market briefing...</div>';
 
-  // Gather portfolio context
-  const allPos = ST.portfolios.flatMap(p=>p.positions);
-  const portSummary = allPos.length
-    ? allPos.map(p=>`${p.ticker}(${p.strategy},${(((p.currentPrice-p.entryPrice)/p.entryPrice)*100).toFixed(1)}%)`).join(', ')
-    : 'No positions';
-  const totalPnl = allPos.reduce((s,p)=>(s+(p.currentPrice-p.entryPrice)*p.shares),0);
+  // Gather portfolio context (real loaded holdings, weights as of the last price refresh)
+  const hc = axHoldingsContext(10);
   const watchTickers = ST.watchlist.map(w=>w.ticker).join(', ')||'none';
 
   const liveIdx = await axLiveIndexLine();
   const prompt = `You are AXIOM, an elite financial analyst. Today is ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}. Write a concise 3-paragraph daily market briefing for a ${ST.risk} risk investor.
 
-Portfolio context: ${portSummary}. Total unrealized P&L: ${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(0)}. Watchlist: ${watchTickers}.
+Loaded portfolio (weights as of the last price refresh): ${hc.text}.${hc.gainPct!=null?` Gain vs the user's cost on holdings with known cost: ${axPct(hc.gainPct)}.`:''} Watchlist: ${watchTickers}.
 
 Paragraph 1 — MARKET CONDITIONS: Describe how the market is behaving using ONLY this live data: ${liveIdx}. Do not cite Fed decisions, economic reports, earnings, headlines or any other event — you have no verified news feed. If the data is missing, say in one sentence that live index data was not available. Do not reference any date other than today.
-Paragraph 2 — PORTFOLIO HEALTH: Based on their positions and P&L, assess overall portfolio health and any positions that need attention. If no positions, give general advice for a ${ST.risk} investor.
+Paragraph 2 — PORTFOLIO HEALTH: Based ONLY on the holdings and weights above, comment on concentration and anything that needs attention; do not invent prices or news. If no portfolio is loaded, say so in one sentence and give general diversification guidance for a ${ST.risk} investor.
 Paragraph 3 — TODAY'S OPPORTUNITIES: 2-3 specific actionable ideas or themes to watch today. Name real tickers.
 
 Plain text only. No markdown. No bullet points. Just 3 clean paragraphs separated by line breaks.`;
@@ -4406,10 +4168,6 @@ function renderCompareTable(tickers){
 
   html+='</tbody></table></div>';
 
-  // Add to portfolio buttons
-  html+=`<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-    ${valid.map(t=>`<button onclick="openTradeModalWith('${t}',${compareData[t].q?.price||0})" class="add-trade-btn">＋ Add ${t} to Portfolio</button>`).join('')}
-  </div>`;
 
   result.innerHTML = html;
 
@@ -4588,21 +4346,14 @@ function renderEarnings(el){
 let askHistory = []; // conversation history for Groq
 
 function buildAskSystemPrompt(){
-  const portTickers = ST.portfolios.flatMap(p=>p.positions.map(pos=>pos.ticker));
-  const portSummary = portTickers.length
-    ? portTickers.slice(0,10).join(', ')
-    : 'no positions yet';
+  const hc = axHoldingsContext(12);
   const watchTickers = ST.watchlist.map(w=>w.ticker).join(', ')||'none';
-  const totalPnl = ST.portfolios.flatMap(p=>p.positions).reduce((s,p)=>(s+(p.currentPrice-p.entryPrice)*p.shares),0);
   return `You are AXIOM, an elite AI financial analyst and market expert. Today is ${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}.
 
 User context:
 - Risk profile: ${ST.risk}
-- Starting capital: $${(ST.capital||100000).toLocaleString()}
-- Portfolio positions: ${portSummary}
-- Unrealized P&L: ${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(0)}
+- Loaded portfolio holdings (weights as of last price refresh): ${hc.text}${hc.total>0?'\n- Total loaded value: $'+Math.round(hc.total).toLocaleString():''}${hc.gainPct!=null?'\n- Gain vs the user\'s cost (holdings with known cost): '+axPct(hc.gainPct):''}
 - Watchlist: ${watchTickers}
-- Portfolios: ${ST.portfolios.length} portfolio(s)
 
 You have deep expertise in: equity analysis, technical analysis (RSI, moving averages, MACD), fundamental analysis, options, macroeconomics, sector rotation, and portfolio construction.
 
@@ -5044,7 +4795,6 @@ function openActionCard(ticker, price, longName){
 
   // Wire buttons
   document.getElementById('ac-analyze-btn').onclick = ()=>{ closeActionCard(); quickSearch(ticker); switchView('analyze'); };
-  document.getElementById('ac-portfolio-btn').onclick = ()=>{ closeActionCard(); openTradeModalWith(ticker, parseFloat(price)||0); };
   document.getElementById('ac-watchlist-btn').onclick = ()=>{ closeActionCard(); addToWatchlistDirect(ticker); };
   document.getElementById('ac-compare-btn').onclick = ()=>{
     closeActionCard();
@@ -5171,34 +4921,11 @@ function runScanner(){
 function renderDashActivity(){
   const el=document.getElementById('dash-activity');
   if(!el) return;
-  const recentTrades=ST.portfolios.flatMap(p=>p.positions.map(pos=>({...pos,portName:p.name}))).sort((a,b)=>new Date(b.addedAt)-new Date(a.addedAt)).slice(0,5);
-  const recentTickers=(ST.recentTickers||[]).slice(-5).reverse();
-  if(!recentTrades.length&&!recentTickers.length){el.innerHTML='<div style="font-size:12px;color:var(--text3)">No recent activity yet.</div>';return;}
-  let html='';
-  if(recentTrades.length){
-    html+=recentTrades.map(pos=>{
-      const ret=((pos.currentPrice-pos.entryPrice)/pos.entryPrice)*100;
-      return`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;border-radius:4px" onclick="openActionCard('${pos.ticker}','${pos.currentPrice}','${(pos.ticker||'').replace(/'/g,'')}')" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'">
-        <div style="font-size:16px">📈</div>
-        <div style="flex:1">
-          <div style="font-size:12px;font-weight:700">${pos.ticker} <span style="font-weight:400;color:var(--text3)">→ ${pos.portName}</span></div>
-          <div style="font-size:10px;color:var(--text3)">${new Date(pos.addedAt).toLocaleDateString()} · ${pos.strategy}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="font-size:12px;font-weight:700;color:${ret>=0?'var(--green)':'var(--red)'}">${ret>=0?'+':''}${ret.toFixed(1)}%</div>
-          <div style="font-size:10px;color:var(--text3)">›</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-  if(recentTickers.length){
-    html+=`<div style="font-size:10px;color:var(--text3);margin-top:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Recent Searches</div>`;
-    html+=`<div style="display:flex;gap:6px;flex-wrap:wrap">${recentTickers.map(t=>`<button onclick="openActionCard('${t}',null,'${t}')" style="padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">${t}</button>`).join('')}</div>`;
-  }
-  el.innerHTML=html;
+  const recentTickers=(ST.recentTickers||[]).slice(-8).reverse();
+  if(!recentTickers.length){ el.innerHTML='<div style="font-size:12px;color:var(--text3)">Tickers you analyze will appear here.</div>'; return; }
+  el.innerHTML=`<div style="display:flex;gap:6px;flex-wrap:wrap">${recentTickers.map(t=>`<button onclick="openActionCard('${esc(t)}',null,'${esc(t)}')" style="padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace">${esc(t)}</button>`).join('')}</div>`;
 }
 
-// Briefing with inline ticker chips + technical badges
 function parseBriefingText(text){
   if(!text) return text;
   // Detect and badge key technical signals
@@ -5246,7 +4973,6 @@ function renderWatcherCard(p, i, liveData){
         <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap">
           <button onclick="openActionCard('${p.ticker}','${live.price||0}','${axAttrName(p.name||live.longName||p.ticker)}')" style="padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif">🔍 Actions</button>
           <button onclick="addToWatchlistDirect('${p.ticker}')" style="padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif">👁 Watch</button>
-          <button onclick="openTradeModalWith('${p.ticker}',${live.price||0})" style="padding:4px 10px;border-radius:10px;border:1px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 8%,transparent);color:var(--cyan);font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">＋ Portfolio</button>
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0">
@@ -5290,87 +5016,6 @@ function enhanceInsight(text){
 //  PORTFOLIO PERFORMANCE CHART
 // ══════════════════════════════════════════
 // Snapshots portfolio value once per day on app open
-function takePortfolioSnapshot(){
-  const today = axLocalISODate();
-  ST.portfolios.forEach(p=>{
-    if(!p.snapshots) p.snapshots=[];
-    // Only one snapshot per day
-    if(p.snapshots.length && p.snapshots[p.snapshots.length-1].date===today) return;
-    const invested = p.positions.reduce((s,pos)=>s+pos.currentPrice*pos.shares,0);
-    const total = (p.capital||0) + invested;
-    p.snapshots.push({date:today, value:total});
-    // Keep 365 days max
-    if(p.snapshots.length>365) p.snapshots.shift();
-  });
-  save();
-}
-
-function buildPortfolioChart(portfolio, width=600, height=120){
-  const snaps = portfolio.snapshots||[];
-  if(snaps.length < 2) return `<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px">Chart builds over time — check back tomorrow for your first data point.<br>Value today: <strong style="color:var(--cyan)">$${((portfolio.capital||0)+portfolio.positions.reduce((s,p)=>s+p.currentPrice*p.shares,0)).toLocaleString('en-US',{maximumFractionDigits:0})}</strong></div>`;
-
-  const vals = snaps.map(s=>s.value);
-  const dates = snaps.map(s=>s.date);
-  const minV = Math.min(...vals);
-  const maxV = Math.max(...vals);
-  const range = maxV - minV || 1;
-  const pad = {t:10, r:16, b:28, l:56};
-  const W = width - pad.l - pad.r;
-  const H = height - pad.t - pad.b;
-
-  const isUp = vals[vals.length-1] >= vals[0];
-  const lineColor = isUp ? 'var(--green)' : 'var(--red)';
-  const fillColor = isUp ? '#10b98120' : '#f43f5e15';
-
-  const pts = vals.map((v,i)=>`${pad.l + (i/(vals.length-1))*W},${pad.t + (1-(v-minV)/range)*H}`);
-  const pathD = 'M '+pts.join(' L ');
-  const fillD = `M ${pad.l},${pad.t+H} L ${pts.join(' L ')} L ${pad.l+W},${pad.t+H} Z`;
-
-  // Y-axis labels
-  const fmt = v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v.toFixed(0);
-  const yLabels = [minV, minV+range*0.5, maxV].map((v,i)=>
-    `<text x="${pad.l-6}" y="${pad.t + (1-i*0.5)*H + 4}" text-anchor="end" font-size="9" fill="var(--text3)" font-family="JetBrains Mono,monospace">${fmt(v)}</text>`
-  );
-
-  // X-axis: first and last date
-  const xLabels = [
-    `<text x="${pad.l}" y="${pad.t+H+16}" text-anchor="start" font-size="9" fill="var(--text3)">${dates[0]}</text>`,
-    `<text x="${pad.l+W}" y="${pad.t+H+16}" text-anchor="end" font-size="9" fill="var(--text3)">${dates[dates.length-1]}</text>`
-  ];
-
-  // Current value label at end of line
-  const lastX = pad.l+W, lastY = pad.t+(1-(vals[vals.length-1]-minV)/range)*H;
-  const totalReturn = ((vals[vals.length-1]-vals[0])/vals[0]*100).toFixed(1);
-
-  return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${height}px">
-    <!-- Grid lines -->
-    <line x1="${pad.l}" y1="${pad.t}" x2="${pad.l+W}" y2="${pad.t}" stroke="var(--border)" stroke-width="1"/>
-    <line x1="${pad.l}" y1="${pad.t+H*0.5}" x2="${pad.l+W}" y2="${pad.t+H*0.5}" stroke="var(--border)" stroke-width="1" stroke-dasharray="3,3"/>
-    <line x1="${pad.l}" y1="${pad.t+H}" x2="${pad.l+W}" y2="${pad.t+H}" stroke="var(--border)" stroke-width="1"/>
-    <!-- Fill area -->
-    <path d="${fillD}" fill="${fillColor}"/>
-    <!-- Line -->
-    <path d="${pathD}" fill="none" stroke="${lineColor}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <!-- End dot -->
-    <circle cx="${lastX}" cy="${lastY}" r="4" fill="${lineColor}"/>
-    <!-- Y labels -->
-    ${yLabels.join('')}
-    <!-- X labels -->
-    ${xLabels.join('')}
-    <!-- Return label -->
-    <text x="${lastX+6}" y="${lastY+4}" font-size="10" font-weight="700" fill="${lineColor}" font-family="Outfit,sans-serif">${isUp?'+':''}${totalReturn}%</text>
-  </svg>`;
-}
-
-function renderPortfolioChart(portId){
-  const p = ST.portfolios.find(x=>x.id===portId);
-  if(!p) return;
-  const el = document.getElementById('port-chart-'+portId);
-  if(!el) return;
-  el.innerHTML = buildPortfolioChart(p);
-}
-
-
 // ── BROKERAGE CSV IMPORT ──
 let csvParsedRows = [];
 
@@ -5387,7 +5032,7 @@ function importBrokerageCSV(e){
 }
 
 function parseAndPreviewCSV(raw, filename){
-  const lines = raw.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(function(l){return l.trim();});
+  const lines = raw.replace(/^﻿/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(function(l){return l.trim();});
   if(lines.length < 2){ showToast('⚠️','CSV appears empty'); return; }
 
   function splitCSV(line){
@@ -5401,147 +5046,131 @@ function parseAndPreviewCSV(raw, filename){
     out.push(cur.trim().replace(/^"|"$/g,''));
     return out;
   }
+  // Brokerage exports often put account/summary lines above the real header row — find the header.
+  var hdrAt=0;
+  for(var hi=0;hi<Math.min(lines.length,15);hi++){
+    var hc=splitCSV(lines[hi]).map(function(h){return h.toLowerCase();});
+    if(hc.some(function(h){return /^(symbol|ticker)/.test(h);}) && hc.some(function(h){return /(quantity|qty|shares|units)/.test(h);})){ hdrAt=hi; break; }
+  }
+  var headers = splitCSV(lines[hdrAt]).map(function(h){return h.toLowerCase().trim();});
 
-  var headers = splitCSV(lines[0]).map(function(h){return h.toLowerCase().trim();});
-
-  var ALIASES = {
-    ticker:    ['ticker','symbol','stock symbol','security','sym','stock'],
-    name:      ['name','description','security name','company','security description'],
-    quantity:  ['quantity','qty','shares','units','shares/units'],
-    price:     ['price','current price','last price','market price','price/share','last'],
-    mktVal:    ['market value','value','current value','mkt value','market val'],
-    costBasis: ['cost basis','cost','average cost','avg cost','total cost','avg price','average price','book value','book cost'],
-    unrealized:['unrealized gain','unrealized gain/loss','gain/loss','unrealized p&l','gain'],
+  // Column detection. Per-share cost columns ("Average Cost Basis", "Avg Price") and total-cost columns
+  // ("Cost Basis Total", "Cost Basis") are told apart — dividing a per-share figure by quantity would fake the gain/loss.
+  var perShare=function(h){return /(average|avg|per share|\/ ?share|per unit)/.test(h);};
+  var badCol=function(h){return /(gain|loss|%|percent|change|chng|day)/.test(h);};
+  var find=function(pred){ for(var j=0;j<headers.length;j++){ if(pred(headers[j])) return j; } return -1; };
+  var col={
+    ticker:  find(function(h){return /^(ticker|symbol|stock symbol|security symbol)$/.test(h);}),
+    name:    find(function(h){return /(description|security name|company|^name$)/.test(h);}),
+    quantity:find(function(h){return /^(quantity|qty|shares|units|shares\/units)$/.test(h);}),
+    price:   find(function(h){return /(last price|current price|market price|share price|^price$|^last$)/.test(h) && !perShare(h) && !/cost/.test(h);}),
+    mktVal:  find(function(h){return /(market value|current value|mkt value|^value$)/.test(h) && !badCol(h);}),
+    costPer: find(function(h){return /(cost|price|book)/.test(h) && perShare(h) && !badCol(h);}),
+    costTot: find(function(h){return /(cost basis|total cost|book value|book cost|^cost$)/.test(h) && !perShare(h) && !badCol(h);})
   };
-
-  function findCol(aliases){
-    for(var i=0;i<aliases.length;i++){
-      var a=aliases[i];
-      for(var j=0;j<headers.length;j++){
-        if(headers[j].indexOf(a)>=0||a.indexOf(headers[j])>=0) return j;
-      }
-    }
-    return -1;
-  }
-
-  var col={}, found=[], missing=[];
-  var keys = Object.keys(ALIASES);
-  for(var ki=0;ki<keys.length;ki++){
-    var k=keys[ki];
-    col[k]=findCol(ALIASES[k]);
-    (col[k]>=0?found:missing).push(k);
-  }
-
+  if(col.ticker<0) col.ticker=find(function(h){return /(symbol|ticker)/.test(h);});
+  if(col.quantity<0) col.quantity=find(function(h){return /(quantity|shares|units)/.test(h) && !badCol(h);});
   if(col.ticker<0){ showToast('⚠️','No ticker/symbol column found'); return; }
+  if(col.quantity<0){ showToast('⚠️','No quantity/shares column found'); return; }
+  var found=[],missing=[];
+  [['ticker','symbol'],['name','name'],['quantity','quantity'],['price','price'],['mktVal','market value']].forEach(function(k){ (col[k[0]]>=0?found:missing).push(k[1]); });
+  (col.costPer>=0||col.costTot>=0?found:missing).push('cost basis');
 
-  var SKIP=['CASH','MMKT','SWEEP','TOTAL','PENDING','MONEY','MARKET'];
-  csvParsedRows=[];
-  var warnings=[];
+  var SKIP=['CASH','MMKT','SWEEP','TOTAL','PENDING','MONEY','MARKET','FDRXX','SPAXX','CORE'];
+  var by={}, order=[], warnings=[], skipped=0;
+  function cleanNum(s){ var t=(s||'').toString().trim(); var neg=/^\(.*\)$/.test(t); var n=parseFloat(t.replace(/[$,%\s()]/g,'')); return isNaN(n)?0:(neg?-n:n); }
 
-  function cleanNum(s){ return parseFloat((s||'').toString().replace(/[$,%\s]/g,''))||0; }
-
-  for(var li=1;li<lines.length;li++){
+  for(var li=hdrAt+1;li<lines.length;li++){
     var cols=splitCSV(lines[li]);
     if(cols.every(function(x){return !x;})) continue;
-    var ticker=(col.ticker>=0?cols[col.ticker]||'':'').toUpperCase().replace(/[^A-Z.]/g,'');
-    if(!ticker||ticker.length>6) continue;
+    var raw0=(cols[col.ticker]||'').toUpperCase().replace(/[^A-Z0-9.\-^]/g,'');
+    var ticker=axNormTicker(raw0);
+    if(!ticker){ if(raw0) skipped++; continue; }
     var skip=false;
-    for(var si=0;si<SKIP.length;si++){if(ticker.indexOf(SKIP[si])>=0){skip=true;break;}}
-    if(skip) continue;
-
-    var name      = col.name>=0      ? (cols[col.name]||'').slice(0,40)    : '';
-    var qty       = col.quantity>=0  ? cleanNum(cols[col.quantity])         : 0;
-    var price     = col.price>=0     ? cleanNum(cols[col.price])            : 0;
-    var mktVal    = col.mktVal>=0    ? cleanNum(cols[col.mktVal])           : 0;
-    var costTotal = col.costBasis>=0 ? cleanNum(cols[col.costBasis])        : 0;
-
-    var shares  = qty;
-    var entryPx = 0;
-    var currPx  = price;
-
-    if(costTotal>0 && qty>0)       entryPx = costTotal/qty;
-    else if(costTotal>0)           entryPx = costTotal;
-    if(!currPx && mktVal>0&&qty>0) currPx  = mktVal/qty;
-    if(!entryPx) entryPx = currPx;
-    if(!currPx)  currPx  = entryPx;
-    if(!shares||shares<=0){ warnings.push(ticker+': no quantity'); continue; }
-    if(!entryPx) warnings.push(ticker+': no price data, set to $0');
-
-    csvParsedRows.push({
-      ticker:ticker, name:name, shares:shares,
-      entryPx:entryPx, currPx:currPx,
-      status: entryPx===0?'needs-price':'ok'
-    });
+    for(var si=0;si<SKIP.length;si++){ if(ticker===SKIP[si]||ticker.indexOf('CASH')===0||ticker.indexOf('TOTAL')===0){ skip=true; break; } }
+    if(skip||/\*\*$/.test(cols[col.ticker]||'')){ skipped++; continue; }
+    var qty=cleanNum(cols[col.quantity]);
+    if(!(qty>0)){ warnings.push(ticker+': no positive quantity'); continue; }
+    var price=col.price>=0?cleanNum(cols[col.price]):0;
+    var mv=col.mktVal>=0?cleanNum(cols[col.mktVal]):0;
+    var cost=0;   // cost per share; 0 = unknown (never guessed)
+    if(col.costPer>=0 && cleanNum(cols[col.costPer])>0) cost=cleanNum(cols[col.costPer]);
+    else if(col.costTot>=0 && cleanNum(cols[col.costTot])>0) cost=cleanNum(cols[col.costTot])/qty;
+    if(!price && mv>0) price=mv/qty;
+    var name=col.name>=0?(cols[col.name]||'').slice(0,40):'';
+    var e=by[ticker];
+    if(!e){ e=by[ticker]={ticker:ticker,name:name,shares:0,costTotal:0,costKnownShares:0,price:price}; order.push(ticker); }
+    e.shares+=qty; if(cost>0){ e.costTotal+=cost*qty; e.costKnownShares+=qty; } if(!e.price&&price) e.price=price; if(!e.name&&name) e.name=name;
   }
+  csvParsedRows=order.map(function(t){
+    var e=by[t];
+    var allKnown=e.costKnownShares>0 && Math.abs(e.costKnownShares-e.shares)<1e-9;   // part-known lots would give a wrong average
+    return {ticker:t,name:e.name,shares:e.shares,entryPx:allKnown?e.costTotal/e.shares:0,currPx:e.price||0,status:allKnown?'ok':'no-cost'};
+  });
+  if(!csvParsedRows.length){ showToast('⚠️','No valid holdings found in CSV'); return; }
+  if(skipped) warnings.push(skipped+' non-stock row(s) skipped (cash, totals, footers)');
 
-  if(!csvParsedRows.length){ showToast('⚠️','No valid positions found in CSV'); return; }
-
-  if(!ST.portfolios.length){ showToast('ℹ️','Create a portfolio first'); openNewPortModal(); return; }
-  var portSel=document.getElementById('csv-portfolio-select');
-  portSel.innerHTML=ST.portfolios.map(function(p){
-    return '<option value="'+p.id+'">'+p.name+' ($'+Math.round(p.capital||0).toLocaleString()+' avail)</option>';
-  }).join('');
-  if(ST.activePortId) portSel.value=ST.activePortId;
+  var sel=document.getElementById('csv-portfolio-select');
+  sel.innerHTML=ST.portfolios.map(function(p){ return '<option value="'+p.id+'">'+esc(p.name)+' ('+p.positions.length+' holdings)</option>'; }).join('')+'<option value="__new__">＋ New portfolio</option>';
+  sel.value=(csvTargetPortId&&ST.portfolios.find(function(p){return p.id===csvTargetPortId;}))?csvTargetPortId:'__new__';
+  document.getElementById('csv-new-name').value=String(filename||'My Portfolio').replace(/\.(csv|txt)$/i,'').replace(/[_-]+/g,' ').slice(0,40)||'My Portfolio';
+  csvTargetChanged();
 
   document.getElementById('csv-row-count').textContent=csvParsedRows.length;
   document.getElementById('csv-filename').textContent=filename;
   document.getElementById('csv-cols-found').textContent=found.join(', ');
   var mn=document.getElementById('csv-missing-note');
-  if(missing.length){ mn.textContent='Missing: '+missing.join(', ')+' (estimated where possible).'; }
+  if(missing.length){ mn.textContent='Not found: '+missing.join(', ')+(missing.indexOf('cost basis')>=0?' — gain/loss will be blank for those holdings.':'.'); mn.style.color='var(--amber)'; }
   else { mn.textContent=' All columns mapped.'; mn.style.color='var(--green)'; }
 
-  var tbody=document.getElementById('csv-preview-tbody');
-  tbody.innerHTML=csvParsedRows.map(function(row){
-    var sc=row.status==='needs-price';
+  document.getElementById('csv-preview-tbody').innerHTML=csvParsedRows.map(function(row){
+    var nc=row.status==='no-cost';
     return '<tr style="border-bottom:1px solid var(--border)">'
-      +'<td style="padding:7px 10px;font-family:\'JetBrains Mono\',monospace;font-weight:700">'+row.ticker+'</td>'
-      +'<td style="padding:7px 10px;color:var(--text3);font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(row.name||'-')+'</td>'
+      +'<td style="padding:7px 10px;font-family:\'JetBrains Mono\',monospace;font-weight:700">'+esc(row.ticker)+'</td>'
+      +'<td style="padding:7px 10px;color:var(--text3);font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(row.name||'-')+'</td>'
       +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+row.shares.toFixed(row.shares%1===0?0:3)+'</td>'
-      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.entryPx>0?'$'+row.entryPx.toFixed(2):'<span style="color:var(--amber)">-</span>')+'</td>'
-      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.currPx>0?'$'+row.currPx.toFixed(2):'-')+'</td>'
-      +'<td style="padding:7px 10px;font-size:10px;font-weight:600;color:'+(sc?'var(--amber)':'var(--green)')+';">'+(sc?'Fix price':'Ready')+'</td>'
+      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.entryPx>0?'$'+row.entryPx.toFixed(2):'<span style="color:var(--text3)">—</span>')+'</td>'
+      +'<td style="padding:7px 10px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(row.currPx>0?'$'+row.currPx.toFixed(2):'<span style="color:var(--text3)">live</span>')+'</td>'
+      +'<td style="padding:7px 10px;font-size:10px;font-weight:600;color:'+(nc?'var(--amber)':'var(--green)')+'">'+(nc?'No cost basis':'Ready')+'</td>'
       +'</tr>';
   }).join('');
 
   var warnEl=document.getElementById('csv-warning');
   if(warnings.length){ warnEl.style.display='block'; warnEl.textContent=warnings.slice(0,5).join(' | '); }
   else{ warnEl.style.display='none'; }
-
   document.getElementById('csv-import-modal').classList.add('show');
 }
 
+function csvTargetChanged(){
+  var isNew=document.getElementById('csv-portfolio-select').value==='__new__';
+  document.getElementById('csv-new-wrap').style.display=isNew?'block':'none';
+  document.getElementById('csv-replace-wrap').style.display=isNew?'none':'flex';
+}
 function closeCSVImport(){
   document.getElementById('csv-import-modal').classList.remove('show');
-  csvParsedRows=[];
+  csvParsedRows=[]; csvTargetPortId=null;
 }
 
 function confirmCSVImport(){
-  var portId=document.getElementById('csv-portfolio-select').value;
-  var strategy=document.getElementById('csv-strategy-select').value;
-  if(!portId){ showToast('⚠️','Select a portfolio'); return; }
-  ST.activePortId=portId;
-  var p=getActivePort();
-  if(!p){ showToast('⚠️','Portfolio not found'); return; }
-  var added=0;
-  for(var i=0;i<csvParsedRows.length;i++){
-    var row=csvParsedRows[i];
-    if(row.entryPx>0) p.capital=Math.max(0, p.capital-row.shares*row.entryPx);
-    p.positions.push({
-      id:Date.now()+'_'+Math.random().toString(36).slice(2,6),
-      ticker:row.ticker, shares:row.shares,
-      entryPrice:row.entryPx, currentPrice:row.currPx||row.entryPx,
-      strategy:strategy,
-      note:row.name+(row.entryPx===0?' - PRICE NEEDS UPDATE':''),
-      addedAt:new Date().toISOString()
-    });
-    ST.strategies[strategy]=ST.strategies[strategy]||{trades:0,wins:0,totalReturn:0,closed:[]};
-    ST.strategies[strategy].trades++;
-    added++;
+  if(!csvParsedRows.length){ closeCSVImport(); return; }
+  var sel=document.getElementById('csv-portfolio-select').value, p;
+  if(sel==='__new__'){
+    var name=(document.getElementById('csv-new-name').value||'').trim()||'My Portfolio';
+    p={id:'port_'+Date.now(),name:name,desc:'',positions:[],createdAt:new Date().toISOString()};
+    ST.portfolios.push(p);
+  }else{
+    p=ST.portfolios.find(function(x){return x.id===sel;});
+    if(!p){ showToast('⚠️','Portfolio not found'); return; }
+    if(document.getElementById('csv-replace').checked) p.positions=[];
   }
-  save(); updatePosCount(); renderPortfolioCards();
-  closeCSVImport();
-  showToast('✅','Imported '+added+' position'+(added!==1?'s':'')+' into "'+p.name+'"');
-  setTimeout(function(){ switchView('portfolio'); setTimeout(function(){ openPortDetail(portId); },150); },200);
+  csvParsedRows.forEach(function(row){
+    axMergePos(p,{ticker:row.ticker,shares:row.shares,entryPrice:row.entryPx,currentPrice:row.currPx,name:row.name});
+  });
+  var n=csvParsedRows.length;
+  ST.activePortId=p.id; save(); closeCSVImport(); updatePosCount(); renderPortfolioCards(); renderDashPortfolios();
+  showToast('✅','Loaded '+n+' holding'+(n!==1?'s':'')+' into "'+p.name+'" — pricing live…');
+  switchView('portfolio'); openPortDetail(p.id);
+  refreshHoldings(p.id,{quiet:true});
 }
 
 
